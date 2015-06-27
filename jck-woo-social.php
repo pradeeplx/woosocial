@@ -57,10 +57,12 @@ class JCK_WooSocial {
         require_once($this->plugin_path.'/inc/class-profile-system.php');
         require_once($this->plugin_path.'/inc/class-like-system.php');
         require_once($this->plugin_path.'/inc/class-follow-system.php');
+        require_once($this->plugin_path.'/inc/class-activity-feed-system.php');
         
         $this->profile_system = new JCK_WooSocial_ProfileSystem();
         $this->like_system = new JCK_WooSocial_LikeSystem();
         $this->follow_system = new JCK_WooSocial_FollowSystem();
+        $this->follow_system = new JCK_WooSocial_ActivityFeedSystem();
         
     }
 
@@ -387,6 +389,31 @@ class JCK_WooSocial {
         // Otherwise return null
             return NULL;
         }
+        
+    }
+
+/**	=============================
+    *
+    * Get User info for Current Profile
+    *
+    * @param mixed $anything Description of the parameter
+    * @return bool
+    *
+    ============================= */
+    
+    public function get_user_profile_info() {
+        
+        global $wp_query;
+        $current_author = $wp_query->get_queried_object();
+        
+        $current_author->tagline = "This is my tagline";
+        
+        $current_author->likes_count = 250;
+        $current_author->followers_count = 25;
+        $current_author->following_count = 20;
+        
+        
+        return $current_author;
         
     }
   

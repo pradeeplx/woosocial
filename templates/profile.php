@@ -10,12 +10,15 @@ get_header(); ?>
 
 <?php 
 global $JCK_WooSocial;
-$user_profile_info = $JCK_WooSocial->get_user_profile_info();
+$profile_info = $JCK_WooSocial->profile_system->get_user_info();
+
+//$JCK_WooSocial->activity_log->add_like( $profile_info->ID, 72 );
+//$JCK_WooSocial->activity_log->add_follow( $profile_info->ID, 1 );
 ?>
 
-<h1><?php echo $user_profile_info->user_nicename; ?> - Follow</h1>
-<p><?php echo $user_profile_info->tagline; ?></p>
-<p><?php echo $user_profile_info->likes_count; ?> likes - <?php echo $user_profile_info->followers_count; ?> followers - <?php echo $user_profile_info->following_count; ?> following</p>
+<h1><?php echo $profile_info->user_nicename; ?> - Follow</h1>
+<p><?php echo $profile_info->tagline; ?></p>
+<p><?php echo $profile_info->likes_count; ?> likes - <?php echo $profile_info->followers_count; ?> followers - <?php echo $profile_info->following_count; ?> following</p>
 
 <h3>Friends Activity Feed</h3>
 

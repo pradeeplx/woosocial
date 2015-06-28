@@ -15,7 +15,7 @@ class JCK_WooSocial {
     
     public $name = 'WooCommerce Social';
     public $shortname = 'Woo Social';
-    public $slug = 'jck-woo-social';
+    public $slug = 'jck_woo_social';
     public $version = "1.0.0";
     public $plugin_path;
     public $plugin_url;
@@ -33,11 +33,10 @@ class JCK_WooSocial {
    	
     public function __construct() {
         
-        $this->plugin_path = plugin_dir_path( __FILE__ );
-        $this->plugin_url = plugin_dir_url( __FILE__ );
-        $this->options_name = $this->slug.'_options';
-        
+        $this->set_constants();        
         $this->load_classes();
+        
+        register_activation_hook( __FILE__, array( $this, 'install' ) );
         
         // Hook up to the init and plugins_loaded actions
         add_action( 'plugins_loaded',   array( $this, 'plugins_loaded_hook' ) );
@@ -48,21 +47,47 @@ class JCK_WooSocial {
 
 /**	=============================
     *
+    * Setup Constants for this class
+    *
+    ============================= */
+    
+    public function set_constants() {
+        
+        $this->plugin_path = plugin_dir_path( __FILE__ );
+        $this->plugin_url = plugin_dir_url( __FILE__ );
+        $this->options_name = $this->slug.'_options';
+        
+    }
+
+/**	=============================
+    *
+    * Install Plugin on Activation
+    *
+    ============================= */
+    
+    public function install() {
+        
+        $this->activity_log->setup_activity_log();
+        
+    }
+
+/**	=============================
+    *
     * Load Classes
     *
     ============================= */
     
-    public function load_classes() {
+    private function load_classes() {
         
         require_once($this->plugin_path.'/inc/class-profile-system.php');
         require_once($this->plugin_path.'/inc/class-like-system.php');
         require_once($this->plugin_path.'/inc/class-follow-system.php');
-        require_once($this->plugin_path.'/inc/class-activity-feed-system.php');
+        require_once($this->plugin_path.'/inc/class-activity-log-system.php');
         
         $this->profile_system = new JCK_WooSocial_ProfileSystem();
         $this->like_system = new JCK_WooSocial_LikeSystem();
         $this->follow_system = new JCK_WooSocial_FollowSystem();
-        $this->follow_system = new JCK_WooSocial_ActivityFeedSystem();
+        $this->activity_log = new JCK_WooSocial_ActivityLogSystem();
         
     }
 
@@ -129,7 +154,7 @@ class JCK_WooSocial {
     *
     ============================= */
     
-    public function register_required_plugins() {
+    private function register_required_plugins() {
         
     /**	=============================
         *
@@ -313,7 +338,7 @@ class JCK_WooSocial {
     *
     ============================= */
    	
-	public function remove_filters_for_anonymous_class( $hook_name = '', $class_name ='', $method_name = '', $priority = 0 ) {
+	private function remove_filters_for_anonymous_class( $hook_name = '', $class_name ='', $method_name = '', $priority = 0 ) {
     	
         global $wp_filter;
         
@@ -371,7 +396,7 @@ class JCK_WooSocial {
     *
     ============================= */
     
-    public function get_woo_version_number() {
+    private function get_woo_version_number() {
         
         // If get_plugins() isn't available, require it
         if ( ! function_exists( 'get_plugins' ) )
@@ -389,31 +414,6 @@ class JCK_WooSocial {
         // Otherwise return null
             return NULL;
         }
-        
-    }
-
-/**	=============================
-    *
-    * Get User info for Current Profile
-    *
-    * @param mixed $anything Description of the parameter
-    * @return bool
-    *
-    ============================= */
-    
-    public function get_user_profile_info() {
-        
-        global $wp_query;
-        $current_author = $wp_query->get_queried_object();
-        
-        $current_author->tagline = "This is my tagline";
-        
-        $current_author->likes_count = 250;
-        $current_author->followers_count = 25;
-        $current_author->following_count = 20;
-        
-        
-        return $current_author;
         
     }
   

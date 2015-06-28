@@ -108,5 +108,30 @@ class JCK_WooSocial_ProfileSystem {
     
     	return $template;
     }
+
+/**	=============================
+    *
+    * Get User info for Current Profile
+    *
+    * @param mixed $anything Description of the parameter
+    * @return bool
+    *
+    ============================= */
+    
+    public function get_user_info() {
+        
+        global $wp_query, $JCK_WooSocial;
+        $current_author = $wp_query->get_queried_object();
+        
+        $current_author->tagline = "This is my tagline";
+        
+        $current_author->likes_count = $JCK_WooSocial->activity_log->get_likes_count( $current_author->ID );
+        $current_author->followers_count = $JCK_WooSocial->activity_log->get_followers_count( $current_author->ID );
+        $current_author->following_count = $JCK_WooSocial->activity_log->get_following_count( $current_author->ID );
+        
+        
+        return $current_author;
+        
+    }
 	
 }

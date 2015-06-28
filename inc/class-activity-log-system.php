@@ -130,6 +130,68 @@ class JCK_WooSocial_ActivityLogSystem {
         return $followers_count;
         
     }
+    
+/**	=============================
+    *
+    * Get Activity Feed
+    *
+    * @param int $user_id
+    * @return arr/obj
+    *
+    ============================= */
+    
+    public function get_activity_feed( $user_id, $limit = null, $offset = null, $include_followers = true ) {
+        
+        if( $limit === null ) $limit = 10;
+        if( $offset === null ) $offset = 0;
+        
+        if( $user_id == "" )
+            return 0;
+        
+        global $wpdb;
+        
+        $and_followers = ( $include_followers ) ? "OR rel_id = $user_id" : "";
+        
+        $activity = $wpdb->get_results( "SELECT * FROM $this->table_name WHERE user_id = $user_id $and_followers ORDER BY time DESC LIMIT $limit OFFSET $offset" );
+        
+        return $activity;
+        
+    }
+
+/**	=============================
+    *
+    * Get Following Activity Feed
+    *
+    * @param int $user_id
+    * @return arr/obj
+    *
+    ============================= */
+    
+    public function get_following_activity_feed( $user_id ) {
+        
+        if( $user_id == "" )
+            return 0;
+        
+        global $JCK_WooSocial;
+        
+        $activity = array();
+        $following = $JCK_WooSocial->follow_system->get_following( $user_id, null, null, true );
+        
+        if( $following && !empty($following) ) {
+            
+            foreach( $following as $following_user_id ) {
+                
+                error_log( print_r( $following_user_id, true ) );
+                
+                $activity = array_merge( $this->get_activity_feed( $following_user_id, null, null, false ), $activity );
+                
+            }
+            
+        }
+        
+        return $activity;
+        
+    }
 
 /**	=============================
     *

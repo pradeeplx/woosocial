@@ -136,11 +136,16 @@ class JCK_WooSocial_ActivityLogSystem {
     * Get Activity Feed
     *
     * @param int $user_id
+    * @param int $limit
+    * @param int $offset
+    * @param int $include_followers include results for who the requested user has followed
+    * @param int $from results from this time (closer)
+    * @param int $to to this time (further)
     * @return arr/obj
     *
     ============================= */
     
-    public function get_activity_feed( $user_id, $limit = null, $offset = null, $include_followers = true ) {
+    public function get_activity_feed( $user_id, $limit = null, $offset = null, $include_followers = true, $from = null, $to = null ) {
         
         if( $limit === null ) $limit = 10;
         if( $offset === null ) $offset = 0;
@@ -151,8 +156,9 @@ class JCK_WooSocial_ActivityLogSystem {
         global $wpdb;
         
         $and_followers = ( $include_followers ) ? "OR rel_id = $user_id" : "";
+        $time_query = ( $from !== null && $to !== null ) ? "AND time BETWEEN '$to' AND '$from'" : "";
         
-        $activity = $wpdb->get_results( "SELECT * FROM $this->table_name WHERE user_id = $user_id $and_followers ORDER BY time DESC LIMIT $limit OFFSET $offset" );
+        $activity = $wpdb->get_results( "SELECT * FROM $this->table_name WHERE user_id = $user_id $and_followers $time_query ORDER BY time DESC LIMIT $limit OFFSET $offset" );
         
         return $activity;
         
@@ -163,14 +169,30 @@ class JCK_WooSocial_ActivityLogSystem {
     * Get Following Activity Feed
     *
     * @param int $user_id
+    * @param int $from plus/minus days
+    * @param int $to plus/minus days
     * @return arr/obj
     *
     ============================= */
     
-    public function get_following_activity_feed( $user_id ) {
+    public function get_following_activity_feed( $user_id, $from = null, $to = null ) {
         
+        if( $from === null ) $from = 0;
+        if( $to === null ) $to = -7;
+        
+        // if no user id, return nothing
         if( $user_id == "" )
             return 0;
+        
+        // set time params        
+        date_default_timezone_set("UTC");
+        
+        $time_offset = get_option('gmt_offset');
+        
+        $from = date("Y-m-d H:i:s", strtotime("$from days, $time_offset hours"));
+        $to = date("Y-m-d H:i:s", strtotime("$to days, $time_offset hours"));
+        
+        // start query
         
         global $JCK_WooSocial;
         
@@ -179,13 +201,15 @@ class JCK_WooSocial_ActivityLogSystem {
         
         if( $following && !empty($following) ) {
             
+            // build array of all following activity
             foreach( $following as $following_user_id ) {
                 
-                error_log( print_r( $following_user_id, true ) );
-                
-                $activity = array_merge( $this->get_activity_feed( $following_user_id, null, null, false ), $activity );
+                $activity = array_merge( $this->get_activity_feed( $following_user_id, null, null, false, $from, $to ), $activity );
                 
             }
+            
+            // sort by time
+            uasort( $activity, function ($a, $b) { if ( $a->time == $b->time ) return 0; else return ($a->time > $b->time) ? -1 : 1; });
             
         }
         

@@ -23,13 +23,12 @@ $current_user_id = get_current_user_id();
 <p><?php echo $user_info->tagline; ?></p>
 
 <?php if( $current_user_id == $user_info->ID ) { ?>
-<h3>Logged In Activity</h3>
-<?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'activity' ); ?>
+    <h3>Others' Activity</h3>
+    <?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'activity-following' ); ?>
 <?php } ?>
 
-<h3>Activity</h3>
-
-<?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'activity-following' ); ?>
+<h3><?php echo $user_info->user_nicename; ?>'s Activity</h3>
+<?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'activity' ); ?>
 
 <h3>Likes (<?php echo $user_info->likes_count; ?>)</h3>
 

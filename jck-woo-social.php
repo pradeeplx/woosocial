@@ -9,6 +9,9 @@ Author URI: http://www.jckemp.com
 Text Domain: jck-woo-social
 */
 
+defined('JCK_WOO_SOCIAL_PLUGIN_PATH') or define('JCK_WOO_SOCIAL_PLUGIN_PATH', plugin_dir_path( __FILE__ ));
+defined('JCK_WOO_SOCIAL_PLUGIN_URL') or define('JCK_WOO_SOCIAL_PLUGIN_URL', plugin_dir_url( __FILE__ ));
+
 require_once( dirname( __FILE__ ) . '/inc/admin/class-tgm-plugin-activation.php' );
 
 class JCK_WooSocial {
@@ -17,8 +20,8 @@ class JCK_WooSocial {
     public $shortname = 'Woo Social';
     public $slug = 'jck_woo_social';
     public $version = "1.0.0";
-    public $plugin_path;
-    public $plugin_url;
+    public $plugin_path = JCK_WOO_SOCIAL_PLUGIN_PATH;
+    public $plugin_url = JCK_WOO_SOCIAL_PLUGIN_URL;
     public $options_name;
     public $options;
     public $profile_system;
@@ -52,9 +55,7 @@ class JCK_WooSocial {
     ============================= */
     
     public function set_constants() {
-        
-        $this->plugin_path = plugin_dir_path( __FILE__ );
-        $this->plugin_url = plugin_dir_url( __FILE__ );
+
         $this->options_name = $this->slug.'_options';
         
     }
@@ -79,11 +80,13 @@ class JCK_WooSocial {
     
     private function load_classes() {
         
+        require_once($this->plugin_path.'/inc/class-template-loader.php');
         require_once($this->plugin_path.'/inc/class-profile-system.php');
         require_once($this->plugin_path.'/inc/class-like-system.php');
         require_once($this->plugin_path.'/inc/class-follow-system.php');
         require_once($this->plugin_path.'/inc/class-activity-log-system.php');
         
+        $this->templates = new JCK_WooSocial_TemplateLoader();
         $this->profile_system = new JCK_WooSocial_ProfileSystem();
         $this->like_system = new JCK_WooSocial_LikeSystem();
         $this->follow_system = new JCK_WooSocial_FollowSystem();
@@ -361,32 +364,6 @@ class JCK_WooSocial {
         return false;
         
 	}
-
-/**	=============================
-    *
-    * Template Loader
-    *
-    * Loads template from theme if it exists, if not, from plugin
-    *
-    * @param str $template_name
-    * @return template
-    *
-    ============================= */
-    
-    public function load_template( $template_name = false ) {
-        
-        $template = $template_name.'.php';
-        
-        // Check if a custom template exists in the theme folder, if not, load the plugin template file
-        if ( $theme_template = locate_template( array( 'jck-woo-social/' . $template ) ) ) {
-            $file = $theme_template;
-        } else {
-            $file = $this->plugin_path . '/templates/' . $template;
-        }
-        
-        return apply_filters( 'jck-woo-social_template_' . $template_name, $file );
-        
-    }
 
 /**	=============================
     *

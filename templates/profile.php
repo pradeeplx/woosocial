@@ -10,36 +10,37 @@ get_header(); ?>
 
 <?php 
 global $JCK_WooSocial;
-$profile_info = $JCK_WooSocial->profile_system->get_user_info();
+$user_info = $JCK_WooSocial->profile_system->user_info;
+$current_user_id = get_current_user_id();
 
-//$JCK_WooSocial->activity_log->add_like( $profile_info->ID, 72 );
-// $JCK_WooSocial->activity_log->add_follow( $profile_info->ID, 3 );
+//$JCK_WooSocial->activity_log->add_like( $user_info->ID, 72 );
+//$JCK_WooSocial->activity_log->add_follow( 2, 3 );
 
 // https://codex.wordpress.org/Function_Reference/human_time_diff
 ?>
 
-<h1><?php echo $profile_info->user_nicename; ?> - Follow</h1>
-<p><?php echo $profile_info->tagline; ?></p>
-<p><?php echo $profile_info->likes_count; ?> likes - <?php echo $profile_info->followers_count; ?> followers - <?php echo $profile_info->following_count; ?> following</p>
+<h1><?php echo $user_info->user_nicename; ?> - Follow</h1>
+<p><?php echo $user_info->tagline; ?></p>
 
-<h3>Friends Activity Feed</h3>
+<?php if( $current_user_id == $user_info->ID ) { ?>
+<h3>Logged In Activity</h3>
+<?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'activity' ); ?>
+<?php } ?>
 
-<?php echo '<pre>'.print_r($JCK_WooSocial->activity_log->get_following_activity_feed( $profile_info->ID ),true).'</pre>'; ?>
+<h3>Activity</h3>
 
-<h3>Activity Feed</h3>
+<?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'activity-following' ); ?>
 
-<?php echo '<pre>'.print_r($JCK_WooSocial->activity_log->get_activity_feed( $profile_info->ID ),true).'</pre>'; ?>
+<h3>Likes (<?php echo $user_info->likes_count; ?>)</h3>
 
-<h3>Like Feed</h3>
+<?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'likes' ); ?>
 
-<?php echo '<pre>'.print_r($JCK_WooSocial->like_system->get_likes( $profile_info->ID ),true).'</pre>'; ?>
+<h3>Followers (<?php echo $user_info->followers_count; ?>)</h3>
 
-<h3>Followers</h3>
+<?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'followers' ); ?>
 
-<?php echo '<pre>'.print_r($JCK_WooSocial->follow_system->get_followers( $profile_info->ID ),true).'</pre>'; ?>
+<h3>Following (<?php echo $user_info->following_count; ?>)</h3>
 
-<h3>Following</h3>
-
-<?php echo '<pre>'.print_r($JCK_WooSocial->follow_system->get_following( $profile_info->ID ),true).'</pre>'; ?>
+<?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'following' ); ?>
 
 <?php get_footer(); ?>

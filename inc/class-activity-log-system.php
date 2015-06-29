@@ -153,12 +153,54 @@ class JCK_WooSocial_ActivityLogSystem {
         if( $user_id == "" )
             return 0;
         
-        global $wpdb;
+        global $wpdb, $JCK_WooSocial;
         
         $and_followers = ( $include_followers ) ? "OR rel_id = $user_id" : "";
         $time_query = ( $from !== null && $to !== null ) ? "AND time BETWEEN '$to' AND '$from'" : "";
         
         $activity = $wpdb->get_results( "SELECT * FROM $this->table_name WHERE user_id = $user_id $and_followers $time_query ORDER BY time DESC LIMIT $limit OFFSET $offset" );
+        
+        // add formatted activity actions        
+        if( $activity && !empty( $activity ) ) {
+            
+            $profile_user_id = $JCK_WooSocial->profile_system->user_info->ID;
+            $current_user_id = get_current_user_id();
+            
+            $i = 0; foreach( $activity as $action ) {
+                    
+                if( $action->type === "follow" ) {
+                    
+                    if( $user_id == $profile_user_id && $current_user_id == $profile_user_id ) {
+                        
+                        $action->formatted = "You followed ".$action->rel_id;
+                        
+                    } elseif( $action->rel_id == $profile_user_id && $current_user_id == $profile_user_id ) {
+                        
+                        $action->formatted = $action->user_id." followed you";
+                        
+                    } else {
+                        
+                        $action->formatted = $action->user_id." followed ".$action->rel_id;
+                        
+                    }
+                    
+                } elseif( $action->type === "like" ) {
+                    
+                    if( $current_user_id== $profile_user_id ) {
+                        
+                        $action->formatted = "You liked ".$action->rel_id;
+                        
+                    } else {
+                        
+                        $action->formatted = $action->user_id." liked ".$action->rel_id;
+                        
+                    }
+                    
+                }
+                
+            $i++; }
+            
+        }
         
         return $activity;
         

@@ -3,6 +3,7 @@
 class JCK_WooSocial_ProfileSystem {
     
     public $custom_author_levels = array( 'author', 'profile' );
+    public $user_info;
     
 /**	=============================
     *
@@ -13,9 +14,10 @@ class JCK_WooSocial_ProfileSystem {
     public function __construct() {
         
         add_action( 'init',             array( $this, 'initiate_hook' ) );
+        add_action( 'wp',               array( $this, 'wp_hook' ) );
         
     }
-    
+
 /**	=============================
     *
     * Run after the current user is set (http://codex.wordpress.org/Plugin_API/Action_Reference)
@@ -35,6 +37,22 @@ class JCK_WooSocial_ProfileSystem {
             add_filter( 'template_include',                             array( $this, 'profile_template' ), 99 );
             
         }
+        
+	}
+
+/**	=============================
+    *
+    * Run after wp is fully set up and $post is accessible (http://codex.wordpress.org/Plugin_API/Action_Reference)
+    *
+    ============================= */
+	
+	public function wp_hook() {
+        
+    	if( !is_admin() ) {
+        	
+        	$this->user_info = $this->get_user_info();
+        	
+    	}
         
 	}
 
@@ -98,7 +116,7 @@ class JCK_WooSocial_ProfileSystem {
     
     	if ( is_author() && strpos( $_SERVER['REQUEST_URI'], 'profile/' ) !== false ) {
     		
-    		$profile_template = $JCK_WooSocial->load_template('profile');
+    		$profile_template = $JCK_WooSocial->templates->get_template_part( 'profile', '', false );
     		
     		if ( '' != $profile_template ) {
     			return $profile_template ;
@@ -123,12 +141,15 @@ class JCK_WooSocial_ProfileSystem {
         global $wp_query, $JCK_WooSocial;
         $current_author = $wp_query->get_queried_object();
         
-        $current_author->tagline = "This is my tagline";
+        if( $current_author ) {
+            
+            $current_author->tagline = "This is my tagline";
+            
+            $current_author->likes_count = $JCK_WooSocial->activity_log->get_likes_count( $current_author->ID );
+            $current_author->followers_count = $JCK_WooSocial->activity_log->get_followers_count( $current_author->ID );
+            $current_author->following_count = $JCK_WooSocial->activity_log->get_following_count( $current_author->ID );
         
-        $current_author->likes_count = $JCK_WooSocial->activity_log->get_likes_count( $current_author->ID );
-        $current_author->followers_count = $JCK_WooSocial->activity_log->get_followers_count( $current_author->ID );
-        $current_author->following_count = $JCK_WooSocial->activity_log->get_following_count( $current_author->ID );
-        
+        }        
         
         return $current_author;
         

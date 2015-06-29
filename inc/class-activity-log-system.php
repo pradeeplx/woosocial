@@ -188,29 +188,37 @@ class JCK_WooSocial_ActivityLogSystem {
                     
                 if( $action->type === "follow" ) {
                     
+                    $user_1 = $JCK_WooSocial->profile_system->get_user_info( $action->user_id );
+                    $user_2 = $JCK_WooSocial->profile_system->get_user_info( $action->rel_id );
+                    
                     if( $action->user_id == $profile_user_id && $current_user_id == $profile_user_id ) {
                         
-                        $action->formatted = "You followed ".$action->rel_id;
+                        $action->formatted = "You followed ".$user_2->user_nicename;
                         
                     } elseif( $action->rel_id == $profile_user_id && $current_user_id == $profile_user_id ) {
                         
-                        $action->formatted = $action->user_id." followed you";
+                        $action->formatted = $user_1->user_nicename." followed you";
                         
                     } else {
                         
-                        $action->formatted = $action->user_id." followed ".$action->rel_id;
+                        $action->formatted = $user_1->user_nicename." followed ".$user_2->user_nicename;
                         
                     }
                     
                 } elseif( $action->type === "like" ) {
                     
+                    $user = $JCK_WooSocial->profile_system->get_user_info( $action->user_id );
+                    $product = wc_get_product( $action->rel_id );
+                    
+                    error_log( print_r( $product, true ) );
+                    
                     if( $action->user_id == $profile_user_id && $current_user_id == $profile_user_id ) {
                         
-                        $action->formatted = "You liked ".$action->rel_id;
+                        $action->formatted = "You liked ".$product->get_title();
                         
                     } else {
                         
-                        $action->formatted = $action->user_id." liked ".$action->rel_id;
+                        $action->formatted = $user->user_nicename." liked ".$product->get_title();
                         
                     }
                     

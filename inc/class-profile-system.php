@@ -136,22 +136,31 @@ class JCK_WooSocial_ProfileSystem {
     *
     ============================= */
     
-    public function get_user_info() {
+    public function get_user_info( $user_id = null ) {
         
         global $wp_query, $JCK_WooSocial;
-        $current_author = $wp_query->get_queried_object();
         
-        if( $current_author ) {
+        if( $user_id === null ) {
             
-            $current_author->tagline = "This is my tagline";
+            $user = $wp_query->get_queried_object();
             
-            $current_author->likes_count = $JCK_WooSocial->activity_log->get_likes_count( $current_author->ID );
-            $current_author->followers_count = $JCK_WooSocial->activity_log->get_followers_count( $current_author->ID );
-            $current_author->following_count = $JCK_WooSocial->activity_log->get_following_count( $current_author->ID );
+        } else {
+            
+            $user = get_userdata( $user_id );
+            
+        }
+        
+        if( $user ) {
+            
+            $user->tagline = "This is my tagline";
+            
+            $user->likes_count = $JCK_WooSocial->activity_log->get_likes_count( $user->ID );
+            $user->followers_count = $JCK_WooSocial->activity_log->get_followers_count( $user->ID );
+            $user->following_count = $JCK_WooSocial->activity_log->get_following_count( $user->ID );
         
         }        
         
-        return $current_author;
+        return $user;
         
     }
 	

@@ -170,7 +170,7 @@ class JCK_WooSocial_ActivityLogSystem {
                     
                 if( $action->type === "follow" ) {
                     
-                    if( $user_id == $profile_user_id && $current_user_id == $profile_user_id ) {
+                    if( $action->user_id == $profile_user_id && $current_user_id == $profile_user_id ) {
                         
                         $action->formatted = "You followed ".$action->rel_id;
                         
@@ -186,7 +186,7 @@ class JCK_WooSocial_ActivityLogSystem {
                     
                 } elseif( $action->type === "like" ) {
                     
-                    if( $current_user_id== $profile_user_id ) {
+                    if( $action->user_id == $profile_user_id && $current_user_id == $profile_user_id ) {
                         
                         $action->formatted = "You liked ".$action->rel_id;
                         

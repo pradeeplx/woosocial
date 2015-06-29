@@ -160,7 +160,25 @@ class JCK_WooSocial_ActivityLogSystem {
         
         $activity = $wpdb->get_results( "SELECT * FROM $this->table_name WHERE user_id = $user_id $and_followers $time_query ORDER BY time DESC LIMIT $limit OFFSET $offset" );
         
-        // add formatted activity actions        
+        $this->format_actions( $activity );
+        
+        return $activity;
+        
+    }
+    
+/**	=============================
+    *
+    * Format Actions
+    *
+    * @param arr $activity An array of activities
+    * @return array
+    *
+    ============================= */
+    
+    public function format_actions( $activity ) {
+        
+        global $JCK_WooSocial;
+     
         if( $activity && !empty( $activity ) ) {
             
             $profile_user_id = $JCK_WooSocial->profile_system->user_info->ID;
@@ -203,7 +221,7 @@ class JCK_WooSocial_ActivityLogSystem {
         }
         
         return $activity;
-        
+           
     }
 
 /**	=============================

@@ -19,8 +19,8 @@ $current_user_id = get_current_user_id();
 // https://codex.wordpress.org/Function_Reference/human_time_diff
 ?>
 
-<h1><?php echo $user_info->user_nicename; ?> - Follow</h1>
-<p><?php echo $user_info->tagline; ?></p>
+<h1><?php echo $user_info->user_nicename; ?></h1>
+<a href="javascript: void(0);">Follow</a>
 
 <?php if( $current_user_id == $user_info->ID ) { ?>
     <h3>Others' Activity</h3>

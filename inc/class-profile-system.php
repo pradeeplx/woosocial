@@ -152,8 +152,6 @@ class JCK_WooSocial_ProfileSystem {
         
         if( $user ) {
             
-            $user->tagline = "This is my tagline";
-            
             $user->likes_count = $JCK_WooSocial->activity_log->get_likes_count( $user->ID );
             $user->followers_count = $JCK_WooSocial->activity_log->get_followers_count( $user->ID );
             $user->following_count = $JCK_WooSocial->activity_log->get_following_count( $user->ID );

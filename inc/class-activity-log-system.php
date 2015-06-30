@@ -191,19 +191,11 @@ class JCK_WooSocial_ActivityLogSystem {
                     $user_1 = $JCK_WooSocial->profile_system->get_user_info( $action->user_id );
                     $user_2 = $JCK_WooSocial->profile_system->get_user_info( $action->rel_id );
                     
-                    if( $action->user_id == $profile_user_id && $current_user_id == $profile_user_id ) {
-                        
-                        $action->formatted = "You followed ".$user_2->user_nicename;
-                        
-                    } elseif( $action->rel_id == $profile_user_id && $current_user_id == $profile_user_id ) {
-                        
-                        $action->formatted = $user_1->user_nicename." followed you";
-                        
-                    } else {
-                        
-                        $action->formatted = $user_1->user_nicename." followed ".$user_2->user_nicename;
-                        
-                    }
+                    $you = __("You", "jck_woo_social");
+                    $username_1 = ( $action->user_id == $current_user_id ) ? $you : $user_1->user_nicename; 
+                    $username_2 = ( $action->rel_id == $current_user_id ) ? strtolower($you) : $user_2->user_nicename; 
+                    
+                    $action->formatted = $username_1." followed ".$username_2;
                     
                 } elseif( $action->type === "like" ) {
                     

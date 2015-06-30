@@ -102,7 +102,7 @@ class JCK_WooSocial {
    	
 	public function plugins_loaded_hook() {
     	
-    	load_plugin_textdomain( $this->slug, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+    	load_plugin_textdomain( "jck_woo_social", false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
         
 	}
 

@@ -69,6 +69,7 @@ class JCK_WooSocial {
     public function install() {
         
         $this->activity_log->setup_activity_log();
+        $this->activity_log->create_activity_page();
         
     }
 

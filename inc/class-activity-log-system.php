@@ -16,6 +16,20 @@ class JCK_WooSocial_ActivityLogSystem {
         
         $this->set_constants();
         
+        add_action( 'init', array( $this, 'initiate_hook' ) );
+        
+    }
+
+/**	=============================
+    *
+    * Run after the current user is set (http://codex.wordpress.org/Plugin_API/Action_Reference)
+    *
+    ============================= */
+    
+    public function initiate_hook() {
+        
+        add_shortcode( 'jck-woo-social-activity-log', array( $this, 'activity_log_shortcode' ) );
+        
     }
 
 /**	=============================
@@ -63,6 +77,54 @@ class JCK_WooSocial_ActivityLogSystem {
 			
 		}
         
+    }
+
+/**	=============================
+    *
+    * Create Activity Page
+    *
+    * The activity page is what logged in users will use
+    * to see the activity of people they follow
+    *
+    ============================= */
+    
+    public function create_activity_page() {
+        
+        if( get_page_by_title( 'activity' ) === null ) {
+        
+            $activity = array(
+            	'post_title' => 'Activity',
+            	'post_content' => '[jck-woo-social-activity-log]',
+            	'post_status' => 'publish',
+            	'post_type' => 'page',
+            	'post_slug' => 'activity'
+            );
+            
+            $post_id = wp_insert_post($activity);
+        
+        }
+        
+    }
+
+/**	=============================
+    *
+    * Activity Log Shortcode
+    *
+    * @param arr $atts Shortcode attributes
+    * @return bool
+    *
+    ============================= */
+    
+    function activity_log_shortcode( $atts ) {
+        
+        global $JCK_WooSocial;
+        
+        ob_start();
+        $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'activity-following' );
+        $activity_log = ob_get_clean();
+        
+        return $activity_log;
+    	
     }
 
 /**	=============================
@@ -191,29 +253,28 @@ class JCK_WooSocial_ActivityLogSystem {
                     $user_1 = $JCK_WooSocial->profile_system->get_user_info( $action->user_id );
                     $user_2 = $JCK_WooSocial->profile_system->get_user_info( $action->rel_id );
                     
-                    $username_1 = ( $action->user_id == $current_user_id ) ? __("You", "jck_woo_social") : $user_1->user_nicename; 
-                    $username_2 = ( $action->rel_id == $current_user_id ) ? strtolower(__("You", "jck_woo_social")) : $user_2->user_nicename; 
+                    $username_1 = ( $action->user_id == $current_user_id ) ? __("You", "jck_woo_social") : $user_1->profile_link; 
+                    $username_2 = ( $action->rel_id == $current_user_id ) ? strtolower(__("You", "jck_woo_social")) : $user_2->profile_link; 
                     
-                    $action->formatted = $username_1." followed ".$username_2;
+                    $action->formatted = $username_1." ".__('followed','jck-woo-social')." ".$username_2;
                     
                 } elseif( $action->type === "like" ) {
                     
                     $user = $JCK_WooSocial->profile_system->get_user_info( $action->user_id );
                     $product = wc_get_product( $action->rel_id );
+                    $product_title = $product->get_title();
                     
+                    $username = ( $action->user_id == $current_user_id ) ? __("You", "jck_woo_social") : $user->profile_link; 
+                    $product_link = sprintf('<a href="%s" title="%s">%s</a>', get_permalink($product->id), esc_attr($product_title), $product_title);
                     
-                    
-                    if( $action->user_id == $profile_user_id && $current_user_id == $profile_user_id ) {
-                        
-                        $action->formatted = "You liked ".$product->get_title();
-                        
-                    } else {
-                        
-                        $action->formatted = $user->user_nicename." liked ".$product->get_title();
-                        
-                    }
+                    $action->formatted = sprintf('%s liked %s', $username, $product_link);
                     
                 }
+                
+                $timestamp = strtotime($action->time);
+                error_log( print_r( human_time_diff( current_time( 'timestamp' ), $timestamp ), true ) );
+                
+                $action->formatted_date = sprintf( _x( '%s ago', '%s = human-readable time difference', 'jck-woo-social' ), human_time_diff( current_time( 'timestamp' ), $timestamp ) );
                 
             $i++; }
             

@@ -4,6 +4,7 @@ class JCK_WooSocial_ProfileSystem {
     
     public $custom_author_levels = array( 'author', 'profile' );
     public $user_info;
+    public $profile_base;
     
 /**	=============================
     *
@@ -20,12 +21,25 @@ class JCK_WooSocial_ProfileSystem {
 
 /**	=============================
     *
+    * Setup Constants for this class
+    *
+    ============================= */
+    
+    public function set_constants() {
+
+        $this->profile_base = 'profile';
+        
+    }
+
+/**	=============================
+    *
     * Run after the current user is set (http://codex.wordpress.org/Plugin_API/Action_Reference)
     *
     ============================= */
    	
 	public function initiate_hook() {
     	
+    	$this->set_constants();
     	$this->change_author_base();
 
         if(is_admin()) {
@@ -33,7 +47,6 @@ class JCK_WooSocial_ProfileSystem {
         } else {
             
             add_filter( 'author_rewrite_rules',                         array( $this, 'author_rewrite_rules' ) );
-            add_filter( 'author_link',                                  array( $this, 'author_link' ), 10, 2 );
             add_filter( 'template_include',                             array( $this, 'profile_template' ), 99 );
             
         }
@@ -85,19 +98,37 @@ class JCK_WooSocial_ProfileSystem {
         return $author_rewrite_rules;
         
     }
+
+/**	=============================
+    *
+    * Get profile URL
+    *
+    * @param int $author_id 
+    * @return str/bool
+    *
+    ============================= */
     
-    public function author_link( $link, $author_id ) {
+    public function get_profile_url( $author_nicename ) {
         
-        // https://wordpress.org/support/topic/get-a-users-role-by-user-id
+        return esc_url( home_url( $this->profile_base.'/'.$author_nicename ) );
         
-        if ( 1 == $author_id ) {
-            $author_level = 'author';
-        } else {
-            $author_level = 'profile';
-        }
+    }
+
+/**	=============================
+    *
+    * Get profile Link
+    *
+    * @param int $author_id 
+    * @return str/bool
+    *
+    ============================= */
+    
+    public function get_profile_link( $author_nicename ) {
         
-        $link = str_replace( '%author_level%', $author_level, $link );
-        return $link;
+        $profile_url = $this->get_profile_url($author_nicename);
+        $profile_title = esc_attr(sprintf(__("%s - Visit Profile",'jck-woo-social'), $author_nicename));
+        
+        return sprintf( '<a href="%s" title="%s">%s</a>', $profile_url, $profile_title, $author_nicename);
         
     }
     
@@ -155,6 +186,8 @@ class JCK_WooSocial_ProfileSystem {
             $user->likes_count = $JCK_WooSocial->activity_log->get_likes_count( $user->ID );
             $user->followers_count = $JCK_WooSocial->activity_log->get_followers_count( $user->ID );
             $user->following_count = $JCK_WooSocial->activity_log->get_following_count( $user->ID );
+            $user->profile_url = $this->get_profile_url( $user->user_nicename );
+            $user->profile_link = $this->get_profile_link( $user->user_nicename );
         
         }        
         

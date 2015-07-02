@@ -5,6 +5,7 @@ class JCK_WooSocial_ActivityLogSystem {
     public $table_name;
     public $db_version = "1.0";
     public $slug = "jck_woo_social_activity_log";
+    public $block_level = array('div','small','img');
 
 /**	=============================
     *
@@ -28,7 +29,7 @@ class JCK_WooSocial_ActivityLogSystem {
     
     public function initiate_hook() {
         
-        add_shortcode( 'jck-woo-social-activity-log', array( $this, 'activity_log_shortcode' ) );
+        add_shortcode( 'jck-woo-social-activity-log',   array( $this, 'activity_log_shortcode' ) );
         
     }
 
@@ -115,7 +116,7 @@ class JCK_WooSocial_ActivityLogSystem {
     *
     ============================= */
     
-    function activity_log_shortcode( $atts ) {
+    public function activity_log_shortcode( $atts ) {
         
         global $JCK_WooSocial;
         
@@ -265,7 +266,7 @@ class JCK_WooSocial_ActivityLogSystem {
                     
                     // add related image
                     
-                    $action->rel_image = $user_2->avatar;
+                    $action->rel_image = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr($user_2->profile_url), esc_attr($user_2->user_nicename), $user_2->avatar );
                     
                 } elseif( $action->type === "like" ) {
                     
@@ -287,7 +288,6 @@ class JCK_WooSocial_ActivityLogSystem {
                 // format timestamp
                 
                 $timestamp = strtotime($action->time);
-                error_log( print_r( human_time_diff( current_time( 'timestamp' ), $timestamp ), true ) );
                 
                 $action->formatted_date = sprintf( _x( '%s ago', '%s = human-readable time difference', 'jck-woo-social' ), human_time_diff( current_time( 'timestamp' ), $timestamp ) );
                 

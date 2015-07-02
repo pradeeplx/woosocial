@@ -3,9 +3,8 @@
 
 // Project Specific
 
-var plugin_zip_name = 'baseplugin.zip';
-var plugin_slug = 'jck-baseplugin-';
-var plugin_main_file = 'baseplugin.php';
+var plugin_zip_name = 'jck-woo-social.zip';
+var plugin_main_file = 'jck-woo-social.php';
 
 
 // load plugins
@@ -19,13 +18,16 @@ var gulp            = require('gulp'),
     rename          = require('gulp-rename'),
     concat          = require('gulp-concat'),
     notify          = require('gulp-notify'),
-    zip             = require('gulp-zip');
+    zip             = require('gulp-zip'),
+    sourcemaps      = require('gulp-sourcemaps');
 
 var paths = {
     frontend_scripts: ['source/frontend/js/**/*.js'],
+    frontend_watch_styles: ['source/frontend/scss/**/*.scss'],
     frontend_styles: ['source/frontend/scss/main.scss'],
     admin_scripts: ['source/admin/js/**/*.js'],
-    admin_styles: ['source/admin/scss/main.scss'],
+    admin_styles: ['source/admin/scss/**/*.scss'],
+    admin_watch_styles: ['source/admin/scss/main.scss'],
     src: ['inc/**/*', 'templates/**/*', 'assets/**/*', 'languages/**/*', plugin_main_file],
     cc_src: ['**/*']
 };
@@ -39,12 +41,14 @@ var paths = {
 	gulp.task('frontend_scripts', function() {
         
         return gulp.src(paths.frontend_scripts)
+            .pipe(sourcemaps.init())
             .pipe(jshint('.jshintrc'))
             .pipe(jshint.reporter('default'))
             .pipe(concat('main.js'))
             .pipe(gulp.dest('assets/frontend/js'))
             .pipe(rename({ suffix: '.min' }))
             .pipe(uglify())
+            .pipe(sourcemaps.write())
             .pipe(gulp.dest('assets/frontend/js'))
             .pipe(notify({ message: 'Frontend scripts task complete' }));
             
@@ -92,9 +96,9 @@ var paths = {
 	gulp.task('watch', function () {
     	
         gulp.watch(paths.frontend_scripts, ['frontend_scripts']);
-        gulp.watch(paths.frontend_styles, ['frontend_styles']);
+        gulp.watch(paths.frontend_watch_styles, ['frontend_styles']);
         gulp.watch(paths.admin_scripts, ['admin_scripts']);
-        gulp.watch(paths.admin_styles, ['admin_styles']);
+        gulp.watch(paths.admin_watch_styles, ['admin_styles']);
 	  
 	});
 	

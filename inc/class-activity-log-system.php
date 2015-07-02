@@ -247,29 +247,44 @@ class JCK_WooSocial_ActivityLogSystem {
             $current_user_id = get_current_user_id();
             
             $i = 0; foreach( $activity as $action ) {
+                
+                $user = $JCK_WooSocial->profile_system->get_user_info( $action->user_id );
+                
+                // add user related image
+                
+                $action->user_image = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr($user->profile_url), esc_attr($user->user_nicename), $user->avatar );
                     
                 if( $action->type === "follow" ) {
                     
-                    $user_1 = $JCK_WooSocial->profile_system->get_user_info( $action->user_id );
                     $user_2 = $JCK_WooSocial->profile_system->get_user_info( $action->rel_id );
                     
-                    $username_1 = ( $action->user_id == $current_user_id ) ? __("You", "jck_woo_social") : $user_1->profile_link; 
+                    $username_1 = ( $action->user_id == $current_user_id ) ? __("You", "jck_woo_social") : $user->profile_link; 
                     $username_2 = ( $action->rel_id == $current_user_id ) ? strtolower(__("You", "jck_woo_social")) : $user_2->profile_link; 
                     
                     $action->formatted = $username_1." ".__('followed','jck-woo-social')." ".$username_2;
                     
+                    // add related image
+                    
+                    $action->rel_image = $user_2->avatar;
+                    
                 } elseif( $action->type === "like" ) {
                     
-                    $user = $JCK_WooSocial->profile_system->get_user_info( $action->user_id );
                     $product = wc_get_product( $action->rel_id );
                     $product_title = $product->get_title();
+                    $product_url = get_permalink($product->id);
                     
                     $username = ( $action->user_id == $current_user_id ) ? __("You", "jck_woo_social") : $user->profile_link; 
-                    $product_link = sprintf('<a href="%s" title="%s">%s</a>', get_permalink($product->id), esc_attr($product_title), $product_title);
+                    $product_link = sprintf('<a href="%s" title="%s">%s</a>', esc_attr($product_url), esc_attr($product_title), $product_title);
                     
                     $action->formatted = sprintf('%s liked %s', $username, $product_link);
                     
+                    // add related image
+                    
+                    $action->rel_image = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr($product_url), esc_attr($product_title), get_the_post_thumbnail( $product->id, 'thumbnail' ) );
+                    
                 }
+                
+                // format timestamp
                 
                 $timestamp = strtotime($action->time);
                 error_log( print_r( human_time_diff( current_time( 'timestamp' ), $timestamp ), true ) );

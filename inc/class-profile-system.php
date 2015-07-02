@@ -188,6 +188,7 @@ class JCK_WooSocial_ProfileSystem {
             $user->following_count = $JCK_WooSocial->activity_log->get_following_count( $user->ID );
             $user->profile_url = $this->get_profile_url( $user->user_nicename );
             $user->profile_link = $this->get_profile_link( $user->user_nicename );
+            $user->avatar = get_avatar( $user->ID, get_option( 'thumbnail_size_w' ) );
         
         }        
         

@@ -117,8 +117,9 @@ class JCK_WooSocial {
 
         if(is_admin()) {
             
-            add_action( 'admin_enqueue_scripts',                        array( $this, 'admin_scripts' )); 
-            add_action( 'admin_enqueue_scripts',                        array( $this, 'admin_styles' )); 
+            add_action( 'admin_enqueue_scripts',                        array( $this, 'admin_scripts' ) ); 
+            add_action( 'admin_enqueue_scripts',                        array( $this, 'admin_styles' ) ); 
+            add_action( 'admin_init',                                   array( $this, 'add_nav_menu_meta_boxes' ) );
             
         } else {
             
@@ -141,112 +142,64 @@ class JCK_WooSocial {
         
     	if(!is_admin()) {
         	
-        	$this->remove_frontend_hooks();
-        	$this->add_frontend_hooks();
         	$this->options = ( $post ) ? get_post_meta( $post->ID, $this->options_name, true ) : false;
         	
     	}
         
 	}
-	
-/**	=============================
-    *
-    * Register required plugins
-    *
-    * Use TGM to determine which plugins are required in order
-    * for this plugin to run as it should
-    *
-    ============================= */
-    
-    private function register_required_plugins() {
-        
-    /**	=============================
-        *
-        * Array of plugin arrays. Required keys are name and slug.
-    	* If the source is NOT from the .org repo, then source is also required.
-        *
-        ============================= */
-        
-	    $plugins = array(	
-	
-	        array(
-	            'name'      => 'Redux Framework',
-	            'slug'      => 'redux-framework',
-	            'required'  => true,
-	        )
-	
-	    );
-	    
-    /**	=============================
-        *
-        * Array of configuration settings. Amend each line as needed.
-        * If you want the default strings to be available under your own theme domain,
-        * leave the strings uncommented.
-        * Some of the strings are added into a sprintf, so see the comments at the
-        * end of each line for what each argument will be.
-        *
-        ============================= */
-
-	    $config =   array(
-                        'id'            =>  $this->slug.'-tgmpa',
-                        'default_path'  =>  '',
-                        'menu'          =>  $this->slug.'-install-plugins',
-                        'has_notices'   =>  true,
-                        'dismissable'   =>  false,
-                        'dismiss_msg'   =>  '',
-                        'is_automatic'  =>  true,
-                        'message'       =>  '',
-                        'strings'       =>  array(
-                            
-                                                'page_title'                      => __( 'Install Required Plugins', $this->slug ),
-                                                'menu_title'                      => __( 'Install Plugins', $this->slug ),
-                                                'installing'                      => __( 'Installing Plugin: %s', $this->slug ),
-                                                'oops'                            => __( 'Something went wrong with the plugin API.', $this->slug ),
-                                                'notice_can_install_required'     => _n_noop( 'Please install the following required plugin: %1$s.', 'Please install the following required plugins: %1$s.', $this->slug ),
-                                                'notice_can_install_recommended'  => _n_noop( 'Please consider this recommended plugin: %1$s.', ' Please consider these recommended plugins: %1$s.', $this->slug ),
-                                                'notice_cannot_install'           => _n_noop( 'Sorry, but you do not have the correct permissions to install the %s plugin. Contact the administrator of this site for help on getting the plugin installed.', 'Sorry, but you do not have the correct permissions to install the %s plugins. Contact the administrator of this site for help on getting the plugins installed.', $this->slug ), 
-                                                'notice_can_activate_required'    => _n_noop( 'The following required plugin is currently inactive: %1$s.', 'The following required plugins are currently inactive: %1$s.', $this->slug ),
-                                                'notice_can_activate_recommended' => _n_noop( 'The following recommended plugin is currently inactive: %1$s.', 'The following recommended plugins are currently inactive: %1$s.', $this->slug ),
-                                                'notice_cannot_activate'          => _n_noop( 'Sorry, but you do not have the correct permissions to activate the %s plugin. Contact the administrator of this site for help on getting the plugin activated.', 'Sorry, but you do not have the correct permissions to activate the %s plugins. Contact the administrator of this site for help on getting the plugins activated.', $this->slug ), 
-                                                'notice_ask_to_update'            => _n_noop( 'The following plugin needs to be updated to its latest version to ensure maximum compatibility with '.$this->name.': %1$s.', 'The following plugins need to be updated to their latest version to ensure maximum compatibility with '.$this->name.': %1$s.', $this->slug ),
-                                                'notice_cannot_update'            => _n_noop( 'Sorry, but you do not have the correct permissions to update the %s plugin. Contact the administrator of this site for help on getting the plugin updated.', 'Sorry, but you do not have the correct permissions to update the %s plugins. Contact the administrator of this site for help on getting the plugins updated.', $this->slug ),
-                                                'install_link'                    => _n_noop( 'Begin installing plugin', 'Begin installing plugins', $this->slug ),
-                                                'activate_link'                   => _n_noop( 'Begin activating plugin', 'Begin activating plugins', $this->slug ),
-                                                'return'                          => __( 'Return to Required Plugins Installer', $this->slug ),
-                                                'plugin_activated'                => __( 'Plugin activated successfully.', $this->slug ),
-                                                'complete'                        => __( 'All plugins installed and activated successfully. %s', $this->slug ),
-                                                'nag_type'                        => 'error'
-                                            
-                                            )
-                    );
-	
-	    tgmpa( $plugins, $config );
-	    
-    }
 
 /**	=============================
     *
-    * Remove hooks, where necessary
+    * Add Custom Nav Meta Box
     *
     ============================= */
-   	
-    public function remove_frontend_hooks() {
-        
-        // remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
-        
-    }
 
-/**	=============================
-    *
-    * Add WooCommerce hooks for product page
-    *
-    ============================= */
-    
-    public function add_frontend_hooks() {
+	public function add_nav_menu_meta_boxes() {
+		add_meta_box( 'jck_woo_social_nav_link', __( 'WooCommerce Social', 'jck-woo-social' ), array( $this, 'nav_menu_links' ), 'nav-menus', 'side', 'low' );
+	}
+
+	public function nav_menu_links() {
     	
-    	// add_action( 'woocommerce_single_product_summary', array( $this, 'shop_the_look_display' ), 30 );
-        
-    }
+    	$links = array(
+        	__('Activity Feed','jck-woo-social') => '/activity/',
+        	__('Your Profile','jck-woo-social') => '/profile/%nicename%/'
+    	);
+    	
+		?>
+		<div id="posttype-woocommerce-social" class="posttypediv">
+			<div id="tabs-panel-woocommerce-social" class="tabs-panel tabs-panel-active">
+				<ul id="woocommerce-social-checklist" class="categorychecklist form-no-clear">
+					<?php
+					$i = -1;
+					foreach ($links as $title => $url ) {
+						?>
+						<li>
+							<label class="menu-item-title">
+								<input type="checkbox" class="menu-item-checkbox" name="menu-item[<?php echo esc_attr( $i ); ?>][menu-item-object-id]" value="<?php echo esc_attr( $i ); ?>" /> <?php echo esc_html( $title ); ?>
+							</label>
+							<input type="hidden" class="menu-item-type" name="menu-item[<?php echo esc_attr( $i ); ?>][menu-item-type]" value="custom" />
+							<input type="hidden" class="menu-item-title" name="menu-item[<?php echo esc_attr( $i ); ?>][menu-item-title]" value="<?php echo esc_html( $title ); ?>" />
+							<input type="hidden" class="menu-item-url" name="menu-item[<?php echo esc_attr( $i ); ?>][menu-item-url]" value="<?php echo esc_url( $url ); ?>" />
+							<input type="hidden" class="menu-item-classes" name="menu-item[<?php echo esc_attr( $i ); ?>][menu-item-classes]" />
+						</li>
+						<?php
+						$i --;
+					}
+					?>
+				</ul>
+			</div>
+			<p class="button-controls">
+				<span class="list-controls">
+					<a href="<?php echo admin_url( 'nav-menus.php?page-tab=all&selectall=1#posttype-woocommerce-social' ); ?>" class="select-all"><?php _e( 'Select All', 'woocommerce' ); ?></a>
+				</span>
+				<span class="add-to-menu">
+					<input type="submit" class="button-secondary submit-add-to-menu right" value="<?php _e( 'Add to Menu', 'woocommerce' ); ?>" name="add-post-type-menu-item" id="submit-posttype-woocommerce-social">
+					<span class="spinner"></span>
+				</span>
+			</p>
+		</div>
+		<?php
+	}
 
 /**	=============================
     *

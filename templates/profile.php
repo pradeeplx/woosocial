@@ -11,6 +11,7 @@ get_header(); ?>
 <?php 
 global $JCK_WooSocial;
 $user_info = $JCK_WooSocial->profile_system->user_info;
+$current_user_id = get_current_user_id();
 
 //$JCK_WooSocial->activity_log->add_like( 2, 67 );
 //$JCK_WooSocial->activity_log->add_follow( 2, 3 );
@@ -19,7 +20,18 @@ $user_info = $JCK_WooSocial->profile_system->user_info;
 ?>
 
 <h1><?php echo $user_info->user_nicename; ?></h1>
-<a href="javascript: void(0);">Follow</a>
+
+<?php if( $current_user_id != $user_info->ID ) { ?>
+
+    <?php 
+    $is_following = $JCK_WooSocial->follow_system->is_following( $current_user_id, $user_info->ID );
+    $button_text = ( $is_following ) ? "Unfollow" : "Follow";
+    $button_type = ( $is_following ) ? "unfollow" : "follow";
+    ?>
+
+    <a href="javascript: void(0);" class="<?php echo $JCK_WooSocial->slug; ?>-follow-action <?php echo $JCK_WooSocial->slug; ?>-follow-action--<?php echo $button_type; ?>" data-user-id="<?php echo $user_info->ID; ?>" data-follow-type="<?php echo $button_type; ?>"><?php echo $button_text; ?></a>
+
+<?php } ?>
 
 <h3><?php echo $user_info->user_nicename; ?>'s Activity</h3>
 <?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'activity' ); ?>

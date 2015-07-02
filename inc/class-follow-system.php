@@ -4,6 +4,86 @@ class JCK_WooSocial_FollowSystem {
     
 /**	=============================
     *
+    * Construct the class
+    *
+    ============================= */
+   	
+    public function __construct() {
+        
+        add_action( 'init', array( $this, 'initiate_hook' ) );
+        
+    }
+    
+/**	=============================
+    *
+    * Run after the current user is set (http://codex.wordpress.org/Plugin_API/Action_Reference)
+    *
+    ============================= */
+   	
+	public function initiate_hook() {
+
+        add_action( 'wp_ajax_jck_woo_social_follow_action',                array( $this, 'jck_woo_social_follow_action' ) );
+        add_action( 'wp_ajax_nopriv_jck_woo_social_follow_action',         array( $this, 'jck_woo_social_follow_action' ) );
+        
+	}
+
+/**	=============================
+    *
+    * Ajax: Follow Action
+    *
+    ============================= */
+    
+    function jck_woo_social_follow_action() {
+        
+        global $JCK_WooSocial;
+    	
+    	if ( ! wp_verify_nonce( $_GET['nonce'], $JCK_WooSocial->slug ) )
+    		die ( 'Busted!' );
+    		
+        $current_user_id = get_current_user_id();
+        $response = array(
+            'add_action_html' => false,
+            'remove_action_class' => false
+        );
+        
+        if( $_GET['type'] == "follow" ) {
+    		
+            $added = $JCK_WooSocial->activity_log->add_follow( $current_user_id, $_GET['user_id'] );
+            
+            $response['button']['text'] = __('Unfollow','jck-woo-social');
+            $response['button']['type'] = 'unfollow';
+            
+            error_log( print_r( $added, true ) );
+            
+            $response['add_action_html'] = '<li>Test</li>';
+        
+        } else {
+            
+            $removed = $JCK_WooSocial->activity_log->remove_follow( $current_user_id, $_GET['user_id'] );
+            
+            $response['button']['text'] = __('Follow','jck-woo-social');
+            $response['button']['type'] = 'follow';
+            
+            $response['remove_action_class'] = '.'.$JCK_WooSocial->slug.'-action--'.$removed->id;
+            
+        }
+    
+    	// generate the response
+    	$response['get'] = $_GET;
+    	
+    	// response output
+    	header('Content-Type: text/javascript; charset=utf8');
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Max-Age: 3628800');
+        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+    
+    	echo htmlspecialchars($_GET['callback']) . '(' . json_encode( $response ) . ')';
+    
+    	wp_die();
+    }
+    
+/**	=============================
+    *
     * Get Followers
     *
     * @param int $user_id
@@ -75,6 +155,33 @@ class JCK_WooSocial_FollowSystem {
         
         return $followers;
         
+    }
+
+/**	=============================
+    *
+    * Is Following
+    *
+    * @param int $user_id
+    * @param int $follow_user_id
+    * @return bool
+    *
+    ============================= */
+    
+    public function is_following( $user_id, $follow_user_id ) {
+        
+        global $JCK_WooSocial, $wpdb;
+        
+        $following = $wpdb->get_row( 
+        	"
+        	SELECT *
+        	FROM {$JCK_WooSocial->activity_log->table_name}
+        	WHERE user_id = $user_id
+        	AND rel_id = $follow_user_id
+        	AND type = 'follow'
+        	"
+        );
+        
+        return ( $following ) ? $following : false;
     }
     
 }

@@ -231,6 +231,13 @@ class JCK_WooSocial {
 		
         wp_enqueue_script( $this->slug.'_scripts' );
         
+        $vars = array(
+			'ajax_url' => admin_url( 'admin-ajax.php' ),
+			'nonce' => wp_create_nonce( $this->slug )
+		);
+		
+		wp_localize_script( $this->slug.'_scripts', $this->slug.'_vars', $vars );
+        
     }
 
 /**	=============================
@@ -272,14 +279,6 @@ class JCK_WooSocial {
 		wp_register_script( $this->slug.'_admin_scripts', $this->plugin_url . 'assets/admin/js/main.min.js', array( 'jquery' ), $this->version, true);
 	
         wp_enqueue_script( $this->slug.'_admin_scripts' );
-		
-		$vars = array(
-			'ajaxurl' => admin_url( 'admin-ajax.php' ),
-			'nonce' => wp_create_nonce( $this->slug ),
-			'pluginSlug' => $this->slug
-		);
-		
-		wp_localize_script( $this->slug, 'vars', $vars );
         
     }
 

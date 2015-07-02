@@ -5,7 +5,6 @@ class JCK_WooSocial_ActivityLogSystem {
     public $table_name;
     public $db_version = "1.0";
     public $slug = "jck_woo_social_activity_log";
-    public $block_level = array('div','small','img');
 
 /**	=============================
     *
@@ -398,14 +397,16 @@ class JCK_WooSocial_ActivityLogSystem {
         
         global $wpdb;
         
+        $follow_data = array( 
+            'user_id' => $user_id, 
+            'type' => 'follow',
+            'rel_id' => $follow_user_id,
+            'time' => current_time("Y-m-d H:i:s")
+        );
+        
         $wpdb->insert( 
             $this->table_name, 
-            array( 
-                'user_id' => $user_id, 
-                'type' => 'follow',
-                'rel_id' => $follow_user_id,
-                'time' => current_time("Y-m-d H:i:s")
-            ), 
+            $follow_data, 
             array( 
                 '%d', 
                 '%s',
@@ -413,6 +414,36 @@ class JCK_WooSocial_ActivityLogSystem {
                 '%s'
             ) 
         );
+        
+        $this->format_actions( array( $follow_data ) );
+        
+        return $follow_data;
+        
+    }
+    
+/**	=============================
+    *
+    * Remove follow
+    *
+    * @param int $user_id
+    * @param int $follow_user_id
+    * @return obj Item that was deleted
+    *
+    ============================= */
+    
+    public function remove_follow( $user_id, $follow_user_id ) {
+        
+        global $JCK_WooSocial, $wpdb;
+        
+        $following = $JCK_WooSocial->follow_system->is_following( $user_id, $follow_user_id );
+        
+        if( $following ) {
+        
+            $result = $wpdb->delete( $this->table_name, array( 'user_id' => $user_id, 'rel_id' => $follow_user_id, 'type' => 'follow' ) );
+        
+        }
+        
+        return $following;
         
     }
     

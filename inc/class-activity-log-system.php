@@ -250,22 +250,14 @@ class JCK_WooSocial_ActivityLogSystem {
                 
                 $user = $JCK_WooSocial->profile_system->get_user_info( $action->user_id );
                 
-                // add user related image
-                
-                $action->user_image = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr($user->profile_url), esc_attr($user->user_nicename), $user->avatar );
+                $action->user_image = $this->format_image( $user );
                     
                 if( $action->type === "follow" ) {
                     
                     $user_2 = $JCK_WooSocial->profile_system->get_user_info( $action->rel_id );
                     
-                    $username_1 = ( $action->user_id == $current_user_id ) ? __("You", "jck_woo_social") : $user->profile_link; 
-                    $username_2 = ( $action->rel_id == $current_user_id ) ? strtolower(__("You", "jck_woo_social")) : $user_2->profile_link; 
-                    
-                    $action->formatted = $username_1." ".__('followed','jck-woo-social')." ".$username_2;
-                    
-                    // add related image
-                    
-                    $action->rel_image = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr($user_2->profile_url), esc_attr($user_2->user_nicename), $user_2->avatar );
+                    $action->formatted = $this->format_follow( $user, $user_2 );
+                    $action->rel_image = $this->format_image( $user_2 );
                     
                 } elseif( $action->type === "like" ) {
                     
@@ -296,6 +288,42 @@ class JCK_WooSocial_ActivityLogSystem {
         
         return $activity;
            
+    }
+
+/**	=============================
+    *
+    * Format Follow
+    *
+    * @param obj $user_1 User Object
+    * @param obj $user_2 User Object
+    * @return str
+    *
+    ============================= */
+    
+    public function format_follow( $user_1, $user_2 ) {
+        
+        $current_user_id = get_current_user_id();
+        
+        $username_1 = ( $user_1->ID == $current_user_id ) ? __("You", "jck_woo_social") : $user_1->profile_link; 
+        $username_2 = ( $user_2->ID == $current_user_id ) ? strtolower(__("You", "jck_woo_social")) : $user_2->profile_link; 
+        
+        return $username_1." ".__('followed','jck-woo-social')." ".$username_2;
+        
+    }
+
+/**	=============================
+    *
+    * Format Image
+    *
+    * @param obj $user User Object
+    * @return str
+    *
+    ============================= */
+    
+    public function format_image( $user ) {
+        
+        return sprintf( '<a href="%s" title="%s">%s</a>', esc_attr($user->profile_url), esc_attr($user->user_nicename), $user->avatar );
+        
     }
 
 /**	=============================
@@ -395,7 +423,7 @@ class JCK_WooSocial_ActivityLogSystem {
     
     public function add_follow( $user_id, $follow_user_id ) {
         
-        global $wpdb;
+        global $wpdb, $JCK_WooSocial;
         
         $follow_data = array( 
             'user_id' => $user_id, 
@@ -415,9 +443,22 @@ class JCK_WooSocial_ActivityLogSystem {
             ) 
         );
         
-        $this->format_actions( array( $follow_data ) );
+        $follow = $JCK_WooSocial->follow_system->is_following( $user_id, $follow_user_id );
         
-        return $follow_data;
+        if( $follow ) {
+        
+            $user_1 = $JCK_WooSocial->profile_system->get_user_info( $user_id );
+            $user_2 = $JCK_WooSocial->profile_system->get_user_info( $follow_user_id );
+            
+            $follow->formatted = $this->format_follow( $user_1, $user_2 );
+            $follow->formatted_date = __('Just now','jck-woo-social');
+            
+            $follow->user_image = $this->format_image( $user_1 );
+            $follow->rel_image = $this->format_image( $user_2 );
+        
+        }
+        
+        return $follow;
         
     }
     

@@ -48,14 +48,14 @@ class JCK_WooSocial_FollowSystem {
         
         if( $_GET['type'] == "follow" ) {
     		
-            $added = $JCK_WooSocial->activity_log->add_follow( $current_user_id, $_GET['user_id'] );
+            $action = $JCK_WooSocial->activity_log->add_follow( $current_user_id, $_GET['user_id'] );
             
             $response['button']['text'] = __('Unfollow','jck-woo-social');
             $response['button']['type'] = 'unfollow';
             
-            error_log( print_r( $added, true ) );
-            
-            $response['add_action_html'] = '<li>Test</li>';
+            ob_start();
+            include($JCK_WooSocial->templates->locate_template( 'profile/part-action.php' ));
+            $response['add_action_html'] = ob_get_clean();
         
         } else {
             

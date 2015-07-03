@@ -1,10 +1,19 @@
 (function($, document) {
     
     var jck_woo_social = {
+        
+        cache: function() {
+            jck_woo_social.els = {};
+            jck_woo_social.vars = {};
+            
+            jck_woo_social.els.$actions_list = $('.jck_woo_social-actions');
+        },
  
         on_ready: function() {
-            // on ready stuff here
+            
+            jck_woo_social.cache();
             jck_woo_social.setup_follow_actions();
+            
         },
      
         setup_follow_actions: function() {
@@ -14,8 +23,7 @@
                 var $button = $(this),
                     user_id = $button.attr('data-user-id'),
                     type = $button.attr('data-follow-type'),
-                    $actions_list = $('.jck_woo_social-actions'),
-                    loading_class = 'jck-woo-social-follow-loading';
+                    loading_class = 'jck_woo_social-follow-action--loading';
                 
                 if( !$button.hasClass(loading_class) ) {
                     
@@ -46,17 +54,12 @@
         					$button.addClass('jck_woo_social-follow-action--'+data.button.type);
         					
         					if(data.add_action_html) {
-            					$actions_list.prepend(data.add_action_html);
+            					jck_woo_social.els.$actions_list.prepend(data.add_action_html);
         					}
         					
         					if(data.remove_action_class) {
             					$(data.remove_action_class).remove();
         					}
-        				},
-        				
-        				complete: function( data ) {
-        					console.log( 'complete' );
-        					console.log( data );
         				},
         				
         				error: function( data ) {

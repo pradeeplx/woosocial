@@ -183,5 +183,38 @@ class JCK_WooSocial_FollowSystem {
         
         return ( $following ) ? $following : false;
     }
+
+/**	=============================
+    *
+    * Get Follow Button
+    *
+    * @param int $user_id
+    * @return str
+    *
+    ============================= */
+    
+    public function get_follow_button( $user_info ) {
+        
+        global $JCK_WooSocial;
+        
+        $current_user_id = get_current_user_id();
+        $is_user_logged_in = is_user_logged_in();
+        
+        if( $current_user_id != $user_info->ID ) {
+            
+            $myaccount_page_id = get_option( 'woocommerce_myaccount_page_id' );
+            $myaccount_page_url = ( $myaccount_page_id ) ? get_permalink( $myaccount_page_id ).'?profile='.$user_info->user_nicename : "javascript: void(0);";
+
+            $is_following = $JCK_WooSocial->follow_system->is_following( $current_user_id, $user_info->ID );
+            $button_text = ( $is_following ) ? __("Unfollow",'jck-woo-social') : __("Follow",'jck-woo-social');
+            $button_type = ( $is_user_logged_in ) ? ( $is_following ? "unfollow" : "follow" ) : "login";
+            $button_classes = $JCK_WooSocial->slug.'-follow-action '.$JCK_WooSocial->slug.'-follow-action--'.$button_type;
+            $href = ( $is_user_logged_in ) ? "javascript: void(0);" : $myaccount_page_url;
+        
+            return sprintf('<a href="%s" class="%s" data-user-id="%d" data-follow-type="%s">%s</a>', $href, $button_classes, $user_info->ID, $button_type, $button_text);
+        
+        }
+        
+    }
     
 }

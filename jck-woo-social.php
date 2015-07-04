@@ -119,7 +119,7 @@ class JCK_WooSocial {
             
             add_action( 'admin_enqueue_scripts',                        array( $this, 'admin_scripts' ) ); 
             add_action( 'admin_enqueue_scripts',                        array( $this, 'admin_styles' ) ); 
-            add_action( 'admin_init',                                   array( $this, 'add_nav_menu_meta_boxes' ) );
+            add_action( 'admin_init',                                   array( $this, 'nav_menu_add_meta_boxes' ) );
             
         } else {
             
@@ -154,15 +154,15 @@ class JCK_WooSocial {
     *
     ============================= */
 
-	public function add_nav_menu_meta_boxes() {
+	public function nav_menu_add_meta_boxes() {
 		add_meta_box( 'jck_woo_social_nav_link', __( 'WooCommerce Social', 'jck-woo-social' ), array( $this, 'nav_menu_links' ), 'nav-menus', 'side', 'low' );
 	}
 
 	public function nav_menu_links() {
     	
     	$links = array(
-        	__('Activity Feed','jck-woo-social') => '/activity/',
-        	__('Your Profile','jck-woo-social') => '/profile/%nicename%/'
+        	__('Activity Feed','jck-woo-social') => '/jck-woo-social/activity/',
+        	__('Your Profile','jck-woo-social') => '/jck-woo-social/profile/%nicename%/'
     	);
     	
 		?>

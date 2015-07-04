@@ -48,6 +48,9 @@ class JCK_WooSocial_ProfileSystem {
             
             add_filter( 'author_rewrite_rules',                         array( $this, 'author_rewrite_rules' ) );
             add_filter( 'template_include',                             array( $this, 'profile_template' ), 99 );
+            add_filter( 'woocommerce_login_redirect',                   array( $this, 'login_redirect' ), 10, 2 );
+            add_filter( 'nav_menu_link_attributes',                     array( $this, 'nav_menu_profile_link' ), 10, 4 );
+            add_filter( 'wp_get_nav_menu_items',                        array( $this, 'nav_menu_items' ), 10, 3 );
             
         }
         
@@ -61,7 +64,7 @@ class JCK_WooSocial_ProfileSystem {
 	
 	public function wp_hook() {
         
-    	if( !is_admin() ) {
+    	if( !is_admin() && is_author() ) {
         	
         	$this->user_info = $this->get_user_info();
         	
@@ -96,6 +99,77 @@ class JCK_WooSocial_ProfileSystem {
         }
         
         return $author_rewrite_rules;
+        
+    }
+
+/**	=============================
+    *
+    * Replace Profile Link in menu Item
+    *
+    ============================= */
+    
+    public function nav_menu_profile_link( $atts, $item, $args, $depth ) {
+        
+        if( is_user_logged_in() ) {
+            
+            $current_user = wp_get_current_user();
+        
+            $atts['href'] = str_replace('/jck-woo-social', '', $atts['href']);
+            $atts['href'] = str_replace('%nicename%', $current_user->user_nicename, $atts['href']);
+        
+        }
+        
+        return $atts;
+        
+    }
+    
+/**	=============================
+    *
+    * Edit Menu Items
+    *
+    * Hide profile and article link if not logged in
+    *
+    ============================= */
+    
+    public function nav_menu_items( $items, $menu, $args ) {
+        
+        $i = 0; foreach( $items as $item ) {
+            
+            if( strpos( $item->url, "jck-woo-social" ) !== false && !is_user_logged_in() ) {
+                
+                unset( $items[$i] );
+                
+            }
+            
+        $i++; }
+        
+        return $items;
+        
+    }
+
+/**	=============================
+    *
+    * Login Redirect
+    *
+    * If user clicks to follow or like, redirect
+    * to where they were after logging in
+    *
+    ============================= */
+    
+    public function login_redirect( $redirect, $user ) {
+        
+        if( isset( $_POST['_wp_http_referer'] ) ) {
+            
+            $referer_split = explode( '?', $_POST['_wp_http_referer'] );
+            parse_str( $referer_split[1], $referer_params );
+            
+            if( isset( $referer_params['profile'] ) ) {
+                $redirect = $this->get_profile_url( $referer_params['profile'] );
+            }
+            
+        }
+        
+        return $redirect;
         
     }
 

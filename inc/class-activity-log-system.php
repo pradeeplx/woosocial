@@ -242,8 +242,6 @@ class JCK_WooSocial_ActivityLogSystem {
         global $JCK_WooSocial;
      
         if( $activity && !empty( $activity ) ) {
-            
-            $profile_user_id = $JCK_WooSocial->profile_system->user_info->ID;
             $current_user_id = get_current_user_id();
             
             $i = 0; foreach( $activity as $action ) {

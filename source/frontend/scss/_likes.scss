@@ -1,0 +1,33 @@
+// Button
+
+.jck-woo-social-like-action {    
+    cursor: pointer;    
+}
+
+// Loop List
+
+.jck-woo-social-likes {
+    height: 30px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+    
+    .jck-woo-social-likes__item {
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+        margin: 0 3px 0 0;
+        padding: 0;
+        float: left;
+        
+        img {
+            display: block;
+            border-radius: 100%;
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+    }

@@ -233,7 +233,8 @@ class JCK_WooSocial {
         
         $vars = array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
-			'nonce' => wp_create_nonce( $this->slug )
+			'nonce' => wp_create_nonce( $this->slug ),
+			'user_id' => is_user_logged_in() ? get_current_user_id() : 0
 		);
 		
 		wp_localize_script( $this->slug.'_scripts', $this->slug.'_vars', $vars );
@@ -345,6 +346,31 @@ class JCK_WooSocial {
             return NULL;
         }
         
+    }
+
+/**	=============================
+    *
+    * Shorten large numbers into abbreviations (i.e. 1,500 = 1.5k)
+    *
+    * @param int $number Number to shorten
+    * @return string A number with a symbol
+    *
+    ============================= */
+
+    function shorten_number($number) {
+        
+        if( $number == 0 ) 
+            return $number;
+        
+        $abbrevs = array(12 => "T", 9 => "B", 6 => "M", 3 => "K", 0 => "");
+    
+        foreach($abbrevs as $exponent => $abbrev) {
+            if($number >= pow(10, $exponent)) {
+            	$display_num = $number / pow(10, $exponent);
+            	$decimals = ($exponent >= 3 && round($display_num) < 100) ? 1 : 0;
+                return number_format($display_num,$decimals) . $abbrev;
+            }
+        }
     }
   
 }

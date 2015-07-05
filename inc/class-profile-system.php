@@ -257,7 +257,7 @@ class JCK_WooSocial_ProfileSystem {
         
         if( $user ) {
             
-            $user->likes_count = $JCK_WooSocial->activity_log->get_likes_count( $user->ID );
+            $user->likes_count = $JCK_WooSocial->like_system->get_likes_count( $user->ID );
             $user->followers_count = $JCK_WooSocial->activity_log->get_followers_count( $user->ID );
             $user->following_count = $JCK_WooSocial->activity_log->get_following_count( $user->ID );
             $user->profile_url = $this->get_profile_url( $user->user_nicename );

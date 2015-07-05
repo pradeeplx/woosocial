@@ -42,7 +42,7 @@ class JCK_WooSocial_FollowSystem {
     		
         $current_user_id = get_current_user_id();
         $response = array(
-            'add_action_html' => false,
+            'add_follow_html' => false,
             'remove_action_class' => false
         );
         
@@ -55,7 +55,7 @@ class JCK_WooSocial_FollowSystem {
             
             ob_start();
             include($JCK_WooSocial->templates->locate_template( 'profile/part-action.php' ));
-            $response['add_action_html'] = ob_get_clean();
+            $response['add_follow_html'] = ob_get_clean();
         
         } else {
             
@@ -64,7 +64,7 @@ class JCK_WooSocial_FollowSystem {
             $response['button']['text'] = __('Follow','jck-woo-social');
             $response['button']['type'] = 'follow';
             
-            $response['remove_action_class'] = '.'.$JCK_WooSocial->slug.'-action--'.$removed->id;
+            $response['remove_follow_class'] = '.'.$JCK_WooSocial->slug.'-action--'.$removed->id;
             
         }
     

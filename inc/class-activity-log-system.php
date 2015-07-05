@@ -126,28 +126,6 @@ class JCK_WooSocial_ActivityLogSystem {
         return $activity_log;
     	
     }
-
-/**	=============================
-    *
-    * Get Likes by user ID
-    *
-    * @param int $user_id
-    * @return int
-    *
-    ============================= */
-    
-    public function get_likes_count( $user_id ) {
-        
-        if( $user_id == "" )
-            return 0;
-        
-        global $wpdb;
-        
-        $likes_count = $wpdb->get_var( "SELECT COUNT(*) FROM $this->table_name WHERE user_id = $user_id AND type = 'like'" );
-        
-        return $likes_count;
-        
-    }
     
 /**	=============================
     *
@@ -406,6 +384,32 @@ class JCK_WooSocial_ActivityLogSystem {
                 '%s'
             ) 
         );
+        
+    }
+
+/**	=============================
+    *
+    * Remove like
+    *
+    * @param int $user_id
+    * @param int $product_id
+    * @return obj Item that was deleted
+    *
+    ============================= */
+    
+    public function remove_like( $user_id, $product_id ) {
+        
+        global $JCK_WooSocial, $wpdb;
+        
+        $liked = $JCK_WooSocial->like_system->has_liked( $user_id, $product_id );
+        
+        if( $liked ) {
+        
+            $result = $wpdb->delete( $this->table_name, array( 'user_id' => $user_id, 'rel_id' => $product_id, 'type' => 'like' ) );
+        
+        }
+        
+        return $following;
         
     }
     

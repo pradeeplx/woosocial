@@ -28,7 +28,8 @@ class JCK_WooSocial_LikeSystem {
         if(!is_admin()) {
             
             // @jck: make this position an option
-            add_action( 'woocommerce_after_shop_loop_item', array( $this, 'show_likes_loop' ) );
+            add_action( 'woocommerce_after_shop_loop_item',              array( $this, 'show_likes_loop' ) );
+            add_action( 'woocommerce_single_product_summary',            array( $this, 'show_likes_loop' ), 1 );
             
         }
         
@@ -142,8 +143,9 @@ class JCK_WooSocial_LikeSystem {
         
         $product_likes = $this->get_product_likes( $post->ID );
         $product_likes_count = $this->get_product_likes_count( $post->ID );
+        $location = ( is_archive() ) ? "loop" : "single";
             
-        echo '<ul class="jck-woo-social-likes jck-woo-social-likes--loop">';
+        echo sprintf('<ul class="jck-woo-social-likes jck-woo-social-likes--%s">', $location);
         
             $type = $this->has_liked( get_current_user_id(), $post->ID ) ? "unlike" : "like";
         

@@ -120,7 +120,7 @@ class JCK_WooSocial_ActivityLogSystem {
         global $JCK_WooSocial;
         
         ob_start();
-        $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'activity-following' );
+        $JCK_WooSocial->templates->get_template_part( 'activity/feed', 'following' );
         $activity_log = ob_get_clean();
         
         return $activity_log;

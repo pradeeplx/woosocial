@@ -13,25 +13,45 @@ global $JCK_WooSocial;
 $user_info = $JCK_WooSocial->profile_system->user_info;
 ?>
 
-<h1><?php echo $user_info->user_nicename; ?></h1>
+<?php
+/**	=============================
+    *
+    * jck_woo_social_before_profile hook
+    *
+    * @hooked woocommerce_breadcrumb - 20
+    *
+    ============================= */
 
-<?php // wp_login_form(); ?>
+	do_action( 'jck_woo_social_before_profile' );
+?>
+    
+    <?php include( $JCK_WooSocial->templates->locate_template( 'profile/part-header.php' ) ); ?>
+    
+    <ul class="<?php echo $JCK_WooSocial->slug; ?>-profile-links">
+        <li class="<?php echo $JCK_WooSocial->slug; ?>-profile-links__item"><a href="#<?php echo $JCK_WooSocial->slug; ?>-activity" class="<?php echo $JCK_WooSocial->slug; ?>-profile-link <?php echo $JCK_WooSocial->slug; ?>-tab-link <?php echo $JCK_WooSocial->slug; ?>-tab-link--active">Activity</a></li>
+        <li class="<?php echo $JCK_WooSocial->slug; ?>-profile-links__item"><a href="#<?php echo $JCK_WooSocial->slug; ?>-likes" class="<?php echo $JCK_WooSocial->slug; ?>-profile-link <?php echo $JCK_WooSocial->slug; ?>-tab-link">Likes</a></li>
+        <li class="<?php echo $JCK_WooSocial->slug; ?>-profile-links__item"><a href="#<?php echo $JCK_WooSocial->slug; ?>-followers" class="<?php echo $JCK_WooSocial->slug; ?>-profile-link <?php echo $JCK_WooSocial->slug; ?>-tab-link">Followers</a></li>
+        <li class="<?php echo $JCK_WooSocial->slug; ?>-profile-links__item"><a href="#<?php echo $JCK_WooSocial->slug; ?>-following" class="<?php echo $JCK_WooSocial->slug; ?>-profile-link <?php echo $JCK_WooSocial->slug; ?>-tab-link">Following</a></li>
+    </ul>
+    
+    <?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'activity' ); ?>
+    
+    <?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'likes' ); ?>
+    
+    <?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'followers' ); ?>
+    
+    <?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'following' ); ?>
 
-<?php echo $JCK_WooSocial->follow_system->get_follow_button( $user_info ); ?>
+<?php
+/**	=============================
+    *
+    * jck_woo_social_after_profile hook
+    *
+    * @hooked woocommerce_breadcrumb - 20
+    *
+    ============================= */
 
-<h3><?php echo $user_info->user_nicename; ?>'s Activity</h3>
-<?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'activity' ); ?>
-
-<h3>Likes (<?php echo $user_info->likes_count; ?>)</h3>
-
-<?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'likes' ); ?>
-
-<h3>Followers (<?php echo $user_info->followers_count; ?>)</h3>
-
-<?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'followers' ); ?>
-
-<h3>Following (<?php echo $user_info->following_count; ?>)</h3>
-
-<?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'following' ); ?>
+	do_action( 'jck_woo_social_after_profile' );
+?>
 
 <?php get_footer(); ?>

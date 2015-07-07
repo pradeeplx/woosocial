@@ -1,0 +1,29 @@
+.jck_woo_social-container {
+    width: 100%;
+    max-width: 1024px;
+    padding: 0 20px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+// Butons
+
+.jck_woo_social-button {
+    border: 1px solid #333;
+    border-radius: 3px;
+    padding: 0 10px;
+    height: 30px;
+    box-sizing: border-box;
+    line-height: 30px;
+    white-space: nowrap;
+    color: #333;
+    display: inline-block;
+    text-decoration: none;
+}
+
+// Helpers
+
+.jck_woo_social-vertical-align {
+    display: inline-block;
+    vertical-align: middle;
+}

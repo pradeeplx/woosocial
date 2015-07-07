@@ -7,6 +7,8 @@
             jck_woo_social.vars = {};
             
             jck_woo_social.els.$actions_list = $('.jck_woo_social-actions');
+            jck_woo_social.els.$tab_links = $('.jck_woo_social-tab-link');
+            jck_woo_social.els.$tab_content = $('.jck_woo_social-tab-content');
         },
  
         on_ready: function() {
@@ -14,6 +16,7 @@
             jck_woo_social.cache();
             jck_woo_social.setup_follow_actions();
             jck_woo_social.setup_like_action();
+            jck_woo_social.setup_tabs();
             
         },
      
@@ -48,8 +51,6 @@
             				},
             				
             				success: function( data ) {
-            					console.log( 'success' );
-            					console.log( data );
             					
             					$button.text(data.button.text);
             					$button.attr('data-follow-type',data.button.type);
@@ -59,7 +60,7 @@
             					$button.addClass('jck_woo_social-follow-action--'+data.button.type);
             					
             					if(data.add_follow_html) {
-                					jck_woo_social.els.$actions_list.prepend(data.add_action_html);
+                					jck_woo_social.els.$actions_list.prepend(data.add_follow_html);
             					}
             					
             					if(data.remove_follow_class) {
@@ -68,8 +69,7 @@
             				},
             				
             				error: function( data ) {
-            					console.log( 'error' );
-            					console.log( data );
+                				
             				}
             			});
         			
@@ -110,8 +110,6 @@
         				},
         				
         				success: function( data ) {
-        					console.log( 'success' );
-        					console.log( data );
         					
         					if( $count.length > 0 ) {
             					
@@ -137,12 +135,29 @@
         				},
         				
         				error: function( data ) {
-        					console.log( 'error' );
-        					console.log( data );
+            				
         				}
         			});
         
                 }
+                
+                return false;
+                
+            });
+            
+        },
+        
+        setup_tabs: function() {
+            
+            jck_woo_social.els.$tab_links.on('click', function(){
+                
+                var target = $(this).attr('href'),
+                    active_class = 'jck_woo_social-tab-link--active';
+                
+                jck_woo_social.els.$tab_links.removeClass(active_class);
+                $(this).addClass(active_class);
+                jck_woo_social.els.$tab_content.hide();
+                $(target).show();
                 
                 return false;
                 

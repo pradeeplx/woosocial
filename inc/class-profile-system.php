@@ -52,6 +52,9 @@ class JCK_WooSocial_ProfileSystem {
             add_filter( 'nav_menu_link_attributes',                     array( $this, 'nav_menu_profile_link' ), 10, 4 );
             add_filter( 'wp_get_nav_menu_items',                        array( $this, 'nav_menu_items' ), 10, 3 );
             
+            add_action( 'jck_woo_social_before_profile',                array( $this, 'before_profile' ), 5 );
+            add_action( 'jck_woo_social_after_profile',                array( $this, 'after_profile' ), 50 );
+            
         }
         
 	}
@@ -267,6 +270,30 @@ class JCK_WooSocial_ProfileSystem {
         }        
         
         return $user;
+        
+    }
+    
+/**	=============================
+    *
+    * Before Profile
+    *
+    ============================= */
+    
+    public function before_profile() {
+        
+        echo '<div class="jck_woo_social-container jck_woo_social-container--profile">';
+        
+    }
+
+/**	=============================
+    *
+    * After Profile
+    *
+    ============================= */
+    
+    public function after_profile() {
+        
+        echo '</div>';
         
     }
 	

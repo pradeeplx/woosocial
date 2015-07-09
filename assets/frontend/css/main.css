@@ -143,8 +143,8 @@
   content: "b";
 }
 
-.woo-social-ic-dots:before {
-  content: "c";
+.woo-social-ic-loading:before {
+  content: "d";
 }
 
 .jck_woo_social-actions {

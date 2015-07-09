@@ -28,10 +28,10 @@ $user_info = $JCK_WooSocial->profile_system->user_info;
     <?php include( $JCK_WooSocial->templates->locate_template( 'profile/part-header.php' ) ); ?>
     
     <ul class="<?php echo $JCK_WooSocial->slug; ?>-profile-links">
-        <li class="<?php echo $JCK_WooSocial->slug; ?>-profile-links__item"><a href="#<?php echo $JCK_WooSocial->slug; ?>-activity" class="<?php echo $JCK_WooSocial->slug; ?>-profile-link <?php echo $JCK_WooSocial->slug; ?>-tab-link <?php echo $JCK_WooSocial->slug; ?>-tab-link--active">Activity</a></li>
-        <li class="<?php echo $JCK_WooSocial->slug; ?>-profile-links__item"><a href="#<?php echo $JCK_WooSocial->slug; ?>-likes" class="<?php echo $JCK_WooSocial->slug; ?>-profile-link <?php echo $JCK_WooSocial->slug; ?>-tab-link">Likes</a></li>
-        <li class="<?php echo $JCK_WooSocial->slug; ?>-profile-links__item"><a href="#<?php echo $JCK_WooSocial->slug; ?>-followers" class="<?php echo $JCK_WooSocial->slug; ?>-profile-link <?php echo $JCK_WooSocial->slug; ?>-tab-link">Followers</a></li>
-        <li class="<?php echo $JCK_WooSocial->slug; ?>-profile-links__item"><a href="#<?php echo $JCK_WooSocial->slug; ?>-following" class="<?php echo $JCK_WooSocial->slug; ?>-profile-link <?php echo $JCK_WooSocial->slug; ?>-tab-link">Following</a></li>
+        <li class="<?php echo $JCK_WooSocial->slug; ?>-profile-links__item"><a href="#<?php echo $JCK_WooSocial->slug; ?>-activity" class="<?php echo $JCK_WooSocial->slug; ?>-profile-link <?php echo $JCK_WooSocial->slug; ?>-tab-link <?php echo $JCK_WooSocial->slug; ?>-tab-link--active"><?php _e('Activity','jck-woo-social'); ?></a></li>
+        <li class="<?php echo $JCK_WooSocial->slug; ?>-profile-links__item"><a href="#<?php echo $JCK_WooSocial->slug; ?>-likes" class="<?php echo $JCK_WooSocial->slug; ?>-profile-link <?php echo $JCK_WooSocial->slug; ?>-tab-link"><?php echo $user_info->likes_count_formatted; ?></a></li>
+        <li class="<?php echo $JCK_WooSocial->slug; ?>-profile-links__item"><a href="#<?php echo $JCK_WooSocial->slug; ?>-followers" class="<?php echo $JCK_WooSocial->slug; ?>-profile-link <?php echo $JCK_WooSocial->slug; ?>-tab-link"><?php echo $user_info->followers_count_formatted; ?></a></li>
+        <li class="<?php echo $JCK_WooSocial->slug; ?>-profile-links__item"><a href="#<?php echo $JCK_WooSocial->slug; ?>-following" class="<?php echo $JCK_WooSocial->slug; ?>-profile-link <?php echo $JCK_WooSocial->slug; ?>-tab-link"><?php echo $user_info->following_count_formatted; ?></a></li>
     </ul>
     
     <?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'activity' ); ?>

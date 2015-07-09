@@ -22,8 +22,8 @@ class JCK_WooSocial_LikeSystem {
    	
 	public function initiate_hook() {
     	
-    	add_action( 'wp_ajax_jck_woo_social_like_action',                array( $this, 'jck_woo_social_like_action' ) );
-        add_action( 'wp_ajax_nopriv_jck_woo_social_like_action',         array( $this, 'jck_woo_social_like_action' ) );
+    	add_action( 'wp_ajax_jck_woo_social_like_action',                array( $this, 'like_action' ) );
+        add_action( 'wp_ajax_nopriv_jck_woo_social_like_action',         array( $this, 'like_action' ) );
 
         if(!is_admin()) {
             
@@ -41,7 +41,7 @@ class JCK_WooSocial_LikeSystem {
     *
     ============================= */
     
-    function jck_woo_social_like_action() {
+    function like_action() {
         
         global $JCK_WooSocial;
     	

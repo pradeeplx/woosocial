@@ -5,6 +5,8 @@ class JCK_WooSocial_ActivityLogSystem {
     public $table_name;
     public $db_version = "1.0";
     public $slug = "jck_woo_social_activity_log";
+    public $default_limit = 10;
+    public $default_offset = 0;
 
 /**	=============================
     *
@@ -27,6 +29,9 @@ class JCK_WooSocial_ActivityLogSystem {
     ============================= */
     
     public function initiate_hook() {
+        
+        add_action( 'wp_ajax_jck_woo_social_activity_log_load_more',                array( $this, 'load_more' ) );
+        add_action( 'wp_ajax_nopriv_jck_woo_social_activity_log_load_more',         array( $this, 'load_more' ) );
         
         add_shortcode( 'jck-woo-social-activity-log',   array( $this, 'activity_log_shortcode' ) );
         
@@ -187,8 +192,8 @@ class JCK_WooSocial_ActivityLogSystem {
     
     public function get_activity_feed( $user_id, $limit = null, $offset = null, $include_followers = true, $from = null, $to = null ) {
         
-        if( $limit === null ) $limit = 10;
-        if( $offset === null ) $offset = 0;
+        if( $limit === null ) $limit = $this->default_limit;
+        if( $offset === null ) $offset = $this->default_offset;
         
         if( $user_id == "" )
             return 0;
@@ -204,6 +209,56 @@ class JCK_WooSocial_ActivityLogSystem {
         
         return $activity;
         
+    }
+
+/**	=============================
+    *
+    * Ajax: Load More Action
+    *
+    ============================= */
+    
+    function load_more() {
+        
+        global $JCK_WooSocial;
+    	
+    	if ( ! wp_verify_nonce( $_GET['nonce'], $JCK_WooSocial->slug ) )
+    		die ( 'Busted!' );
+        
+        $response = array(
+            'activity_html' => false
+        );
+        
+        $activity = $this->get_activity_feed( $_GET['user_id'], $_GET['limit'], $_GET['offset'] );
+        
+        $response['activity'] = $activity;
+        
+        if( $activity ) {
+            
+            ob_start();
+            
+            foreach( $activity as $action ) {
+                
+                include($JCK_WooSocial->templates->locate_template( 'profile/part-action.php' ));
+                
+            }
+            
+            $response['activity_html'] = ob_get_clean();
+            
+        }
+        
+    	// generate the response
+    	$response['get'] = $_GET;
+    	
+    	// response output
+    	header('Content-Type: text/javascript; charset=utf8');
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Max-Age: 3628800');
+        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+    
+    	echo htmlspecialchars($_GET['callback']) . '(' . json_encode( $response ) . ')';
+    
+    	wp_die();
+    	
     }
     
 /**	=============================

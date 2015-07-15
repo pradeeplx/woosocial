@@ -18,5 +18,7 @@
         <?php wp_reset_postdata(); ?>
 
 	<?php woocommerce_product_loop_end(); ?>
+	
+	<?php echo $JCK_WooSocial->get_load_more_button( 'likes' ); ?>
     
 </div>

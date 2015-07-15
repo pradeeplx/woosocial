@@ -30,8 +30,8 @@ class JCK_WooSocial_ActivityLogSystem {
     
     public function initiate_hook() {
         
-        add_action( 'wp_ajax_jck_woo_social_activity_log_load_more',                array( $this, 'load_more' ) );
-        add_action( 'wp_ajax_nopriv_jck_woo_social_activity_log_load_more',         array( $this, 'load_more' ) );
+        add_action( 'wp_ajax_jck_woo_social_load_more_activity',                array( $this, 'load_more' ) );
+        add_action( 'wp_ajax_nopriv_jck_woo_social_load_more_activity',         array( $this, 'load_more' ) );
         
         add_shortcode( 'jck-woo-social-activity-log',   array( $this, 'activity_log_shortcode' ) );
         
@@ -220,9 +220,6 @@ class JCK_WooSocial_ActivityLogSystem {
     function load_more() {
         
         global $JCK_WooSocial;
-    	
-    	if ( ! wp_verify_nonce( $_GET['nonce'], $JCK_WooSocial->slug ) )
-    		die ( 'Busted!' );
         
         $response = array(
             'activity_html' => false
@@ -238,7 +235,7 @@ class JCK_WooSocial_ActivityLogSystem {
             
             foreach( $activity as $action ) {
                 
-                include($JCK_WooSocial->templates->locate_template( 'profile/part-action.php' ));
+                include($JCK_WooSocial->templates->locate_template( 'activity/part-action.php' ));
                 
             }
             

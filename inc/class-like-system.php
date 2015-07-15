@@ -23,7 +23,9 @@ class JCK_WooSocial_LikeSystem {
 	public function initiate_hook() {
     	
     	add_action( 'wp_ajax_jck_woo_social_like_action',                array( $this, 'like_action' ) );
-        add_action( 'wp_ajax_nopriv_jck_woo_social_like_action',         array( $this, 'like_action' ) );
+        
+        add_action( 'wp_ajax_jck_woo_social_load_more_likes',            array( $this, 'load_more' ) );
+        add_action( 'wp_ajax_nopriv_jck_woo_social_load_more_likes',     array( $this, 'load_more' ) );
 
         if(!is_admin()) {
             
@@ -83,6 +85,56 @@ class JCK_WooSocial_LikeSystem {
     	echo htmlspecialchars($_GET['callback']) . '(' . json_encode( $response ) . ')';
     
     	wp_die();
+    }
+
+/**	=============================
+    *
+    * Ajax: Load More Action
+    *
+    ============================= */
+    
+    function load_more() {
+        
+        global $JCK_WooSocial;
+        
+        $response = array(
+            'likes_html' => false
+        );
+        
+        $likes = $JCK_WooSocial->like_system->get_likes( $_GET['user_id'], $_GET['limit'], $_GET['offset'] );
+        
+        $response['likes'] = $likes;
+        
+        if( $likes ) {
+            
+            ob_start();
+            
+            foreach( $likes as $like ) {
+                
+                $post = get_post($like->rel_id);
+                setup_postdata( $post );
+                
+                wc_get_template_part( 'content', 'product' );
+                
+            }
+            
+            $response['likes_html'] = ob_get_clean();
+            
+        }
+        
+    	// generate the response
+    	$response['get'] = $_GET;
+    	
+    	// response output
+    	header('Content-Type: text/javascript; charset=utf8');
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Max-Age: 3628800');
+        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+    
+    	echo htmlspecialchars($_GET['callback']) . '(' . json_encode( $response ) . ')';
+    
+    	wp_die();
+    	
     }
 
 /**	=============================

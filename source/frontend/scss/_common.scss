@@ -27,3 +27,11 @@
     display: inline-block;
     vertical-align: middle;
 }
+
+.jck_woo_social-clear {
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}

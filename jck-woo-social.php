@@ -228,8 +228,6 @@ class JCK_WooSocial {
     public function frontend_scripts() {
         
         wp_register_script( $this->slug.'_scripts', $this->plugin_url . 'assets/frontend/js/main.min.js', array( 'jquery' ), $this->version, true);
-		
-        wp_enqueue_script( $this->slug.'_scripts' );
         
         $vars = array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
@@ -238,6 +236,8 @@ class JCK_WooSocial {
 		);
 		
 		wp_localize_script( $this->slug.'_scripts', $this->slug.'_vars', $vars );
+		
+		wp_enqueue_script( $this->slug.'_scripts' );
         
     }
 
@@ -371,6 +371,38 @@ class JCK_WooSocial {
                 return number_format($display_num,$decimals) . $abbrev;
             }
         }
+    }
+
+/**	=============================
+    *
+    * Get "Load More" Ajax Button
+    *
+    * @param mixed $anything Description of the parameter
+    * @return str
+    *
+    ============================= */
+    
+    public function get_load_more_button( $type = false ) {
+        
+        if( !$type )
+            return "";
+        
+        global $JCK_WooSocial;
+        
+        $classes = array(
+            sprintf('%s-load-more', $JCK_WooSocial->slug),
+            sprintf('%s-load-more--%s', $JCK_WooSocial->slug, $type)
+        );
+        
+        return sprintf(
+            '<a href="javascript: void(0);" class="%s" data-limit="%d" data-offset="%d" data-user-id="%d"><i class="woo-social-ic-loading"></i> %s</a>', 
+            implode(' ', $classes),
+            $JCK_WooSocial->activity_log->default_limit,
+            $JCK_WooSocial->activity_log->default_offset,
+            $JCK_WooSocial->profile_system->user_info->ID,
+            __('Load more','jck-woo-social')
+        );
+        
     }
   
 }

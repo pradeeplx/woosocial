@@ -266,10 +266,13 @@ class JCK_WooSocial_ProfileSystem {
             $user->profile_url = $this->get_profile_url( $user->user_nicename );
             $user->profile_link = $this->get_profile_link( $user->user_nicename );
             $user->avatar = get_avatar( $user->ID, get_option( 'thumbnail_size_w' ) );
+            $user->avatar_link = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr($user->profile_url), esc_attr($user->user_nicename), $user->avatar );
             
             $user->likes_count_formatted = sprintf('<strong>%s</strong> %s', $user->likes_count, _n('Like', 'Likes', $user->likes_count,'jck-woo-social'));
             $user->followers_count_formatted = sprintf('<strong>%s</strong> %s', $user->followers_count, _n('Follower', 'Followers', $user->followers_count,'jck-woo-social'));
             $user->following_count_formatted = sprintf('<strong>%s</strong> %s', $user->following_count, __('Following', 'jck-woo-social'));
+            
+            $user->follow_button = $JCK_WooSocial->follow_system->get_follow_button( $user );
         
         }        
         

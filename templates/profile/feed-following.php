@@ -10,7 +10,7 @@
             
             <?php $user = $JCK_WooSocial->profile_system->get_user_info( $user->rel_id ); ?>
             
-            <?php include( $JCK_WooSocial->templates->locate_template( 'profile/part-user.php' ) ); ?>
+            <?php include( $JCK_WooSocial->templates->locate_template( 'cards/user.php' ) ); ?>
             
         <?php } ?>
     

@@ -201,7 +201,7 @@ class JCK_WooSocial_LikeSystem {
         
             $type = $this->has_liked( get_current_user_id(), $post->ID ) ? "unlike" : "like";
         
-            echo sprintf('<li class="jck-woo-social-likes__item jck-woo-social-likes__item--like-button"><span class="jck-woo-social-like-action jck_woo_social-like-action--%s" data-type="%s" data-product-id="%d"><i class="woo-social-ic-heart"></i> <span class="jck-woo-social-like-button__count">%s</span></span></li>', $type, $type, $post->ID, $product_likes_count);
+            echo sprintf('<li class="jck-woo-social-likes__item jck-woo-social-likes__item--like-button"><span class="jck-woo-social-like-action jck_woo_social-like-action--%s" data-type="%s" data-product-id="%d"><i class="woo-social-ic-like"></i> <span class="jck-woo-social-like-button__count">%s</span></span></li>', $type, $type, $post->ID, $product_likes_count);
             
             if( $product_likes && !empty($product_likes) ) {
             
@@ -321,6 +321,34 @@ class JCK_WooSocial_LikeSystem {
         $likes_count = $wpdb->get_var( "SELECT COUNT(*) FROM {$JCK_WooSocial->activity_log->table_name} WHERE rel_id = $product_id AND type = 'like'" );
         
         return $JCK_WooSocial->shorten_number( $likes_count );
+        
+    }
+
+/**	=============================
+    *
+    * Get Product Info
+    *
+    * @param int $product_id
+    * @return obj
+    *
+    ============================= */
+    
+    public function get_product_info( $product_id ) {
+        
+        $product = wc_get_product( $product_id );
+        
+        $product->title = $product->post->post_title;
+        $product->url = get_permalink( $product_id );
+        $product->link = sprintf('<a href="%s" title="%s">%s</a>', esc_attr( $product->url ), esc_attr( $product->title ), $product->title);
+        $product->sku = $product->get_sku();
+                    
+        $product->image_link = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr( $product->url ), esc_attr( $product->title ), get_the_post_thumbnail( $product_id, 'thumbnail' ) );
+        
+        $product->add_to_cart_button = do_shortcode( sprintf( '[add_to_cart id="%d" sku="%s" style=""]', $product_id, $product->sku ) );
+        
+        $product->likes_count = $this->get_product_likes_count( $product_id );
+        
+        return $product;
         
     }
     

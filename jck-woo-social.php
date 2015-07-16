@@ -398,7 +398,7 @@ class JCK_WooSocial {
             '<a href="javascript: void(0);" class="%s" data-limit="%d" data-offset="%d" data-user-id="%d"><i class="woo-social-ic-loading"></i> %s</a>', 
             implode(' ', $classes),
             $JCK_WooSocial->activity_log->default_limit,
-            $JCK_WooSocial->activity_log->default_offset,
+            $JCK_WooSocial->activity_log->default_offset + $JCK_WooSocial->activity_log->default_limit,
             $JCK_WooSocial->profile_system->user_info->ID,
             __('Load more','jck-woo-social')
         );

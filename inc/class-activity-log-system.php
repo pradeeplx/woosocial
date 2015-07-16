@@ -276,31 +276,21 @@ class JCK_WooSocial_ActivityLogSystem {
             
             $i = 0; foreach( $activity as $action ) {
                 
-                $user = $JCK_WooSocial->profile_system->get_user_info( $action->user_id );
-                
-                $action->user_image = $this->format_image( $user );
+                $action->user = $JCK_WooSocial->profile_system->get_user_info( $action->user_id );
                     
                 if( $action->type === "follow" ) {
                     
-                    $user_2 = $JCK_WooSocial->profile_system->get_user_info( $action->rel_id );
+                    $action->user_2 = $JCK_WooSocial->profile_system->get_user_info( $action->rel_id );
                     
-                    $action->formatted = $this->format_follow( $user, $user_2 );
-                    $action->rel_image = $this->format_image( $user_2 );
+                    $action->formatted = $this->format_follow( $action->user, $action->user_2 );
                     
                 } elseif( $action->type === "like" ) {
                     
-                    $product = wc_get_product( $action->rel_id );
-                    $product_title = $product->get_title();
-                    $product_url = get_permalink($product->id);
+                    $action->product = $JCK_WooSocial->like_system->get_product_info( $action->rel_id );
                     
-                    $username = ( $action->user_id == $current_user_id ) ? __("You", "jck_woo_social") : $user->profile_link; 
-                    $product_link = sprintf('<a href="%s" title="%s">%s</a>', esc_attr($product_url), esc_attr($product_title), $product_title);
+                    $username = ( $action->user_id == $current_user_id ) ? __("You", "jck_woo_social") : $action->user->profile_link; 
                     
-                    $action->formatted = sprintf('%s liked %s', $username, $product_link);
-                    
-                    // add related image
-                    
-                    $action->rel_image = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr($product_url), esc_attr($product_title), get_the_post_thumbnail( $product->id, 'thumbnail' ) );
+                    $action->formatted = sprintf('%s liked %s', $username, $action->product->link);
                     
                 }
                 
@@ -336,21 +326,6 @@ class JCK_WooSocial_ActivityLogSystem {
         $username_2 = ( $user_2->ID == $current_user_id ) ? strtolower(__("You", "jck_woo_social")) : $user_2->profile_link; 
         
         return $username_1." ".__('followed','jck-woo-social')." ".$username_2;
-        
-    }
-
-/**	=============================
-    *
-    * Format Image
-    *
-    * @param obj $user User Object
-    * @return str
-    *
-    ============================= */
-    
-    public function format_image( $user ) {
-        
-        return sprintf( '<a href="%s" title="%s">%s</a>', esc_attr($user->profile_url), esc_attr($user->user_nicename), $user->avatar );
         
     }
 
@@ -501,14 +476,11 @@ class JCK_WooSocial_ActivityLogSystem {
         
         if( $follow ) {
         
-            $user_1 = $JCK_WooSocial->profile_system->get_user_info( $user_id );
-            $user_2 = $JCK_WooSocial->profile_system->get_user_info( $follow_user_id );
+            $follow->user_1 = $JCK_WooSocial->profile_system->get_user_info( $user_id );
+            $follow->user_2 = $JCK_WooSocial->profile_system->get_user_info( $follow_user_id );
             
-            $follow->formatted = $this->format_follow( $user_1, $user_2 );
+            $follow->formatted = $this->format_follow( $follow->user_1, $follow->user_2 );
             $follow->formatted_date = __('Just now','jck-woo-social');
-            
-            $follow->user_image = $this->format_image( $user_1 );
-            $follow->rel_image = $this->format_image( $user_2 );
         
         }
         

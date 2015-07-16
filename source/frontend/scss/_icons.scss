@@ -38,12 +38,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.woo-social-ic-heart:before {
-  content: "a";
-}
 .woo-social-ic-like:before {
-  content: "b";
+  content: "a";
 }
 .woo-social-ic-loading:before {
   content: "d";
+}
+.woo-social-ic-follow:before {
+  content: "c";
 }

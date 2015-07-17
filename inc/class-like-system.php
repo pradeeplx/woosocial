@@ -111,10 +111,8 @@ class JCK_WooSocial_LikeSystem {
             
             foreach( $likes as $like ) {
                 
-                $post = get_post($like->rel_id);
-                setup_postdata( $post );
-                
-                wc_get_template_part( 'content', 'product' );
+                $product = $JCK_WooSocial->like_system->get_product_info( $like->rel_id );        
+                include($JCK_WooSocial->templates->locate_template( 'cards/product.php' ));
                 
             }
             
@@ -189,19 +187,21 @@ class JCK_WooSocial_LikeSystem {
     *
     ============================= */
     
-    public function show_likes_loop() {
+    public function show_likes_loop( $product_id = false ) {
         
         global $JCK_WooSocial, $post;
         
-        $product_likes = $this->get_product_likes( $post->ID );
-        $product_likes_count = $this->get_product_likes_count( $post->ID );
+        $product_id = ( $product_id ) ? $product_id : $post->ID;
+        
+        $product_likes = $this->get_product_likes( $product_id );
+        $product_likes_count = $this->get_product_likes_count( $product_id );
         $location = ( is_archive() ) ? "loop" : "single";
             
         echo sprintf('<ul class="jck-woo-social-likes jck-woo-social-likes--%s">', $location);
         
-            $type = $this->has_liked( get_current_user_id(), $post->ID ) ? "unlike" : "like";
+            $type = $this->has_liked( get_current_user_id(), $product_id ) ? "unlike" : "like";
         
-            echo sprintf('<li class="jck-woo-social-likes__item jck-woo-social-likes__item--like-button"><span class="jck-woo-social-like-action jck_woo_social-like-action--%s" data-type="%s" data-product-id="%d"><i class="woo-social-ic-like"></i> <span class="jck-woo-social-like-button__count">%s</span></span></li>', $type, $type, $post->ID, $product_likes_count);
+            echo sprintf('<li class="jck-woo-social-likes__item jck-woo-social-likes__item--like-button"><span class="jck-woo-social-like-action jck_woo_social-like-action--%s" data-type="%s" data-product-id="%d"><i class="woo-social-ic-like"></i> <span class="jck-woo-social-like-button__count">%s</span></span></li>', $type, $type, $product_id, $product_likes_count);
             
             if( $product_likes && !empty($product_likes) ) {
             

@@ -40,7 +40,7 @@
                 
                 var $button = $(this),
                     user_id = $button.attr('data-user-id'),
-                    type = $button.attr('data-follow-type'),
+                    type = $button.attr('data-type'),
                     loading_class = 'jck_woo_social-follow-action--loading';
                 
                 if( type === "login" ) {
@@ -67,7 +67,7 @@
             				success: function( data ) {
             					
             					$button.text(data.button.text);
-            					$button.attr('data-follow-type',data.button.type);
+            					$button.attr('data-type',data.button.type);
             					
             					$button.removeClass(loading_class);
             					$button.removeClass('jck_woo_social-follow-action--'+type);
@@ -201,6 +201,7 @@
                 offset = parseInt( $load_more_button.attr('data-offset') ),
                 next_offset = limit+offset,
                 user_id = $load_more_button.attr('data-user-id'),
+                profile_user_id = $load_more_button.attr('data-profile-user-id'),
                 $load_more_item = $load_more_button.parent();
                 
             $.ajax({
@@ -214,7 +215,8 @@
 					nonce : jck_woo_social_vars.nonce,
 					limit : limit,
 					offset : offset,
-					user_id : user_id
+					user_id : user_id,
+					profile_user_id : profile_user_id
 				},
 				
 				success: function( data ) {

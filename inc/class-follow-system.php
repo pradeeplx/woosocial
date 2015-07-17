@@ -209,13 +209,14 @@ class JCK_WooSocial_FollowSystem {
             $button_text = ( $is_following ) ? __("Unfollow",'jck-woo-social') : __("Follow",'jck-woo-social');
             $button_type = ( $is_user_logged_in ) ? ( $is_following ? "unfollow" : "follow" ) : "login";
             $button_classes = implode(' ', array(
-                $JCK_WooSocial->slug.'-button',
-                $JCK_WooSocial->slug.'-follow-action',
-                $JCK_WooSocial->slug.'-follow-action--'.$button_type
+                'button',
+                sprintf( '%s-button', $JCK_WooSocial->slug ),
+                sprintf( '%s-follow-action', $JCK_WooSocial->slug ),
+                sprintf( '%s-follow-action--', $JCK_WooSocial->slug, $button_type )
             ));
             $href = ( $is_user_logged_in ) ? "javascript: void(0);" : $myaccount_page_url;
         
-            return sprintf('<a href="%s" class="%s" data-user-id="%d" data-follow-type="%s">%s</a>', $href, $button_classes, $user_info->ID, $button_type, $button_text);
+            return sprintf('<a href="%s" class="%s" data-user-id="%d" data-type="%s">%s</a>', $href, $button_classes, $user_info->ID, $button_type, $button_text);
         
         }
         

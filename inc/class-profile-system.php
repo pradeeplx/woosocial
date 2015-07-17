@@ -53,7 +53,9 @@ class JCK_WooSocial_ProfileSystem {
             add_filter( 'wp_get_nav_menu_items',                        array( $this, 'nav_menu_items' ), 10, 3 );
             
             add_action( 'jck_woo_social_before_profile',                array( $this, 'before_profile' ), 5 );
-            add_action( 'jck_woo_social_after_profile',                array( $this, 'after_profile' ), 50 );
+            add_action( 'jck_woo_social_after_profile',                 array( $this, 'after_profile' ), 50 );
+            
+            add_filter('body_class',                                    array( $this, 'body_class' ), 10, 1 );
             
         }
         
@@ -67,7 +69,7 @@ class JCK_WooSocial_ProfileSystem {
 	
 	public function wp_hook() {
         
-    	if( !is_admin() && is_author() ) {
+    	if( ( !is_admin() && is_author() ) || ( defined('DOING_AJAX') && DOING_AJAX ) ) {
         	
         	$this->user_info = $this->get_user_info();
         	
@@ -250,7 +252,15 @@ class JCK_WooSocial_ProfileSystem {
         
         if( $user_id === null ) {
             
-            $user = $wp_query->get_queried_object();
+            if( isset( $_GET['profile_user_id'] ) ) {
+                
+                $user = get_userdata( $_GET['profile_user_id'] );
+                
+            } else {
+            
+                $user = $wp_query->get_queried_object();
+            
+            }
             
         } else {
             
@@ -301,6 +311,43 @@ class JCK_WooSocial_ProfileSystem {
     public function after_profile() {
         
         echo '</div>';
+        
+    }
+
+/**	=============================
+    *
+    * Body Class
+    *
+    * @param arr $classes Array of existing classes
+    * @return arr $classes
+    *
+    ============================= */
+    
+    public function body_class( $classes ) {
+        
+        if( $this->is_profile() )
+            $classes[] = 'woocommerce';
+        
+        return $classes;
+         
+    }
+
+/**	=============================
+    *
+    * Is Profile
+    *
+    * Function to check whether current page is a profile page
+    *
+    * @return bool
+    *
+    ============================= */
+    
+    public function is_profile() {
+        
+        $current_url = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+        $profile_url = str_replace( array( 'http://', 'https://' ), '', home_url( $this->profile_base.'/' ) );
+        
+        return (strpos( $current_url, $profile_url ) !== false) ? true : false;
         
     }
 	

@@ -387,19 +387,23 @@ class JCK_WooSocial {
         if( !$type )
             return "";
         
-        global $JCK_WooSocial;
-        
         $classes = array(
-            sprintf('%s-load-more', $JCK_WooSocial->slug),
-            sprintf('%s-load-more--%s', $JCK_WooSocial->slug, $type)
+            sprintf('%s-load-more', $this->slug),
+            sprintf('%s-load-more--%s', $this->slug, $type)
         );
         
+        $additional_attributes = array();
+        
+        if( $this->profile_system->is_profile() )
+            $additional_attributes[] = sprintf( 'data-profile-user-id="%d"', $this->profile_system->user_info->ID );
+        
         return sprintf(
-            '<a href="javascript: void(0);" class="%s" data-limit="%d" data-offset="%d" data-user-id="%d"><i class="woo-social-ic-loading"></i> %s</a>', 
+            '<a href="javascript: void(0);" class="%s" data-limit="%d" data-offset="%d" data-user-id="%d" %s><i class="woo-social-ic-loading"></i> %s</a>', 
             implode(' ', $classes),
-            $JCK_WooSocial->activity_log->default_limit,
-            $JCK_WooSocial->activity_log->default_offset + $JCK_WooSocial->activity_log->default_limit,
-            $JCK_WooSocial->profile_system->user_info->ID,
+            $this->activity_log->default_limit,
+            $this->activity_log->default_offset + $this->activity_log->default_limit,
+            $this->profile_system->user_info->ID,
+            implode(' ', $additional_attributes),
             __('Load more','jck-woo-social')
         );
         

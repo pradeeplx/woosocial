@@ -11,9 +11,6 @@
 		    
 		    <?php if($action->type == "follow") { ?>
 		    
-		        <?php echo $JCK_WooSocial->profile_system->user_info->ID; ?><br>
-		        <?php echo $action->rel_id; ?>
-		        <?php var_dump($JCK_WooSocial->profile_system->user_info->ID === $action->rel_id); ?>
 		        <?php $user = ( $JCK_WooSocial->profile_system->user_info->ID === $action->rel_id ) ? $action->user : $action->user_2; ?>     
 		        <?php include($JCK_WooSocial->templates->locate_template( 'cards/user.php' )); ?>
 		        

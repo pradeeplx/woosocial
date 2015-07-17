@@ -252,15 +252,7 @@ class JCK_WooSocial_ProfileSystem {
         
         if( $user_id === null ) {
             
-            if( isset( $_GET['profile_user_id'] ) ) {
-                
-                $user = get_userdata( $_GET['profile_user_id'] );
-                
-            } else {
-            
-                $user = $wp_query->get_queried_object();
-            
-            }
+            $user = $wp_query->get_queried_object();
             
         } else {
             

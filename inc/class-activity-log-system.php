@@ -227,6 +227,9 @@ class JCK_WooSocial_ActivityLogSystem {
         
         $activity = $this->get_activity_feed( $_GET['user_id'], $_GET['limit'], $_GET['offset'] );
         
+        if( isset( $_GET['profile_user_id'] ) )
+            $JCK_WooSocial->profile_system->user_info = $JCK_WooSocial->profile_system->get_user_info( $_GET['profile_user_id'] );
+        
         $response['activity'] = $activity;
         
         if( $activity ) {
@@ -275,6 +278,9 @@ class JCK_WooSocial_ActivityLogSystem {
             $current_user_id = get_current_user_id();
             
             $i = 0; foreach( $activity as $action ) {
+                
+                $action->user_id = (int)$action->user_id;
+                $action->rel_id = (int)$action->rel_id;
                 
                 $action->user = $JCK_WooSocial->profile_system->get_user_info( $action->user_id );
                     

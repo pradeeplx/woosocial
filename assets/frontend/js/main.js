@@ -10,7 +10,8 @@
             jck_woo_social.els.$tab_links = $('.jck_woo_social-tab-link');
             jck_woo_social.els.$tab_content = $('.jck_woo_social-tab-content');
             jck_woo_social.els.$load_more_button = $('.jck_woo_social-load-more');
-            jck_woo_social.els.$action_blocks = $('.jck_woo_social-action');
+            jck_woo_social.els.$action_blocks = $('.jck_woo_social-action');            
+            jck_woo_social.els.$likes_container = $('.jck_woo_social-likes');
             
             jck_woo_social.vars.action_offset = 1;
             jck_woo_social.vars.is_hidden_class = "jck_woo_social--is-hidden";
@@ -266,7 +267,12 @@
 					
 					if( data.likes_html ) {
     					
-    					$('.products').append( data.likes_html );
+    					jck_woo_social.els.$likes_container.append( data.likes_html );
+    					$load_more_button.attr('data-offset', next_offset) ;
+    					
+					} else {
+    					
+    					$load_more_button.remove();
     					
 					}
 					

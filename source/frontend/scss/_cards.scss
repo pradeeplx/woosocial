@@ -1,0 +1,70 @@
+.jck_woo_social-card {
+    overflow: hidden;
+}
+
+    .jck_woo_social-card__image {
+        float: left;
+        width: 35%;
+        padding: 15px 10px;
+        box-sizing: border-box;
+        
+        img {
+            width: 100%;
+            height: auto;
+            border: none;
+            box-shadow: none;
+        }
+    }
+    
+    .jck_woo_social-card__content {
+        float: right;
+        width: 65%;
+        box-sizing: border-box;
+        padding: 15px;
+    }
+        
+        .jck_woo_social-card__title {
+            margin: 0;
+        }
+    
+// User Card
+
+.jck_woo_social-card--user {
+    
+    .jck_woo_social-card__image img {
+        border-radius: 100%;
+    }
+    
+}
+
+    .jck_woo_social-card__user-stats {
+        overflow: hidden;
+        list-style: none none outside;
+        margin: 0;
+        padding: 0;
+    }
+        
+        .jck_woo_social-card__user-stat {
+            list-style: none none outside;
+            margin: 0;
+            padding: 0;
+            float: left;
+            width: 33.33%;
+            display: inline;
+            font-size: 90%;
+            
+            strong {
+                display: block;
+                font-size: 110%;
+            }
+        }
+
+// Product Card
+
+.jck_woo_social-card--product {
+    
+    .jck_woo_social-card__image {
+        padding: 15px;
+    }
+    
+}

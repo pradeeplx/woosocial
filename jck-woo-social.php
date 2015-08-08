@@ -411,4 +411,4 @@ class JCK_WooSocial {
   
 }
 
-$JCK_WooSocial = new JCK_WooSocial();
+$GLOBALS['jck_woosocial'] = new JCK_WooSocial();

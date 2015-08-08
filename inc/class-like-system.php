@@ -45,9 +45,9 @@ class JCK_WooSocial_LikeSystem {
     
     function like_action() {
         
-        global $JCK_WooSocial;
+        
     	
-    	if ( ! wp_verify_nonce( $_GET['nonce'], $JCK_WooSocial->slug ) )
+    	if ( ! wp_verify_nonce( $_GET['nonce'], $GLOBALS['jck_woosocial']->slug ) )
     		die ( 'Busted!' );
     		
         $current_user_id = get_current_user_id();
@@ -59,14 +59,14 @@ class JCK_WooSocial_LikeSystem {
         
         if( $_GET['type'] == "like" ) {
     		
-            $action = $JCK_WooSocial->activity_log->add_like( $current_user_id, $_GET['product_id'] );
+            $action = $GLOBALS['jck_woosocial']->activity_log->add_like( $current_user_id, $_GET['product_id'] );
             
             $response['button']['type'] = 'unlike';
             $response['add_like_html'] = $this->get_like_list_item( $current_user_id );
         
         } else {
             
-            $action = $JCK_WooSocial->activity_log->remove_like( $current_user_id, $_GET['product_id'] );
+            $action = $GLOBALS['jck_woosocial']->activity_log->remove_like( $current_user_id, $_GET['product_id'] );
             
             $response['button']['type'] = 'like';
             $response['remove_like_class'] = '.jck-woo-social-likes__item--'.$current_user_id;
@@ -95,13 +95,13 @@ class JCK_WooSocial_LikeSystem {
     
     function load_more() {
         
-        global $JCK_WooSocial;
+        
         
         $response = array(
             'likes_html' => false
         );
         
-        $likes = $JCK_WooSocial->like_system->get_likes( $_GET['user_id'], $_GET['limit'], $_GET['offset'] );
+        $likes = $GLOBALS['jck_woosocial']->like_system->get_likes( $_GET['user_id'], $_GET['limit'], $_GET['offset'] );
         
         $response['likes'] = $likes;
         
@@ -111,8 +111,8 @@ class JCK_WooSocial_LikeSystem {
             
             foreach( $likes as $like ) {
                 
-                $product = $JCK_WooSocial->like_system->get_product_info( $like->rel_id );        
-                include($JCK_WooSocial->templates->locate_template( 'cards/product.php' ));
+                $product = $GLOBALS['jck_woosocial']->like_system->get_product_info( $like->rel_id );        
+                include($GLOBALS['jck_woosocial']->templates->locate_template( 'cards/product.php' ));
                 
             }
             
@@ -147,12 +147,12 @@ class JCK_WooSocial_LikeSystem {
     
     public function has_liked( $user_id, $product_id ) {
         
-        global $JCK_WooSocial, $wpdb;
+        global $wpdb;
         
         $liked = $wpdb->get_row( 
         	"
         	SELECT *
-        	FROM {$JCK_WooSocial->activity_log->table_name}
+        	FROM {$GLOBALS['jck_woosocial']->activity_log->table_name}
         	WHERE user_id = $user_id
         	AND rel_id = $product_id
         	AND type = 'like'
@@ -173,9 +173,9 @@ class JCK_WooSocial_LikeSystem {
     
     public function get_like_list_item( $user_id ) {
         
-        global $JCK_WooSocial;
         
-        $user = $JCK_WooSocial->profile_system->get_user_info( $user_id );
+        
+        $user = $GLOBALS['jck_woosocial']->profile_system->get_user_info( $user_id );
         
         return sprintf('<li class="jck-woo-social-likes__item jck-woo-social-likes__item--%d">%s</li>', $user_id, $user->avatar);
         
@@ -189,7 +189,7 @@ class JCK_WooSocial_LikeSystem {
     
     public function show_likes_loop( $product_id = false ) {
         
-        global $JCK_WooSocial, $post;
+        global $post;
         
         $product_id = ( $product_id ) ? $product_id : $post->ID;
         
@@ -237,7 +237,7 @@ class JCK_WooSocial_LikeSystem {
         if( !$args['product_id'] )
             return "";
             
-        global $JCK_WooSocial;
+        
             
         $type = $this->has_liked( get_current_user_id(), $args['product_id'] ) ? "unlike" : "like";
         $product_likes_count = $this->get_product_likes_count( $args['product_id'] );
@@ -247,9 +247,9 @@ class JCK_WooSocial_LikeSystem {
 
         $button_classes = implode(' ', array(
             'button',
-            sprintf( '%s-button', $JCK_WooSocial->slug ),
-            sprintf( '%s-like-action', $JCK_WooSocial->slug ),
-            sprintf( '%s-like-action--%s', $JCK_WooSocial->slug, $type )
+            sprintf( '%s-button', $GLOBALS['jck_woosocial']->slug ),
+            sprintf( '%s-like-action', $GLOBALS['jck_woosocial']->slug ),
+            sprintf( '%s-like-action--%s', $GLOBALS['jck_woosocial']->slug, $type )
         ));
         $href = ( is_user_logged_in() ) ? "javascript: void(0);" : $myaccount_page_url;
         
@@ -270,12 +270,12 @@ class JCK_WooSocial_LikeSystem {
     
     public function get_likes( $user_id, $limit = 10, $offset = 0 ) {
         
-        global $wpdb, $JCK_WooSocial;
+        global $wpdb;
         
         $likes = $wpdb->get_results( 
         	"
         	SELECT *
-        	FROM {$JCK_WooSocial->activity_log->table_name}
+        	FROM {$GLOBALS['jck_woosocial']->activity_log->table_name}
         	WHERE user_id = $user_id
         	AND type = 'like'
         	ORDER BY time DESC
@@ -302,11 +302,11 @@ class JCK_WooSocial_LikeSystem {
         if( $user_id == "" )
             return 0;
         
-        global $JCK_WooSocial, $wpdb;
+        global $wpdb;
         
-        $likes_count = $wpdb->get_var( "SELECT COUNT(*) FROM {$JCK_WooSocial->activity_log->table_name} WHERE user_id = $user_id AND type = 'like'" );
+        $likes_count = $wpdb->get_var( "SELECT COUNT(*) FROM {$GLOBALS['jck_woosocial']->activity_log->table_name} WHERE user_id = $user_id AND type = 'like'" );
         
-        return $JCK_WooSocial->shorten_number( $likes_count );
+        return $GLOBALS['jck_woosocial']->shorten_number( $likes_count );
         
     }
     
@@ -325,12 +325,12 @@ class JCK_WooSocial_LikeSystem {
     
     public function get_product_likes( $product_id, $limit = 8 ) {
         
-        global $wpdb, $JCK_WooSocial;
+        global $wpdb;
         
         $likes = $wpdb->get_results( 
         	"
         	SELECT *
-        	FROM {$JCK_WooSocial->activity_log->table_name}
+        	FROM {$GLOBALS['jck_woosocial']->activity_log->table_name}
         	WHERE rel_id = $product_id
         	AND type = 'like'
         	ORDER BY time DESC
@@ -356,11 +356,11 @@ class JCK_WooSocial_LikeSystem {
         if( $product_id == "" )
             return 0;
         
-        global $JCK_WooSocial, $wpdb;
+        global $wpdb;
         
-        $likes_count = $wpdb->get_var( "SELECT COUNT(*) FROM {$JCK_WooSocial->activity_log->table_name} WHERE rel_id = $product_id AND type = 'like'" );
+        $likes_count = $wpdb->get_var( "SELECT COUNT(*) FROM {$GLOBALS['jck_woosocial']->activity_log->table_name} WHERE rel_id = $product_id AND type = 'like'" );
         
-        return $JCK_WooSocial->shorten_number( $likes_count );
+        return $GLOBALS['jck_woosocial']->shorten_number( $likes_count );
         
     }
 

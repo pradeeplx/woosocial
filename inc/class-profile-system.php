@@ -222,11 +222,11 @@ class JCK_WooSocial_ProfileSystem {
 
     function profile_template( $template ) {
         
-        global $JCK_WooSocial;
+        
     
     	if ( is_author() && strpos( $_SERVER['REQUEST_URI'], 'profile/' ) !== false ) {
     		
-    		$profile_template = $JCK_WooSocial->templates->get_template_part( 'profile', '', false );
+    		$profile_template = $GLOBALS['jck_woosocial']->templates->get_template_part( 'profile', '', false );
     		
     		if ( '' != $profile_template ) {
     			return $profile_template ;
@@ -248,7 +248,7 @@ class JCK_WooSocial_ProfileSystem {
     
     public function get_user_info( $user_id = null ) {
         
-        global $wp_query, $JCK_WooSocial;
+        global $wp_query;
         
         if( $user_id === null ) {
             
@@ -262,9 +262,9 @@ class JCK_WooSocial_ProfileSystem {
         
         if( $user ) {
             
-            $user->likes_count = $JCK_WooSocial->like_system->get_likes_count( $user->ID );
-            $user->followers_count = $JCK_WooSocial->activity_log->get_followers_count( $user->ID );
-            $user->following_count = $JCK_WooSocial->activity_log->get_following_count( $user->ID );
+            $user->likes_count = $GLOBALS['jck_woosocial']->like_system->get_likes_count( $user->ID );
+            $user->followers_count = $GLOBALS['jck_woosocial']->activity_log->get_followers_count( $user->ID );
+            $user->following_count = $GLOBALS['jck_woosocial']->activity_log->get_following_count( $user->ID );
             $user->profile_url = $this->get_profile_url( $user->user_nicename );
             $user->profile_link = $this->get_profile_link( $user->user_nicename );
             $user->avatar = get_avatar( $user->ID, get_option( 'thumbnail_size_w' ) );
@@ -274,7 +274,7 @@ class JCK_WooSocial_ProfileSystem {
             $user->followers_count_formatted = sprintf('<strong>%s</strong> %s', $user->followers_count, _n('Follower', 'Followers', $user->followers_count,'jck-woo-social'));
             $user->following_count_formatted = sprintf('<strong>%s</strong> %s', $user->following_count, __('Following', 'jck-woo-social'));
             
-            $user->follow_button = $JCK_WooSocial->follow_system->get_follow_button( $user );
+            $user->follow_button = $GLOBALS['jck_woosocial']->follow_system->get_follow_button( $user );
         
         }        
         

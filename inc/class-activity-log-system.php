@@ -122,10 +122,8 @@ class JCK_WooSocial_ActivityLogSystem {
     
     public function activity_log_shortcode( $atts ) {
         
-        global $JCK_WooSocial;
-        
         ob_start();
-        $JCK_WooSocial->templates->get_template_part( 'activity/feed', 'following' );
+        $GLOBALS['jck_woosocial']->templates->get_template_part( 'activity/feed', 'following' );
         $activity_log = ob_get_clean();
         
         return $activity_log;
@@ -198,7 +196,7 @@ class JCK_WooSocial_ActivityLogSystem {
         if( $user_id == "" )
             return 0;
         
-        global $wpdb, $JCK_WooSocial;
+        global $wpdb;
         
         $and_followers = ( $include_followers ) ? "OR rel_id = $user_id" : "";
         $time_query = ( $from !== null && $to !== null ) ? "AND time BETWEEN '$to' AND '$from'" : "";
@@ -219,7 +217,7 @@ class JCK_WooSocial_ActivityLogSystem {
     
     function load_more() {
         
-        global $JCK_WooSocial;
+        
         
         $response = array(
             'activity_html' => false
@@ -228,7 +226,7 @@ class JCK_WooSocial_ActivityLogSystem {
         $activity = $this->get_activity_feed( $_GET['user_id'], $_GET['limit'], $_GET['offset'] );
         
         if( isset( $_GET['profile_user_id'] ) )
-            $JCK_WooSocial->profile_system->user_info = $JCK_WooSocial->profile_system->get_user_info( $_GET['profile_user_id'] );
+            $GLOBALS['jck_woosocial']->profile_system->user_info = $GLOBALS['jck_woosocial']->profile_system->get_user_info( $_GET['profile_user_id'] );
         
         $response['activity'] = $activity;
         
@@ -238,7 +236,7 @@ class JCK_WooSocial_ActivityLogSystem {
             
             foreach( $activity as $action ) {
                 
-                include($JCK_WooSocial->templates->locate_template( 'activity/part-action.php' ));
+                include($GLOBALS['jck_woosocial']->templates->locate_template( 'activity/part-action.php' ));
                 
             }
             
@@ -272,7 +270,7 @@ class JCK_WooSocial_ActivityLogSystem {
     
     public function format_actions( $activity ) {
         
-        global $JCK_WooSocial;
+        
      
         if( $activity && !empty( $activity ) ) {
             $current_user_id = get_current_user_id();
@@ -282,17 +280,17 @@ class JCK_WooSocial_ActivityLogSystem {
                 $action->user_id = (int)$action->user_id;
                 $action->rel_id = (int)$action->rel_id;
                 
-                $action->user = $JCK_WooSocial->profile_system->get_user_info( $action->user_id );
+                $action->user = $GLOBALS['jck_woosocial']->profile_system->get_user_info( $action->user_id );
                     
                 if( $action->type === "follow" ) {
                     
-                    $action->user_2 = $JCK_WooSocial->profile_system->get_user_info( $action->rel_id );
+                    $action->user_2 = $GLOBALS['jck_woosocial']->profile_system->get_user_info( $action->rel_id );
                     
                     $action->formatted = $this->format_follow( $action->user, $action->user_2 );
                     
                 } elseif( $action->type === "like" ) {
                     
-                    $action->product = $JCK_WooSocial->like_system->get_product_info( $action->rel_id );
+                    $action->product = $GLOBALS['jck_woosocial']->like_system->get_product_info( $action->rel_id );
                     
                     $username = ( $action->user_id == $current_user_id ) ? __("You", "jck_woo_social") : $action->user->profile_link; 
                     
@@ -365,10 +363,10 @@ class JCK_WooSocial_ActivityLogSystem {
         
         // start query
         
-        global $JCK_WooSocial;
+        
         
         $activity = array();
-        $following = $JCK_WooSocial->follow_system->get_following( $user_id, null, null, true );
+        $following = $GLOBALS['jck_woosocial']->follow_system->get_following( $user_id, null, null, true );
         
         if( $following && !empty($following) ) {
             
@@ -432,9 +430,9 @@ class JCK_WooSocial_ActivityLogSystem {
     
     public function remove_like( $user_id, $product_id ) {
         
-        global $JCK_WooSocial, $wpdb;
+        global $wpdb;
         
-        $liked = $JCK_WooSocial->like_system->has_liked( $user_id, $product_id );
+        $liked = $GLOBALS['jck_woosocial']->like_system->has_liked( $user_id, $product_id );
         
         if( $liked ) {
         
@@ -458,7 +456,7 @@ class JCK_WooSocial_ActivityLogSystem {
     
     public function add_follow( $user_id, $follow_user_id ) {
         
-        global $wpdb, $JCK_WooSocial;
+        global $wpdb;
         
         $follow_data = array( 
             'user_id' => $user_id, 
@@ -478,12 +476,12 @@ class JCK_WooSocial_ActivityLogSystem {
             ) 
         );
         
-        $follow = $JCK_WooSocial->follow_system->is_following( $user_id, $follow_user_id );
+        $follow = $GLOBALS['jck_woosocial']->follow_system->is_following( $user_id, $follow_user_id );
         
         if( $follow ) {
         
-            $follow->user_1 = $JCK_WooSocial->profile_system->get_user_info( $user_id );
-            $follow->user_2 = $JCK_WooSocial->profile_system->get_user_info( $follow_user_id );
+            $follow->user_1 = $GLOBALS['jck_woosocial']->profile_system->get_user_info( $user_id );
+            $follow->user_2 = $GLOBALS['jck_woosocial']->profile_system->get_user_info( $follow_user_id );
             
             $follow->formatted = $this->format_follow( $follow->user_1, $follow->user_2 );
             $follow->formatted_date = __('Just now','jck-woo-social');
@@ -506,9 +504,9 @@ class JCK_WooSocial_ActivityLogSystem {
     
     public function remove_follow( $user_id, $follow_user_id ) {
         
-        global $JCK_WooSocial, $wpdb;
+        global $wpdb;
         
-        $following = $JCK_WooSocial->follow_system->is_following( $user_id, $follow_user_id );
+        $following = $GLOBALS['jck_woosocial']->follow_system->is_following( $user_id, $follow_user_id );
         
         if( $following ) {
         

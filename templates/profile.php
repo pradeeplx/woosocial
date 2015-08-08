@@ -9,8 +9,8 @@
 get_header(); ?>
 
 <?php 
-global $JCK_WooSocial;
-$user_info = $JCK_WooSocial->profile_system->user_info;
+
+$user_info = $GLOBALS['jck_woosocial']->profile_system->user_info;
 ?>
 
 <?php
@@ -25,22 +25,22 @@ $user_info = $JCK_WooSocial->profile_system->user_info;
 	do_action( 'jck_woo_social_before_profile' );
 ?>
     
-    <?php include( $JCK_WooSocial->templates->locate_template( 'profile/part-header.php' ) ); ?>
+    <?php include( $GLOBALS['jck_woosocial']->templates->locate_template( 'profile/part-header.php' ) ); ?>
     
-    <ul class="<?php echo $JCK_WooSocial->slug; ?>-profile-links">
-        <li class="<?php echo $JCK_WooSocial->slug; ?>-profile-links__item"><a href="#<?php echo $JCK_WooSocial->slug; ?>-activity" class="<?php echo $JCK_WooSocial->slug; ?>-profile-link <?php echo $JCK_WooSocial->slug; ?>-tab-link <?php echo $JCK_WooSocial->slug; ?>-tab-link--active"><?php _e('Activity','jck-woo-social'); ?></a></li>
-        <li class="<?php echo $JCK_WooSocial->slug; ?>-profile-links__item"><a href="#<?php echo $JCK_WooSocial->slug; ?>-likes" class="<?php echo $JCK_WooSocial->slug; ?>-profile-link <?php echo $JCK_WooSocial->slug; ?>-tab-link"><?php echo $user_info->likes_count_formatted; ?></a></li>
-        <li class="<?php echo $JCK_WooSocial->slug; ?>-profile-links__item"><a href="#<?php echo $JCK_WooSocial->slug; ?>-followers" class="<?php echo $JCK_WooSocial->slug; ?>-profile-link <?php echo $JCK_WooSocial->slug; ?>-tab-link"><?php echo $user_info->followers_count_formatted; ?></a></li>
-        <li class="<?php echo $JCK_WooSocial->slug; ?>-profile-links__item"><a href="#<?php echo $JCK_WooSocial->slug; ?>-following" class="<?php echo $JCK_WooSocial->slug; ?>-profile-link <?php echo $JCK_WooSocial->slug; ?>-tab-link"><?php echo $user_info->following_count_formatted; ?></a></li>
+    <ul class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-links">
+        <li class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-links__item"><a href="#<?php echo $GLOBALS['jck_woosocial']->slug; ?>-activity" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-link <?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-link <?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-link--active"><?php _e('Activity','jck-woo-social'); ?></a></li>
+        <li class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-links__item"><a href="#<?php echo $GLOBALS['jck_woosocial']->slug; ?>-likes" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-link <?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-link"><?php echo $user_info->likes_count_formatted; ?></a></li>
+        <li class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-links__item"><a href="#<?php echo $GLOBALS['jck_woosocial']->slug; ?>-followers" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-link <?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-link"><?php echo $user_info->followers_count_formatted; ?></a></li>
+        <li class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-links__item"><a href="#<?php echo $GLOBALS['jck_woosocial']->slug; ?>-following" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-link <?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-link"><?php echo $user_info->following_count_formatted; ?></a></li>
     </ul>
     
-    <?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'activity' ); ?>
+    <?php $GLOBALS['jck_woosocial']->templates->get_template_part( 'profile/feed', 'activity' ); ?>
     
-    <?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'likes' ); ?>
+    <?php $GLOBALS['jck_woosocial']->templates->get_template_part( 'profile/feed', 'likes' ); ?>
     
-    <?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'followers' ); ?>
+    <?php $GLOBALS['jck_woosocial']->templates->get_template_part( 'profile/feed', 'followers' ); ?>
     
-    <?php $JCK_WooSocial->templates->get_template_part( 'profile/feed', 'following' ); ?>
+    <?php $GLOBALS['jck_woosocial']->templates->get_template_part( 'profile/feed', 'following' ); ?>
 
 <?php
 /**	=============================

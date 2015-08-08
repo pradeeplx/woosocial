@@ -1,13 +1,11 @@
-<?php global $JCK_WooSocial; ?>
+<div id="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-following" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-content">
 
-<div id="<?php echo $JCK_WooSocial->slug; ?>-following" class="<?php echo $JCK_WooSocial->slug; ?>-tab-content">
-
-    <?php $following = $JCK_WooSocial->follow_system->get_following( $JCK_WooSocial->profile_system->user_info->ID ); ?>
+    <?php $following = $GLOBALS['jck_woosocial']->follow_system->get_following( $GLOBALS['jck_woosocial']->profile_system->user_info->ID ); ?>
     
     <?php foreach( $following as $user ) { ?>
         
-        <?php $user = $JCK_WooSocial->profile_system->get_user_info( $user->rel_id ); ?>            
-        <?php include( $JCK_WooSocial->templates->locate_template( 'cards/user.php' ) ); ?>
+        <?php $user = $GLOBALS['jck_woosocial']->profile_system->get_user_info( $user->rel_id ); ?>            
+        <?php include( $GLOBALS['jck_woosocial']->templates->locate_template( 'cards/user.php' ) ); ?>
         
     <?php } ?>
 

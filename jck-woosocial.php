@@ -12,8 +12,6 @@ Text Domain: jck-woo-social
 defined('JCK_WOOSOCIAL_PLUGIN_PATH') or define('JCK_WOOSOCIAL_PLUGIN_PATH', plugin_dir_path( __FILE__ ));
 defined('JCK_WOOSOCIAL_PLUGIN_URL') or define('JCK_WOOSOCIAL_PLUGIN_URL', plugin_dir_url( __FILE__ ));
 
-require_once( dirname( __FILE__ ) . '/inc/admin/class-tgm-plugin-activation.php' );
-
 class JCK_WooSocial {
     
     public $name = 'WooCommerce Social';

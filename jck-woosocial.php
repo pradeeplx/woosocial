@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: WooCommerce Social
+Plugin Name: WooSocial
 Plugin URI: http://www.jckemp.com
-Description: Profiles, likes, and followers - WooCommerce Social
+Description: Profiles, likes, and followers - WooSocial
 Version: 1.0.0
 Author: James Kemp
 Author URI: http://www.jckemp.com
@@ -14,8 +14,8 @@ defined('JCK_WOOSOCIAL_PLUGIN_URL') or define('JCK_WOOSOCIAL_PLUGIN_URL', plugin
 
 class JCK_WooSocial {
     
-    public $name = 'WooCommerce Social';
-    public $shortname = 'Woo Social';
+    public $name = 'WooSocial';
+    public $shortname = 'WooSocial';
     public $slug = 'jck-woosocial';
     public $version = "1.0.0";
     public $plugin_path = JCK_WOOSOCIAL_PLUGIN_PATH;

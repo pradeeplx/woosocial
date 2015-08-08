@@ -50,7 +50,7 @@ class JCK_WooSocial_FollowSystem {
     		
             $action = $GLOBALS['jck_woosocial']->activity_log->add_follow( $current_user_id, $_GET['user_id'] );
             
-            $response['button']['text'] = __('Unfollow','jck-woo-social');
+            $response['button']['text'] = __('Unfollow', 'jck-woosocial');
             $response['button']['type'] = 'unfollow';
             
             ob_start();
@@ -61,7 +61,7 @@ class JCK_WooSocial_FollowSystem {
             
             $removed = $GLOBALS['jck_woosocial']->activity_log->remove_follow( $current_user_id, $_GET['user_id'] );
             
-            $response['button']['text'] = __('Follow','jck-woo-social');
+            $response['button']['text'] = __('Follow', 'jck-woosocial');
             $response['button']['type'] = 'follow';
             
             $response['remove_follow_class'] = '.'.$GLOBALS['jck_woosocial']->slug.'-action--'.$removed->id;
@@ -206,7 +206,7 @@ class JCK_WooSocial_FollowSystem {
             $myaccount_page_url = ( $myaccount_page_id ) ? get_permalink( $myaccount_page_id ).'?profile='.$user_info->user_nicename : "javascript: void(0);";
 
             $is_following = $GLOBALS['jck_woosocial']->follow_system->is_following( $current_user_id, $user_info->ID );
-            $button_text = ( $is_following ) ? __("Unfollow",'jck-woo-social') : __("Follow",'jck-woo-social');
+            $button_text = ( $is_following ) ? __("Unfollow", 'jck-woosocial') : __("Follow", 'jck-woosocial');
             $button_type = ( $is_user_logged_in ) ? ( $is_following ? "unfollow" : "follow" ) : "login";
             $button_classes = implode(' ', array(
                 'button',

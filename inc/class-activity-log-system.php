@@ -292,7 +292,7 @@ class JCK_WooSocial_ActivityLogSystem {
                     
                     $action->product = $GLOBALS['jck_woosocial']->like_system->get_product_info( $action->rel_id );
                     
-                    $username = ( $action->user_id == $current_user_id ) ? __("You", "jck_woo_social") : $action->user->profile_link; 
+                    $username = ( $action->user_id == $current_user_id ) ? __("You", 'jck-woosocial') : $action->user->profile_link; 
                     
                     $action->formatted = sprintf('%s liked %s', $username, $action->product->link);
                     
@@ -326,10 +326,10 @@ class JCK_WooSocial_ActivityLogSystem {
         
         $current_user_id = get_current_user_id();
         
-        $username_1 = ( $user_1->ID == $current_user_id ) ? __("You", "jck_woo_social") : $user_1->profile_link; 
-        $username_2 = ( $user_2->ID == $current_user_id ) ? strtolower(__("You", "jck_woo_social")) : $user_2->profile_link; 
+        $username_1 = ( $user_1->ID == $current_user_id ) ? __("You", 'jck-woosocial') : $user_1->profile_link; 
+        $username_2 = ( $user_2->ID == $current_user_id ) ? strtolower(__("You", 'jck-woosocial')) : $user_2->profile_link; 
         
-        return $username_1." ".__('followed','jck-woo-social')." ".$username_2;
+        return $username_1." ".__('followed', 'jck-woosocial')." ".$username_2;
         
     }
 
@@ -484,7 +484,7 @@ class JCK_WooSocial_ActivityLogSystem {
             $follow->user_2 = $GLOBALS['jck_woosocial']->profile_system->get_user_info( $follow_user_id );
             
             $follow->formatted = $this->format_follow( $follow->user_1, $follow->user_2 );
-            $follow->formatted_date = __('Just now','jck-woo-social');
+            $follow->formatted_date = __('Just now', 'jck-woosocial');
         
         }
         

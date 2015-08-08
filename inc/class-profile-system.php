@@ -205,7 +205,7 @@ class JCK_WooSocial_ProfileSystem {
     public function get_profile_link( $author_nicename ) {
         
         $profile_url = $this->get_profile_url($author_nicename);
-        $profile_title = esc_attr(sprintf(__("%s - Visit Profile",'jck-woo-social'), $author_nicename));
+        $profile_title = esc_attr(sprintf(__("%s - Visit Profile", 'jck-woosocial'), $author_nicename));
         
         return sprintf( '<a href="%s" title="%s">%s</a>', $profile_url, $profile_title, $author_nicename);
         
@@ -272,7 +272,7 @@ class JCK_WooSocial_ProfileSystem {
             
             $user->likes_count_formatted = sprintf('<strong>%s</strong> %s', $user->likes_count, _n('Like', 'Likes', $user->likes_count,'jck-woo-social'));
             $user->followers_count_formatted = sprintf('<strong>%s</strong> %s', $user->followers_count, _n('Follower', 'Followers', $user->followers_count,'jck-woo-social'));
-            $user->following_count_formatted = sprintf('<strong>%s</strong> %s', $user->following_count, __('Following', 'jck-woo-social'));
+            $user->following_count_formatted = sprintf('<strong>%s</strong> %s', $user->following_count, __('Following', 'jck-woosocial'));
             
             $user->follow_button = $GLOBALS['jck_woosocial']->follow_system->get_follow_button( $user );
         

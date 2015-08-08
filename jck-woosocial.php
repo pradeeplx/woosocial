@@ -101,7 +101,7 @@ class JCK_WooSocial {
    	
 	public function plugins_loaded_hook() {
     	
-    	load_plugin_textdomain( "jck_woo_social", false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+    	load_plugin_textdomain( "jck-woosocial", false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
         
 	}
 
@@ -153,14 +153,14 @@ class JCK_WooSocial {
     ============================= */
 
 	public function nav_menu_add_meta_boxes() {
-		add_meta_box( 'jck_woo_social_nav_link', __( 'WooCommerce Social', 'jck-woo-social' ), array( $this, 'nav_menu_links' ), 'nav-menus', 'side', 'low' );
+		add_meta_box( 'jck_woo_social_nav_link', __( 'WooCommerce Social', 'jck-woosocial' ), array( $this, 'nav_menu_links' ), 'nav-menus', 'side', 'low' );
 	}
 
 	public function nav_menu_links() {
     	
     	$links = array(
-        	__('Activity Feed','jck-woo-social') => '/jck-woo-social/activity/',
-        	__('Your Profile','jck-woo-social')  => '/jck-woo-social/profile/%nicename%/'
+        	__('Activity Feed', 'jck-woosocial') => '/jck-woo-social/activity/',
+        	__('Your Profile', 'jck-woosocial')  => '/jck-woo-social/profile/%nicename%/'
     	);
     	
 		?>
@@ -416,7 +416,7 @@ class JCK_WooSocial {
             $this->activity_log->default_offset + $this->activity_log->default_limit,
             $this->profile_system->user_info->ID,
             implode(' ', $additional_attributes),
-            __('Load more','jck-woo-social')
+            __('Load more', 'jck-woosocial')
         );
         
     }

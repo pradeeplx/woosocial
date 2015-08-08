@@ -176,7 +176,7 @@ class JCK_WooSocial_LikeSystem {
         $user = $GLOBALS['jck_woosocial']->profile_system->get_user_info( $user_id );
         
         ob_start();
-        include($GLOBALS['jck_woosocial']->templates->locate_template( 'product/loop-likes.php' ));
+        include($GLOBALS['jck_woosocial']->templates->locate_template( 'product/part-like-item.php' ));
         $like_list_item = ob_get_clean();
         
         return $like_list_item;
@@ -186,6 +186,8 @@ class JCK_WooSocial_LikeSystem {
 /**	=============================
     *
     * Show Likes in the Loop
+    *
+    * @param int $product_id
     *
     ============================= */
     

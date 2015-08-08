@@ -377,7 +377,7 @@ class JCK_WooSocial {
     *
     * Get "Load More" Ajax Button
     *
-    * @param mixed $anything Description of the parameter
+    * @param mixed $type
     * @return str
     *
     ============================= */

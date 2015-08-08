@@ -223,23 +223,24 @@ class JCK_WooSocial_LikeSystem {
         if( !$args['product_id'] )
             return "";
             
-        
-            
-        $type = $this->has_liked( get_current_user_id(), $args['product_id'] ) ? "unlike" : "like";
-        $product_likes_count = $this->get_product_likes_count( $args['product_id'] );
+        $product_id = $args['product_id'];            
+        $type = $this->has_liked( get_current_user_id(), $product_id ) ? "unlike" : "like";
+        $product_likes_count = $this->get_product_likes_count( $product_id );
         
         $myaccount_page_id = get_option( 'woocommerce_myaccount_page_id' );
         $myaccount_page_url = ( $myaccount_page_id ) ? sprintf( '%s?like-product=%d', get_permalink( $myaccount_page_id ), $args['product_id'] ) : "javascript: void(0);";
 
-        $button_classes = implode(' ', array(
-            'button',
-            sprintf( '%s-button', $GLOBALS['jck_woosocial']->slug ),
+        $button_classes = implode(' ', apply_filters( 'jck_woosocial_like_button_classes', array(
             sprintf( '%s-like-action', $GLOBALS['jck_woosocial']->slug ),
             sprintf( '%s-like-action--%s', $GLOBALS['jck_woosocial']->slug, $type )
-        ));
+        ), $product_id, $type, $product_likes_count ));
         $href = ( is_user_logged_in() ) ? "javascript: void(0);" : $myaccount_page_url;
         
-        return sprintf( '<a href="%s" class="%s" data-type="%s" data-product-id="%d"><i class="woo-social-ic-like"></i> <span class="jck-woo-social-like-button__count">%d</span></a>', $href, $button_classes, $type, $args['product_id'], $product_likes_count );
+        ob_start();
+        include($GLOBALS['jck_woosocial']->templates->locate_template( 'product/part-like-button.php' ));
+        $like_button = ob_get_clean();
+        
+        return $like_button;
         
     }
     

@@ -4,7 +4,7 @@ class JCK_WooSocial_ActivityLogSystem {
     
     public $table_name;
     public $db_version = "1.0";
-    public $slug = "jck_woo_social_activity_log";
+    public $slug = "jck_woosocial_activity_log";
     public $default_limit = 10;
     public $default_offset = 0;
 

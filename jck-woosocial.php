@@ -16,7 +16,7 @@ class JCK_WooSocial {
     
     public $name = 'WooCommerce Social';
     public $shortname = 'Woo Social';
-    public $slug = 'jck_woo_social';
+    public $slug = 'jck-woosocial';
     public $version = "1.0.0";
     public $plugin_path = JCK_WOOSOCIAL_PLUGIN_PATH;
     public $plugin_url = JCK_WOOSOCIAL_PLUGIN_URL;

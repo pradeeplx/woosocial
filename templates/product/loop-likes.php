@@ -1,4 +1,4 @@
-<?php $location = ( is_archive() ) ? "loop" : "single"; ?>
+<?php $location = ( is_archive() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) ? "loop" : "single"; ?>
 
 <ul class="jck-woo-social-likes jck-woo-social-likes--<?php echo $location; ?>">
             

@@ -308,7 +308,7 @@
 .jck_woo_social-action__wrapper {
   position: relative;
   margin-left: 60px;
-  background: #eee;
+  background: #fff;
   border-radius: 5px;
   padding: 0;
 }
@@ -347,7 +347,7 @@
   width: 100%;
   height: 60px;
   overflow: hidden;
-  background: #dddddd;
+  background: #ddd;
   border-radius: 5px 5px 0 0;
   line-height: 60px;
   text-overflow: ellipsis;
@@ -363,6 +363,11 @@
   float: left;
   display: inline;
   border: none;
+}
+.jck_woo_social-action__content {
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
 }
 .jck_woo_social-action__date {
   display: inline-block;
@@ -410,7 +415,7 @@
   white-space: nowrap;
 }
 .jck-woo-social-likes--loop {
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #ddd;
   margin-top: 15px;
   padding-top: 15px;
   height: 34px;

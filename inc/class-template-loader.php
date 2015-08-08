@@ -44,6 +44,6 @@ class JCK_WooSocial_TemplateLoader extends Gamajo_Template_Loader {
 	 * @since 1.0.0
 	 * @type string
 	 */
-	protected $plugin_directory = JCK_WOO_SOCIAL_PLUGIN_PATH;
+	protected $plugin_directory = JCK_WOOSOCIAL_PLUGIN_PATH;
 
 }

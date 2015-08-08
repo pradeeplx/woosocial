@@ -9,8 +9,8 @@ Author URI: http://www.jckemp.com
 Text Domain: jck-woo-social
 */
 
-defined('JCK_WOO_SOCIAL_PLUGIN_PATH') or define('JCK_WOO_SOCIAL_PLUGIN_PATH', plugin_dir_path( __FILE__ ));
-defined('JCK_WOO_SOCIAL_PLUGIN_URL') or define('JCK_WOO_SOCIAL_PLUGIN_URL', plugin_dir_url( __FILE__ ));
+defined('JCK_WOOSOCIAL_PLUGIN_PATH') or define('JCK_WOOSOCIAL_PLUGIN_PATH', plugin_dir_path( __FILE__ ));
+defined('JCK_WOOSOCIAL_PLUGIN_URL') or define('JCK_WOOSOCIAL_PLUGIN_URL', plugin_dir_url( __FILE__ ));
 
 require_once( dirname( __FILE__ ) . '/inc/admin/class-tgm-plugin-activation.php' );
 
@@ -20,8 +20,8 @@ class JCK_WooSocial {
     public $shortname = 'Woo Social';
     public $slug = 'jck_woo_social';
     public $version = "1.0.0";
-    public $plugin_path = JCK_WOO_SOCIAL_PLUGIN_PATH;
-    public $plugin_url = JCK_WOO_SOCIAL_PLUGIN_URL;
+    public $plugin_path = JCK_WOOSOCIAL_PLUGIN_PATH;
+    public $plugin_url = JCK_WOOSOCIAL_PLUGIN_URL;
     public $options_name;
     public $options;
     public $profile_system;
@@ -42,9 +42,9 @@ class JCK_WooSocial {
         register_activation_hook( __FILE__, array( $this, 'install' ) );
         
         // Hook up to the init and plugins_loaded actions
-        add_action( 'plugins_loaded',   array( $this, 'plugins_loaded_hook' ) );
-        add_action( 'init',             array( $this, 'initiate_hook' ) );
-        add_action( 'wp',               array( $this, 'wp_hook' ) );
+        add_action( 'plugins_loaded', array( $this, 'plugins_loaded_hook' ) );
+        add_action( 'init',           array( $this, 'initiate_hook' ) );
+        add_action( 'wp',             array( $this, 'wp_hook' ) );
         
     }
 
@@ -81,17 +81,17 @@ class JCK_WooSocial {
     
     private function load_classes() {
         
-        require_once($this->plugin_path.'/inc/class-template-loader.php');
-        require_once($this->plugin_path.'/inc/class-profile-system.php');
-        require_once($this->plugin_path.'/inc/class-like-system.php');
-        require_once($this->plugin_path.'/inc/class-follow-system.php');
-        require_once($this->plugin_path.'/inc/class-activity-log-system.php');
+        require_once( $this->plugin_path.'/inc/class-template-loader.php' );
+        require_once( $this->plugin_path.'/inc/class-profile-system.php' );
+        require_once( $this->plugin_path.'/inc/class-like-system.php' );
+        require_once( $this->plugin_path.'/inc/class-follow-system.php' );
+        require_once( $this->plugin_path.'/inc/class-activity-log-system.php' );
         
-        $this->templates = new JCK_WooSocial_TemplateLoader();
+        $this->templates      = new JCK_WooSocial_TemplateLoader();
         $this->profile_system = new JCK_WooSocial_ProfileSystem();
-        $this->like_system = new JCK_WooSocial_LikeSystem();
-        $this->follow_system = new JCK_WooSocial_FollowSystem();
-        $this->activity_log = new JCK_WooSocial_ActivityLogSystem();
+        $this->like_system    = new JCK_WooSocial_LikeSystem();
+        $this->follow_system  = new JCK_WooSocial_FollowSystem();
+        $this->activity_log   = new JCK_WooSocial_ActivityLogSystem();
         
     }
 
@@ -117,14 +117,14 @@ class JCK_WooSocial {
 
         if(is_admin()) {
             
-            add_action( 'admin_enqueue_scripts',                        array( $this, 'admin_scripts' ) ); 
-            add_action( 'admin_enqueue_scripts',                        array( $this, 'admin_styles' ) ); 
-            add_action( 'admin_init',                                   array( $this, 'nav_menu_add_meta_boxes' ) );
+            add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) ); 
+            add_action( 'admin_enqueue_scripts', array( $this, 'admin_styles' ) ); 
+            add_action( 'admin_init',            array( $this, 'nav_menu_add_meta_boxes' ) );
             
         } else {
             
-            add_action( 'wp_enqueue_scripts',                           array( $this, 'frontend_scripts' ) );
-            add_action( 'wp_enqueue_scripts',                           array( $this, 'frontend_styles' ) );
+            add_action( 'wp_enqueue_scripts',    array( $this, 'frontend_scripts' ) );
+            add_action( 'wp_enqueue_scripts',    array( $this, 'frontend_styles' ) );
             
         }
         
@@ -162,7 +162,7 @@ class JCK_WooSocial {
     	
     	$links = array(
         	__('Activity Feed','jck-woo-social') => '/jck-woo-social/activity/',
-        	__('Your Profile','jck-woo-social') => '/jck-woo-social/profile/%nicename%/'
+        	__('Your Profile','jck-woo-social')  => '/jck-woo-social/profile/%nicename%/'
     	);
     	
 		?>
@@ -231,8 +231,8 @@ class JCK_WooSocial {
         
         $vars = array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
-			'nonce' => wp_create_nonce( $this->slug ),
-			'user_id' => is_user_logged_in() ? get_current_user_id() : 0
+			'nonce'    => wp_create_nonce( $this->slug ),
+			'user_id'  => is_user_logged_in() ? get_current_user_id() : 0
 		);
 		
 		wp_localize_script( $this->slug.'_scripts', $this->slug.'_vars', $vars );
@@ -335,15 +335,18 @@ class JCK_WooSocial {
         
             // Create the plugins folder and file variables
         $plugin_folder = get_plugins( '/' . 'woocommerce' );
-        $plugin_file = 'woocommerce.php';
+        $plugin_file   = 'woocommerce.php';
         
         // If the plugin version number is set, return it 
         if ( isset( $plugin_folder[$plugin_file]['Version'] ) ) {
+            
             return $plugin_folder[$plugin_file]['Version'];
     
-        } else {
         // Otherwise return null
+        } else {
+            
             return NULL;
+            
         }
         
     }
@@ -362,14 +365,25 @@ class JCK_WooSocial {
         if( $number == 0 ) 
             return $number;
         
-        $abbrevs = array(12 => "T", 9 => "B", 6 => "M", 3 => "K", 0 => "");
+        $abbrevs = array(
+            12 => "T", 
+            9  => "B", 
+            6  => "M", 
+            3  => "K",
+            0  => "",
+        );
     
         foreach($abbrevs as $exponent => $abbrev) {
-            if($number >= pow(10, $exponent)) {
+            
+            if( $number >= pow(10, $exponent) ) {
+            	
             	$display_num = $number / pow(10, $exponent);
-            	$decimals = ($exponent >= 3 && round($display_num) < 100) ? 1 : 0;
+            	$decimals    = ($exponent >= 3 && round($display_num) < 100) ? 1 : 0;
+                
                 return number_format($display_num,$decimals) . $abbrev;
+                
             }
+            
         }
     }
 

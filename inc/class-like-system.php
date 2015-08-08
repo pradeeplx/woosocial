@@ -173,11 +173,13 @@ class JCK_WooSocial_LikeSystem {
     
     public function get_like_list_item( $user_id ) {
         
-        
-        
         $user = $GLOBALS['jck_woosocial']->profile_system->get_user_info( $user_id );
         
-        return sprintf('<li class="jck-woo-social-likes__item jck-woo-social-likes__item--%d">%s</li>', $user_id, $user->avatar);
+        ob_start();
+        include($GLOBALS['jck_woosocial']->templates->locate_template( 'product/loop-likes.php' ));
+        $like_list_item = ob_get_clean();
+        
+        return $like_list_item;
         
     }
 
@@ -192,27 +194,9 @@ class JCK_WooSocial_LikeSystem {
         global $post;
         
         $product_id = ( $product_id ) ? $product_id : $post->ID;
-        
         $product_likes = $this->get_product_likes( $product_id );
-        $location = ( is_archive() ) ? "loop" : "single";
-            
-        echo sprintf('<ul class="jck-woo-social-likes jck-woo-social-likes--%s">', $location);
-            
-            $like_button = $this->get_like_button( array( 'product_id' => $product_id ) );
         
-            echo sprintf( '<li class="jck-woo-social-likes__item jck-woo-social-likes__item--like-button">%s</li>', $like_button );
-            
-            if( $product_likes && !empty($product_likes) ) {
-            
-                foreach($product_likes as $product_like ) {
-                    
-                    echo $this->get_like_list_item( $product_like->user_id );
-                    
-                }
-            
-            }
-        
-        echo '</ul>';
+        include($GLOBALS['jck_woosocial']->templates->locate_template( 'product/loop-likes.php' ));
         
     }
 

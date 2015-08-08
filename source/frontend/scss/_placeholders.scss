@@ -1,0 +1,22 @@
+%avatar {
+    display: block;
+    border-radius: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    max-width: 100%;
+}
+
+%avatar-small {
+    @extend %avatar;
+    
+    width: 34px;
+    height: 34px;
+}
+
+%avatar-large {
+    @extend %avatar;
+    
+    width: 250px;
+    height: 250px;
+}

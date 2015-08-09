@@ -29,13 +29,18 @@ $user_info = $GLOBALS['jck_woosocial']->profile_system->user_info;
     
     <?php include( $GLOBALS['jck_woosocial']->templates->locate_template( 'profile/part-links.php' ) ); ?>
     
-    <?php $GLOBALS['jck_woosocial']->templates->get_template_part( 'profile/feed', 'activity' ); ?>
+    <?php $feeds = array(
+        'activity',
+        'likes',
+        'followers',
+        'following',
+    ); ?>
     
-    <?php $GLOBALS['jck_woosocial']->templates->get_template_part( 'profile/feed', 'likes' ); ?>
-    
-    <?php $GLOBALS['jck_woosocial']->templates->get_template_part( 'profile/feed', 'followers' ); ?>
-    
-    <?php $GLOBALS['jck_woosocial']->templates->get_template_part( 'profile/feed', 'following' ); ?>
+    <?php foreach( $feeds as $feed ) { ?>
+        
+        <?php include( $GLOBALS['jck_woosocial']->templates->locate_template( sprintf( 'profile/feed-%s.php', $feed ) ) ); ?>
+        
+    <?php } ?>
 
 <?php
 /**	=============================

@@ -27,12 +27,7 @@ $user_info = $GLOBALS['jck_woosocial']->profile_system->user_info;
     
     <?php include( $GLOBALS['jck_woosocial']->templates->locate_template( 'profile/part-header.php' ) ); ?>
     
-    <ul class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-links">
-        <li class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-links__item"><a href="#<?php echo $GLOBALS['jck_woosocial']->slug; ?>-activity" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-link <?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-link <?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-link--active"><?php _e('Activity','jck-woo-social'); ?></a></li>
-        <li class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-links__item"><a href="#<?php echo $GLOBALS['jck_woosocial']->slug; ?>-likes" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-link <?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-link"><?php echo $user_info->likes_count_formatted; ?></a></li>
-        <li class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-links__item"><a href="#<?php echo $GLOBALS['jck_woosocial']->slug; ?>-followers" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-link <?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-link"><?php echo $user_info->followers_count_formatted; ?></a></li>
-        <li class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-links__item"><a href="#<?php echo $GLOBALS['jck_woosocial']->slug; ?>-following" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-link <?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-link"><?php echo $user_info->following_count_formatted; ?></a></li>
-    </ul>
+    <?php include( $GLOBALS['jck_woosocial']->templates->locate_template( 'profile/part-links.php' ) ); ?>
     
     <?php $GLOBALS['jck_woosocial']->templates->get_template_part( 'profile/feed', 'activity' ); ?>
     

@@ -22,10 +22,10 @@ class JCK_WooSocial_LikeSystem {
    	
 	public function initiate_hook() {
     	
-    	add_action( 'wp_ajax_jck_woo_social_like_action',                array( $this, 'like_action' ) );
+    	add_action( 'wp_ajax_jck_woosocial_like_action',                 array( $this, 'like_action' ) );
         
-        add_action( 'wp_ajax_jck_woo_social_load_more_likes',            array( $this, 'load_more' ) );
-        add_action( 'wp_ajax_nopriv_jck_woo_social_load_more_likes',     array( $this, 'load_more' ) );
+        add_action( 'wp_ajax_jck_woosocial_load_more_likes',             array( $this, 'load_more' ) );
+        add_action( 'wp_ajax_nopriv_jck_woosocial_load_more_likes',      array( $this, 'load_more' ) );
 
         if(!is_admin()) {
             
@@ -44,8 +44,6 @@ class JCK_WooSocial_LikeSystem {
     ============================= */
     
     function like_action() {
-        
-        
     	
     	if ( ! wp_verify_nonce( $_GET['nonce'], $GLOBALS['jck_woosocial']->slug ) )
     		die ( 'Busted!' );
@@ -69,7 +67,7 @@ class JCK_WooSocial_LikeSystem {
             $action = $GLOBALS['jck_woosocial']->activity_log->remove_like( $current_user_id, $_GET['product_id'] );
             
             $response['button']['type'] = 'like';
-            $response['remove_like_class'] = '.jck-woo-social-likes__item--'.$current_user_id;
+            $response['remove_like_class'] = sprintf( '.%s-likes__item--%s', $GLOBALS['jck_woosocial']->slug, $current_user_id );
             
         }
     
@@ -94,8 +92,6 @@ class JCK_WooSocial_LikeSystem {
     ============================= */
     
     function load_more() {
-        
-        
         
         $response = array(
             'likes_html' => false

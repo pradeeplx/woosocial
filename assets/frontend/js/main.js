@@ -118,7 +118,7 @@
         				dataType: "jsonp",				
         				crossDomain: true,
         				data: {
-        					action: 'jck-woosocial_like_action',
+        					action: 'jck_woosocial_like_action',
         					nonce: jck_woosocial_vars.nonce,
         					product_id: product_id,
         					type: type

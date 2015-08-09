@@ -2,7 +2,7 @@
 /**
  * The template for displaying a profile page
  *
- * @package jck-woo-social
+ * @package jck-woosocial
  * @since WooCommerce Social 1.0.0
  */
 

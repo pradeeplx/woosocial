@@ -28,7 +28,7 @@ class JCK_WooSocial_TemplateLoader extends Gamajo_Template_Loader {
 	 * @since 1.0.0
 	 * @type string
 	 */
-	protected $theme_template_directory = 'jck-woo-social';
+	protected $theme_template_directory = 'jck-woosocial';
 
 	/**
 	 * Reference to the root directory path of this plugin.

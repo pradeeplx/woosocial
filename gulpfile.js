@@ -3,8 +3,8 @@
 
 // Project Specific
 
-var plugin_zip_name = 'jck-woo-social.zip';
-var plugin_main_file = 'jck-woo-social.php';
+var plugin_zip_name = 'jck-woosocial.zip';
+var plugin_main_file = 'jck-woosocial.php';
 
 
 // load plugins

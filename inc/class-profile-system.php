@@ -119,7 +119,7 @@ class JCK_WooSocial_ProfileSystem {
             
             $current_user = wp_get_current_user();
         
-            $atts['href'] = str_replace('/jck-woo-social', '', $atts['href']);
+            $atts['href'] = str_replace('/jck-woosocial', '', $atts['href']);
             $atts['href'] = str_replace('%nicename%', $current_user->user_nicename, $atts['href']);
         
         }
@@ -140,7 +140,7 @@ class JCK_WooSocial_ProfileSystem {
         
         $i = 0; foreach( $items as $item ) {
             
-            if( strpos( $item->url, "jck-woo-social" ) !== false && !is_user_logged_in() ) {
+            if( strpos( $item->url, "jck-woosocial" ) !== false && !is_user_logged_in() ) {
                 
                 unset( $items[$i] );
                 
@@ -270,8 +270,8 @@ class JCK_WooSocial_ProfileSystem {
             $user->avatar = get_avatar( $user->ID, get_option( 'thumbnail_size_w' ) );
             $user->avatar_link = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr($user->profile_url), esc_attr($user->user_nicename), $user->avatar );
             
-            $user->likes_count_formatted = sprintf('<strong>%s</strong> %s', $user->likes_count, _n('Like', 'Likes', $user->likes_count,'jck-woo-social'));
-            $user->followers_count_formatted = sprintf('<strong>%s</strong> %s', $user->followers_count, _n('Follower', 'Followers', $user->followers_count,'jck-woo-social'));
+            $user->likes_count_formatted = sprintf('<strong>%s</strong> %s', $user->likes_count, _n('Like', 'Likes', $user->likes_count,'jck-woosocial'));
+            $user->followers_count_formatted = sprintf('<strong>%s</strong> %s', $user->followers_count, _n('Follower', 'Followers', $user->followers_count,'jck-woosocial'));
             $user->following_count_formatted = sprintf('<strong>%s</strong> %s', $user->following_count, __('Following', 'jck-woosocial'));
             
             $user->follow_button = $GLOBALS['jck_woosocial']->follow_system->get_follow_button( $user );

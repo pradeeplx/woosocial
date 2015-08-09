@@ -6,7 +6,7 @@ Description: Profiles, likes, and followers - WooSocial
 Version: 1.0.0
 Author: James Kemp
 Author URI: http://www.jckemp.com
-Text Domain: jck-woo-social
+Text Domain: jck-woosocial
 */
 
 defined('JCK_WOOSOCIAL_PLUGIN_PATH') or define('JCK_WOOSOCIAL_PLUGIN_PATH', plugin_dir_path( __FILE__ ));
@@ -161,8 +161,8 @@ class JCK_WooSocial {
 	public function nav_menu_links() {
     	
     	$links = array(
-        	__('Activity Feed', 'jck-woosocial') => '/jck-woo-social/activity/',
-        	__('Your Profile', 'jck-woosocial')  => '/jck-woo-social/profile/%nicename%/'
+        	__('Activity Feed', 'jck-woosocial') => '/jck-woosocial/activity/',
+        	__('Your Profile', 'jck-woosocial')  => '/jck-woosocial/profile/%nicename%/'
     	);
     	
 		?>
@@ -412,7 +412,7 @@ class JCK_WooSocial {
             $additional_attributes[] = sprintf( 'data-profile-user-id="%d"', $this->profile_system->user_info->ID );
         
         return sprintf(
-            '<a href="javascript: void(0);" class="%s" data-limit="%d" data-offset="%d" data-user-id="%d" %s><i class="woo-social-ic-loading"></i> %s</a>', 
+            '<a href="javascript: void(0);" class="%s" data-limit="%d" data-offset="%d" data-user-id="%d" %s><i class="woosocial-ic-loading"></i> %s</a>', 
             implode(' ', $classes),
             $this->activity_log->default_limit,
             $this->activity_log->default_offset + $this->activity_log->default_limit,

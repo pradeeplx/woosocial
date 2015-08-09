@@ -186,8 +186,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-[class^="woo-social-ic-"]:before,
-[class*=" woo-social-ic-"]:before {
+[class^="woosocial-ic-"]:before,
+[class*=" woosocial-ic-"]:before {
   font-family: "woosocial" !important;
   font-style: normal !important;
   font-weight: normal !important;
@@ -199,15 +199,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.woo-social-ic-like:before {
+.woosocial-ic-like:before {
   content: "a";
 }
 
-.woo-social-ic-loading:before {
+.woosocial-ic-loading:before {
   content: "d";
 }
 
-.woo-social-ic-follow:before {
+.woosocial-ic-follow:before {
   content: "c";
 }
 

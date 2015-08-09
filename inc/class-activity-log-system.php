@@ -30,10 +30,10 @@ class JCK_WooSocial_ActivityLogSystem {
     
     public function initiate_hook() {
         
-        add_action( 'wp_ajax_jck_woo_social_load_more_activity',                array( $this, 'load_more' ) );
-        add_action( 'wp_ajax_nopriv_jck_woo_social_load_more_activity',         array( $this, 'load_more' ) );
+        add_action( 'wp_ajax_jck_woosocial_load_more_activity',         array( $this, 'load_more' ) );
+        add_action( 'wp_ajax_nopriv_jck_woosocial_load_more_activity',  array( $this, 'load_more' ) );
         
-        add_shortcode( 'jck-woo-social-activity-log',   array( $this, 'activity_log_shortcode' ) );
+        add_shortcode( 'jck-woosocial-activity-log',                    array( $this, 'activity_log_shortcode' ) );
         
     }
 
@@ -99,7 +99,7 @@ class JCK_WooSocial_ActivityLogSystem {
         
             $activity = array(
             	'post_title' => 'Activity',
-            	'post_content' => '[jck-woo-social-activity-log]',
+            	'post_content' => '[jck-woosocial-activity-log]',
             	'post_status' => 'publish',
             	'post_type' => 'page',
             	'post_slug' => 'activity'
@@ -302,7 +302,7 @@ class JCK_WooSocial_ActivityLogSystem {
                 
                 $timestamp = strtotime($action->time);
                 
-                $action->formatted_date = sprintf( _x( '%s ago', '%s = human-readable time difference', 'jck-woo-social' ), human_time_diff( current_time( 'timestamp' ), $timestamp ) );
+                $action->formatted_date = sprintf( _x( '%s ago', '%s = human-readable time difference', 'jck-woosocial' ), human_time_diff( current_time( 'timestamp' ), $timestamp ) );
                 
             $i++; }
             

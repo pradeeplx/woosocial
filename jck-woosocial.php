@@ -17,6 +17,7 @@ class JCK_WooSocial {
     public $name = 'WooSocial';
     public $shortname = 'WooSocial';
     public $slug = 'jck-woosocial';
+    public $alt_slug;
     public $version = "1.0.0";
     public $plugin_path = JCK_WOOSOCIAL_PLUGIN_PATH;
     public $plugin_url = JCK_WOOSOCIAL_PLUGIN_URL;
@@ -55,6 +56,7 @@ class JCK_WooSocial {
     public function set_constants() {
 
         $this->options_name = $this->slug.'_options';
+        $this->alt_slug = str_replace('-', '_', $this->slug);
         
     }
 
@@ -233,7 +235,7 @@ class JCK_WooSocial {
 			'user_id'  => is_user_logged_in() ? get_current_user_id() : 0
 		);
 		
-		wp_localize_script( $this->slug.'_scripts', $this->slug.'_vars', $vars );
+		wp_localize_script( $this->slug.'_scripts', $this->alt_slug.'_vars', $vars );
 		
 		wp_enqueue_script( $this->slug.'_scripts' );
         

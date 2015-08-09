@@ -53,16 +53,16 @@
                         $button.addClass(loading_class);
                     
                         $.ajax({
-            				type: "GET",
-            				url: jck-woosocial_vars.ajax_url,
-            				cache: false,
-            				dataType: "jsonp",				
+            				type:        "GET",
+            				url:         jck_woosocial_vars.ajax_url,
+            				cache:       false,
+            				dataType:    "jsonp",				
             				crossDomain: true,
             				data: {
-            					action : 'jck-woosocial_follow_action',
-            					nonce : jck-woosocial_vars.nonce,
-            					user_id : user_id,
-            					type : type
+            					action:  'jck_woosocial_follow_action',
+            					nonce:   jck_woosocial_vars.nonce,
+            					user_id: user_id,
+            					type:    type
             				},
             				
             				success: function( data ) {
@@ -98,13 +98,13 @@
         
         setup_like_action: function() {
             
-            $(document).on('click', '.jck-woo-social-like-action', function(){
+            $(document).on('click', '.jck-woosocial-like-action', function(){
                 
                 var $button = $(this),
-                    $current_likes_list = $button.closest('.jck-woo-social-likes'),
+                    $current_likes_list = $button.closest('.jck-woosocial-likes'),
                     product_id = $button.attr('data-product-id'),
                     type = $button.attr('data-type'),
-                    $count = $button.find('.jck-woo-social-like-button__count'),
+                    $count = $button.find('.jck-woosocial-like-button__count'),
                     loading_class = 'jck-woosocial-follow-action--loading';
                     
                 if( !$button.hasClass(loading_class) ) {
@@ -113,15 +113,15 @@
                     
                     $.ajax({
         				type: "GET",
-        				url: jck-woosocial_vars.ajax_url,
+        				url: jck_woosocial_vars.ajax_url,
         				cache: false,
         				dataType: "jsonp",				
         				crossDomain: true,
         				data: {
-        					action : 'jck-woosocial_like_action',
-        					nonce : jck-woosocial_vars.nonce,
-        					product_id : product_id,
-        					type : type
+        					action: 'jck-woosocial_like_action',
+        					nonce: jck_woosocial_vars.nonce,
+        					product_id: product_id,
+        					type: type
         				},
         				
         				success: function( data ) {
@@ -139,7 +139,7 @@
             					$button.addClass('jck-woosocial-like-action--'+data.button.type);
             					
             					if(data.add_like_html) {
-                					$current_likes_list.find('.jck-woo-social-likes__item--like-button').after(data.add_like_html);
+                					$current_likes_list.find('.jck-woosocial-likes__item--like-button').after(data.add_like_html);
             					}
             					
             					if(data.remove_like_class) {
@@ -206,18 +206,18 @@
                 $load_more_item = $load_more_button.parent();
                 
             $.ajax({
-				type: "GET",
-				url: jck-woosocial_vars.ajax_url,
-				cache: false,
-				dataType: "jsonp",				
+				type:        "GET",
+				url:         jck_woosocial_vars.ajax_url,
+				cache:       false,
+				dataType:    "jsonp",				
 				crossDomain: true,
 				data: {
-					action : 'jck-woosocial_load_more_activity',
-					nonce : jck-woosocial_vars.nonce,
-					limit : limit,
-					offset : offset,
-					user_id : user_id,
-					profile_user_id : profile_user_id
+					action:          'jck_woosocial_load_more_activity',
+					nonce:           jck_woosocial_vars.nonce,
+					limit:           limit,
+					offset:          offset,
+					user_id:         user_id,
+					profile_user_id: profile_user_id
 				},
 				
 				success: function( data ) {
@@ -250,17 +250,17 @@
                 user_id = $load_more_button.attr('data-user-id');
                 
             $.ajax({
-				type: "GET",
-				url: jck-woosocial_vars.ajax_url,
-				cache: false,
-				dataType: "jsonp",				
+				type:        "GET",
+				url:         jck_woosocial_vars.ajax_url,
+				cache:       false,
+				dataType:    "jsonp",				
 				crossDomain: true,
 				data: {
-					action : 'jck-woosocial_load_more_likes',
-					nonce : jck-woosocial_vars.nonce,
-					limit : limit,
-					offset : offset,
-					user_id : user_id
+					action:  'jck_woosocial_load_more_likes',
+					nonce:   jck_woosocial_vars.nonce,
+					limit:   limit,
+					offset:  offset,
+					user_id: user_id
 				},
 				
 				success: function( data ) {

@@ -1,4 +1,4 @@
-.jck_woo_social-actions {
+.jck-woosocial-actions {
     position: relative;
     padding: 0;
     margin-top: 2em;
@@ -26,7 +26,7 @@
     }
 }
 
-    .jck_woo_social-action {
+    .jck-woosocial-action {
         position: relative;
         margin: 2em 0;
         padding: 0;
@@ -181,7 +181,7 @@
 
 @media only screen and (min-width: 1170px) {
   
-    .jck_woo_social-action:nth-child(even) .jck_woo_social-action__wrapper {
+    .jck-woosocial-action:nth-child(even) .jck-woosocial-action__wrapper {
         float: right;
         
         &:before {
@@ -193,7 +193,7 @@
         }
     }
     
-    .jck_woo_social-action:nth-child(even) .jck_woo_social-action__wrapper .jck_woo_social-action__date {
+    .jck-woosocial-action:nth-child(even) .jck-woosocial-action__wrapper .jck-woosocial-action__date {
         left: auto;
         right: 122%;
         text-align: right;

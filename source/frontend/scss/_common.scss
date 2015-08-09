@@ -1,4 +1,4 @@
-.jck_woo_social-container {
+.jck-woosocial-container {
     width: 100%;
     max-width: 1024px;
     padding: 0 20px;
@@ -8,12 +8,12 @@
 
 // Helpers
 
-.jck_woo_social-vertical-align {
+.jck-woosocial-vertical-align {
     display: inline-block;
     vertical-align: middle;
 }
 
-.jck_woo_social-clear {
+.jck-woosocial-clear {
     &:after {
         content: "";
         display: table;

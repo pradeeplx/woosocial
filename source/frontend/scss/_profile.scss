@@ -1,6 +1,6 @@
 // Header
 
-.jck_woo_social-profile-header {
+.jck-woosocial-profile-header {
     overflow: hidden;
     margin: 50px 0 30px;
     
@@ -37,7 +37,7 @@
 
 // Tabs
 
-.jck_woo_social-profile-links {
+.jck-woosocial-profile-links {
     overflow: hidden;
     height: 52px;
     margin: 0 0 50px;
@@ -59,7 +59,7 @@
     }
 }
 
-    .jck_woo_social-profile-link {
+    .jck-woosocial-profile-link {
         text-decoration: none;
         padding: 0;
         margin: 0;
@@ -74,7 +74,7 @@
             border-bottom-color: #555;
         }
         
-        &.jck_woo_social-tab-link--active {
+        &.jck-woosocial-tab-link--active {
             color: #3498db;
             border-bottom-color: #3498db;
         }

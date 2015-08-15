@@ -269,9 +269,9 @@ class JCK_WooSocial_ProfileSystem {
             $user->avatar = get_avatar( $user->ID, get_option( 'thumbnail_size_w' ) );
             $user->avatar_link = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr($user->profile_url), esc_attr($user->display_name), $user->avatar );
             
-            $user->likes_count_formatted = sprintf('<strong>%s</strong> %s', $user->likes_count, _n('Like', 'Likes', $user->likes_count,'jck-woosocial'));
-            $user->followers_count_formatted = sprintf('<strong>%s</strong> %s', $user->followers_count, _n('Follower', 'Followers', $user->followers_count,'jck-woosocial'));
-            $user->following_count_formatted = sprintf('<strong>%s</strong> %s', $user->following_count, __('Following', 'jck-woosocial'));
+            $user->likes_count_formatted = sprintf('<i class="%s-ic-heart"></i> %d', $GLOBALS['jck_woosocial']->slug, $user->likes_count );
+            $user->followers_count_formatted = sprintf('<i class="%s-ic-followers"></i> %d', $GLOBALS['jck_woosocial']->slug, $user->followers_count );
+            $user->following_count_formatted = sprintf('<i class="%s-ic-following"></i> %d', $GLOBALS['jck_woosocial']->slug, $user->following_count );
             
             $user->follow_button = $GLOBALS['jck_woosocial']->follow_system->get_follow_button( $user );
         

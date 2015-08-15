@@ -2,18 +2,25 @@
     array(
         'href' => 'activity',
         'text' => __('Activity','jck-woosocial'),
+        'icon' => 'bubble'
     ),
     array(
         'href' => 'user-likes',
-        'text' => $user_info->likes_count_formatted,
+        'text' => __('Likes', 'jck-woosocial'),
+        'icon' => 'heart',
+        'count' => $user_info->likes_count
     ),
     array(
         'href' => 'followers',
-        'text' => $user_info->followers_count_formatted,
+        'text' => __('Followers', 'jck-woosocial'),
+        'icon' => 'followers',
+        'count' => $user_info->followers_count
     ),
     array(
         'href' => 'following',
-        'text' => $user_info->following_count_formatted,
+        'text' => __('Following', 'jck-woosocial'),
+        'icon' => 'following',
+        'count' => $user_info->following_count
     ),
 ); ?>
 
@@ -25,7 +32,8 @@
     
         <li class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-links__item">
             <a href="#<?php echo $GLOBALS['jck_woosocial']->slug; ?>-<?php echo $link['href']; ?>" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-link <?php echo $active_class; ?>">
-                <?php echo $link['text']; ?>
+                <i class="jck-woosocial-ic-<?php echo $link['icon']; ?>"></i> <?php echo $link['text']; ?>
+                <?php if( isset( $link['count'] ) ) { ?><span class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-link__count"><?php echo $link['count']; ?></span><?php } ?>
             </a>
         </li>
     

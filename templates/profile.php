@@ -16,42 +16,44 @@ $user_info = $GLOBALS['jck_woosocial']->profile_system->user_info;
 <?php
 /**	=============================
     *
-    * jck_woo_social_before_profile hook
+    * jck_woosocial_before_profile hook
     *
     * @hooked woocommerce_breadcrumb - 20
     *
     ============================= */
 
-	do_action( 'jck_woo_social_before_profile' );
+	do_action( 'jck_woosocial_before_profile' );
 ?>
     
-    <?php include( $GLOBALS['jck_woosocial']->templates->locate_template( 'profile/part-header.php' ) ); ?>
+    <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-wrapper">
     
-    <?php include( $GLOBALS['jck_woosocial']->templates->locate_template( 'profile/part-links.php' ) ); ?>
-    
-    <?php $feeds = array(
-        'activity',
-        'likes',
-        'followers',
-        'following',
-    ); ?>
-    
-    <?php foreach( $feeds as $feed ) { ?>
+        <?php include( $GLOBALS['jck_woosocial']->templates->locate_template( 'profile/part-info.php' ) ); ?>
         
-        <?php include( $GLOBALS['jck_woosocial']->templates->locate_template( sprintf( 'profile/feed-%s.php', $feed ) ) ); ?>
+        <?php $feeds = array(
+            'activity',
+            'likes',
+            'followers',
+            'following',
+        ); ?>
         
-    <?php } ?>
+        <?php foreach( $feeds as $feed ) { ?>
+            
+            <?php include( $GLOBALS['jck_woosocial']->templates->locate_template( sprintf( 'profile/feed-%s.php', $feed ) ) ); ?>
+            
+        <?php } ?>
+    
+    </div>
 
 <?php
 /**	=============================
     *
-    * jck_woo_social_after_profile hook
+    * jck_woosocial_after_profile hook
     *
     * @hooked woocommerce_breadcrumb - 20
     *
     ============================= */
 
-	do_action( 'jck_woo_social_after_profile' );
+	do_action( 'jck_woosocial_after_profile' );
 ?>
 
 <?php get_footer(); ?>

@@ -251,7 +251,7 @@ class JCK_WooSocial_LikeSystem {
     *
     ============================= */
     
-    public function get_likes( $user_id, $limit = 10, $offset = 0 ) {
+    public function get_likes( $user_id, $limit = 12, $offset = 0 ) {
         
         global $wpdb;
         

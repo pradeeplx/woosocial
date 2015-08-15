@@ -7,7 +7,7 @@
             jck_woosocial.vars = {};
             
             jck_woosocial.els.$actions_list = $('.jck-woosocial-actions');
-            jck_woosocial.els.$tab_links = $('.jck-woosocial-tab-link');
+            jck_woosocial.els.$tab_links = $('.jck-woosocial-profile-link');
             jck_woosocial.els.$tab_content = $('.jck-woosocial-tab-content');
             jck_woosocial.els.$load_more_button = $('.jck-woosocial-load-more');
             jck_woosocial.els.$action_blocks = $('.jck-woosocial-action');            

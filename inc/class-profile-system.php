@@ -52,8 +52,8 @@ class JCK_WooSocial_ProfileSystem {
             add_filter( 'nav_menu_link_attributes',                     array( $this, 'nav_menu_profile_link' ), 10, 4 );
             add_filter( 'wp_get_nav_menu_items',                        array( $this, 'nav_menu_items' ), 10, 3 );
             
-            add_action( 'jck_woo_social_before_profile',                array( $this, 'before_profile' ), 5 );
-            add_action( 'jck_woo_social_after_profile',                 array( $this, 'after_profile' ), 50 );
+            add_action( 'jck_woosocial_before_profile',                array( $this, 'before_profile' ), 5 );
+            add_action( 'jck_woosocial_after_profile',                 array( $this, 'after_profile' ), 50 );
             
             add_filter('body_class',                                    array( $this, 'body_class' ), 10, 1 );
             
@@ -202,12 +202,12 @@ class JCK_WooSocial_ProfileSystem {
     *
     ============================= */
     
-    public function get_profile_link( $author_nicename ) {
+    public function get_profile_link( $user ) {
         
-        $profile_url = $this->get_profile_url($author_nicename);
-        $profile_title = esc_attr(sprintf(__("%s - Visit Profile", 'jck-woosocial'), $author_nicename));
+        $profile_url = $this->get_profile_url( $user->user_nicename );
+        $profile_title = esc_attr(sprintf(__("%s - Visit Profile", 'jck-woosocial'), $user->display_name));
         
-        return sprintf( '<a href="%s" title="%s">%s</a>', $profile_url, $profile_title, $author_nicename);
+        return sprintf( '<a href="%s" title="%s">%s</a>', $profile_url, $profile_title, $user->display_name );
         
     }
     
@@ -222,8 +222,6 @@ class JCK_WooSocial_ProfileSystem {
 
     function profile_template( $template ) {
         
-        
-    
     	if ( is_author() && strpos( $_SERVER['REQUEST_URI'], 'profile/' ) !== false ) {
     		
     		$profile_template = $GLOBALS['jck_woosocial']->templates->get_template_part( 'profile', '', false );
@@ -235,6 +233,7 @@ class JCK_WooSocial_ProfileSystem {
     	}
     
     	return $template;
+    	
     }
 
 /**	=============================
@@ -266,9 +265,9 @@ class JCK_WooSocial_ProfileSystem {
             $user->followers_count = $GLOBALS['jck_woosocial']->activity_log->get_followers_count( $user->ID );
             $user->following_count = $GLOBALS['jck_woosocial']->activity_log->get_following_count( $user->ID );
             $user->profile_url = $this->get_profile_url( $user->user_nicename );
-            $user->profile_link = $this->get_profile_link( $user->user_nicename );
+            $user->profile_link = $this->get_profile_link( $user );
             $user->avatar = get_avatar( $user->ID, get_option( 'thumbnail_size_w' ) );
-            $user->avatar_link = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr($user->profile_url), esc_attr($user->user_nicename), $user->avatar );
+            $user->avatar_link = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr($user->profile_url), esc_attr($user->display_name), $user->avatar );
             
             $user->likes_count_formatted = sprintf('<strong>%s</strong> %s', $user->likes_count, _n('Like', 'Likes', $user->likes_count,'jck-woosocial'));
             $user->followers_count_formatted = sprintf('<strong>%s</strong> %s', $user->followers_count, _n('Follower', 'Followers', $user->followers_count,'jck-woosocial'));
@@ -290,7 +289,7 @@ class JCK_WooSocial_ProfileSystem {
     
     public function before_profile() {
         
-        echo '<div class="jck_woo_social-container jck_woo_social-container--profile">';
+        echo '<div class="jck_woosocial-container jck_woosocial-container--profile">';
         
     }
 

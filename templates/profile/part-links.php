@@ -21,10 +21,10 @@
 
     <?php $i = 0; foreach( $links as $link ) { ?>
     
-        <?php $active_class = $i === 0 ? sprintf( '%s-tab-link--active', $GLOBALS['jck_woosocial']->slug ) : ""; ?>
+        <?php $active_class = $i === 0 ? sprintf( '%s-profile-link--active', $GLOBALS['jck_woosocial']->slug ) : ""; ?>
     
         <li class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-links__item">
-            <a href="#<?php echo $GLOBALS['jck_woosocial']->slug; ?>-<?php echo $link['href']; ?>" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-link <?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-link <?php echo $active_class; ?>">
+            <a href="#<?php echo $GLOBALS['jck_woosocial']->slug; ?>-<?php echo $link['href']; ?>" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-link <?php echo $active_class; ?>">
                 <?php echo $link['text']; ?>
             </a>
         </li>

@@ -1,81 +1,23 @@
-// Header
+// Info
 
-.jck-woosocial-profile-header {
-    overflow: hidden;
-    margin: 50px 0 30px;
-    
-    &__avatar {
-        float: left;
-        width: 25%;
-        display: inline; 
-        
-        img.avatar {
-            width: 100%;
-            max-width: 190px;
-            height: auto;
-            margin: 0 auto;
-            border-radius: 100%;
-            border: none;
-            padding: 0 20px;
-            display: block;
-            box-sizing: border-box;
-            min-width: 100px;
-        }       
-    }
-    
-    &__info {
-        float: right;
-        width: 75%;
-        display: inline;
-    } 
-    
-    &__info-username {
-        margin: 0 0 10px;
-        padding: 0;
-    }
+.jck-woosocial-profile-info {
+
 }
 
 // Tabs
 
 .jck-woosocial-profile-links {
-    overflow: hidden;
-    height: 52px;
-    margin: 0 0 50px;
-    padding: 0;
-    
-    &__item {
-        float: left;
-        width: 25%;
-        margin: 0;
-        padding: 0;
-        list-style: none none outside;
-        height: 50px;
-        line-height: 50px;
-        white-space: nowrap;
-        text-align: center;
-        font-size: 16px;
-        font-weight: normal;
-        font-smoothing: antialiased;
-    }
+
 }
 
     .jck-woosocial-profile-link {
-        text-decoration: none;
-        padding: 0;
-        margin: 0;
-        color: #aaa;
-        border-bottom: 2px solid #ccc;
-        display: block;
-        height: 50px;
-        line-height: 50px;
+
         
         &:hover {
-            color: #555;
-            border-bottom-color: #555;
+
         }
         
-        &.jck-woosocial-tab-link--active {
-            color: #3498db;
-            border-bottom-color: #3498db;
+        &--active {
+
         }
     }

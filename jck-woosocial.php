@@ -23,9 +23,11 @@ class JCK_WooSocial {
     public $plugin_url = JCK_WOOSOCIAL_PLUGIN_URL;
     public $options_name;
     public $options;
+    public $templates;
     public $profile_system;
     public $like_system;
     public $follow_system;
+    public $activity_log;
 	
 /**	=============================
     *
@@ -155,7 +157,7 @@ class JCK_WooSocial {
     ============================= */
 
 	public function nav_menu_add_meta_boxes() {
-		add_meta_box( 'jck_woo_social_nav_link', __( 'WooCommerce Social', 'jck-woosocial' ), array( $this, 'nav_menu_links' ), 'nav-menus', 'side', 'low' );
+		add_meta_box( 'jck_woosocial_nav_link', __( 'WooCommerce Social', 'jck-woosocial' ), array( $this, 'nav_menu_links' ), 'nav-menus', 'side', 'low' );
 	}
 
 	public function nav_menu_links() {

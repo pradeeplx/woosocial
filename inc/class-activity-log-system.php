@@ -5,7 +5,7 @@ class JCK_WooSocial_ActivityLogSystem {
     public $table_name;
     public $db_version = "1.0";
     public $slug = "jck_woosocial_activity_log";
-    public $default_limit = 10;
+    public $default_limit = 12;
     public $default_offset = 0;
 
 /**	=============================
@@ -33,7 +33,7 @@ class JCK_WooSocial_ActivityLogSystem {
         add_action( 'wp_ajax_jck_woosocial_load_more_activity',         array( $this, 'load_more' ) );
         add_action( 'wp_ajax_nopriv_jck_woosocial_load_more_activity',  array( $this, 'load_more' ) );
         
-        add_shortcode( 'jck-woosocial-activity-log',                    array( $this, 'activity_log_shortcode' ) );
+        add_shortcode( 'woosocial-activity-log',                        array( $this, 'activity_log_shortcode' ) );
         
     }
 
@@ -362,8 +362,6 @@ class JCK_WooSocial_ActivityLogSystem {
         $to = date("Y-m-d H:i:s", strtotime("$to days, $time_offset hours"));
         
         // start query
-        
-        
         
         $activity = array();
         $following = $GLOBALS['jck_woosocial']->follow_system->get_following( $user_id, null, null, true );

@@ -4,9 +4,9 @@
     cursor: pointer;    
 }
 
-// Loop List
+// Product Likes
 
-.jck-woosocial-likes {
+.jck-woosocial-product-likes {
     width: 100%;
     margin: 0;
     padding: 0;
@@ -23,7 +23,7 @@
     }
 }
     
-    .jck-woosocial-likes__item {
+    .jck-woosocial-product-likes__item {
         width: 34px;
         height: 34px;
         line-height: 34px;
@@ -44,5 +44,32 @@
             float: left;
             margin-right: 10px;
             margin-left: 0;
+            width: auto;
         }
     }
+
+// Profile - User likes
+
+.jck-woosocial-user-likes {
+    overflow: hidden;
+    margin: 0 -2.5%;
+    width: 105%;
+    
+    .jck-woosocial-card {
+        float: left;
+        width: 20%;
+        margin: 0 2.5% 5%;
+        
+        &__image {
+            float: none;
+            width: 100%;
+            padding: 0;
+        }
+        
+        &__content {
+            float: none;
+            width: 100%;
+            padding: 0;
+        }
+    }
+}

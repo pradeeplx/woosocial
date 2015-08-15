@@ -22,8 +22,8 @@ class JCK_WooSocial_FollowSystem {
    	
 	public function initiate_hook() {
 
-        add_action( 'wp_ajax_jck_woo_social_follow_action',                array( $this, 'jck_woo_social_follow_action' ) );
-        add_action( 'wp_ajax_nopriv_jck_woo_social_follow_action',         array( $this, 'jck_woo_social_follow_action' ) );
+        add_action( 'wp_ajax_jck_woosocial_follow_action',                array( $this, 'jck_woosocial_follow_action' ) );
+        add_action( 'wp_ajax_nopriv_jck_woosocial_follow_action',         array( $this, 'jck_woosocial_follow_action' ) );
         
 	}
 
@@ -33,7 +33,7 @@ class JCK_WooSocial_FollowSystem {
     *
     ============================= */
     
-    function jck_woo_social_follow_action() {
+    function jck_woosocial_follow_action() {
         
         
     	
@@ -203,7 +203,7 @@ class JCK_WooSocial_FollowSystem {
         if( $current_user_id != $user_info->ID ) {
             
             $myaccount_page_id = get_option( 'woocommerce_myaccount_page_id' );
-            $myaccount_page_url = ( $myaccount_page_id ) ? get_permalink( $myaccount_page_id ).'?profile='.$user_info->user_nicename : "javascript: void(0);";
+            $myaccount_page_url = ( $myaccount_page_id ) ? get_permalink( $myaccount_page_id ).'?profile='.$user_info->display_name : "javascript: void(0);";
 
             $is_following = $GLOBALS['jck_woosocial']->follow_system->is_following( $current_user_id, $user_info->ID );
             $button_text = ( $is_following ) ? __("Unfollow", 'jck-woosocial') : __("Follow", 'jck-woosocial');

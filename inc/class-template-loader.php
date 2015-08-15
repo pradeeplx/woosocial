@@ -20,7 +20,7 @@ class JCK_WooSocial_TemplateLoader extends Gamajo_Template_Loader {
 	 * @since 1.0.0
 	 * @type string
 	 */
-	protected $filter_prefix = 'jck_woo_social';
+	protected $filter_prefix = 'jck_woosocial';
 
 	/**
 	 * Directory name where custom templates for this plugin should be found in the theme.

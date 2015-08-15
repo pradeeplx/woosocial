@@ -7,7 +7,7 @@
     <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__content">
     
         <h2 class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__title">
-            <a href="<?php echo $user->profile_url; ?>"><?php echo $user->user_nicename; ?></a>
+            <a href="<?php echo $user->profile_url; ?>"><?php echo $user->display_name; ?></a>
         </h2>
         
         <?php echo $user->follow_button; ?>

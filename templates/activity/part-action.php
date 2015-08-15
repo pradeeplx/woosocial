@@ -1,7 +1,7 @@
 <li class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-action <?php echo $GLOBALS['jck_woosocial']->slug; ?>-action--<?php echo $action->id; ?> <?php echo $GLOBALS['jck_woosocial']->slug; ?>-action--<?php echo $action->type; ?> <?php echo $GLOBALS['jck_woosocial']->slug; ?>-clear">
     
     <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-action__icon <?php echo $GLOBALS['jck_woosocial']->slug; ?>-action__icon--<?php echo $action->type; ?>">
-		<i class="woosocial-ic-<?php echo $action->type; ?>"></i>
+		<i class="jck-woosocial-ic-<?php echo $action->icon; ?>"></i>
 	</div>
 
 	<div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-action__wrapper">

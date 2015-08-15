@@ -284,17 +284,17 @@ class JCK_WooSocial_ActivityLogSystem {
                     
                 if( $action->type === "follow" ) {
                     
-                    $action->user_2 = $GLOBALS['jck_woosocial']->profile_system->get_user_info( $action->rel_id );
-                    
+                    $action->user_2 = $GLOBALS['jck_woosocial']->profile_system->get_user_info( $action->rel_id );                    
                     $action->formatted = $this->format_follow( $action->user, $action->user_2 );
+                    $action->icon = "user";
                     
                 } elseif( $action->type === "like" ) {
                     
-                    $action->product = $GLOBALS['jck_woosocial']->like_system->get_product_info( $action->rel_id );
+                    $username = ( $action->user_id == $current_user_id ) ? __("You", 'jck-woosocial') : $action->user->profile_link;
                     
-                    $username = ( $action->user_id == $current_user_id ) ? __("You", 'jck-woosocial') : $action->user->profile_link; 
-                    
+                    $action->product = $GLOBALS['jck_woosocial']->like_system->get_product_info( $action->rel_id );                     
                     $action->formatted = sprintf('%s liked %s', $username, $action->product->link);
+                    $action->icon = "heart";
                     
                 }
                 

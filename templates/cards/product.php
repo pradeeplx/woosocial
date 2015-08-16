@@ -10,6 +10,10 @@
             <a href="#"><?php echo $product->title; ?></a>
         </h2>
         
+        <span class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card--product__price">
+            <?php echo $product->price_html; ?>
+        </span>
+        
         <?php echo $product->add_to_cart_button; ?>
     
     </div>

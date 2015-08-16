@@ -364,6 +364,7 @@ class JCK_WooSocial_LikeSystem {
         $product->url = get_permalink( $product_id );
         $product->link = sprintf('<a href="%s" title="%s">%s</a>', esc_attr( $product->url ), esc_attr( $product->title ), $product->title);
         $product->sku = $product->get_sku();
+        $product->price_html = $product->get_price_html();
                     
         $product->image_link = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr( $product->url ), esc_attr( $product->title ), get_the_post_thumbnail( $product_id, 'thumbnail' ) );
         

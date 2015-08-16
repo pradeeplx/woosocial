@@ -52,24 +52,13 @@
 
 .jck-woosocial-user-likes {
     overflow: hidden;
-    margin: 0 -2.5%;
-    width: 105%;
+    margin: 0 -1%;
+    width: 102%;
     
     .jck-woosocial-card {
         float: left;
-        width: 20%;
-        margin: 0 2.5% 5%;
-        
-        &__image {
-            float: none;
-            width: 100%;
-            padding: 0;
-        }
-        
-        &__content {
-            float: none;
-            width: 100%;
-            padding: 0;
-        }
+        width: 23.5%;
+        margin: 0 1% 2%;
+        box-sizing: border-box;
     }
 }

@@ -1,71 +1,38 @@
 .jck-woosocial-card {
-    overflow: hidden;
-}
-
-    .jck-woosocial-card__image {
-        float: left;
-        width: 35%;
-        padding: 15px 10px;
-        box-sizing: border-box;
+    border: 1px solid $c-border;
+    padding: 15px;
+    
+    &--product {
+        &__price {
+            margin: 0 0 20px;
+            display: block;
+            line-height: 1.4;
+        }
+    }
+    
+    &__image {
+        margin: 0 0 20px;
         
         img {
             width: 100%;
             height: auto;
-            border: none;
-            box-shadow: none;
+            display: block;
         }
     }
     
-    .jck-woosocial-card__content {
-        float: right;
-        width: 65%;
-        box-sizing: border-box;
-        padding: 15px;
-    }
-        
-        .jck-woosocial-card__title {
-            margin: 0;
-            font-size: 22px;
-        }
-    
-// User Card
-
-.jck-woosocial-card--user {
-    
-    .jck-woosocial-card__image img {
-        border-radius: 100%;
-    }
-    
-}
-
-    .jck-woosocial-card__user-stats {
+    &__title {
+        font-size: 18px;
+        font-weight: 400;
+        white-space: nowrap;
         overflow: hidden;
-        list-style: none none outside;
+        text-overflow: ellipsis;
+        color: $c-text-primary;
         margin: 0;
-        padding: 0;
-    }
+        line-height: 1.4;
         
-        .jck-woosocial-card__user-stat {
-            list-style: none none outside;
-            margin: 0;
-            padding: 0;
-            float: left;
-            width: 33.33%;
-            display: inline;
-            font-size: 90%;
-            
-            strong {
-                display: block;
-                font-size: 110%;
-            }
+        a {
+            text-decoration: none;
+            color: $c-text-primary;
         }
-
-// Product Card
-
-.jck-woosocial-card--product {
-    
-    .jck-woosocial-card__image {
-        padding: 15px;
     }
-    
 }

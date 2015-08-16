@@ -6,26 +6,92 @@
         float: left;
         width: 23.5%;
         display: inline;
+        border: 1px solid $c-border;
+        box-sizing: border-box;
+        
+        &__avatar {
+            display: block;
+            width: 140px;
+            height: 140px;
+            margin: 30px auto 15px;
+            
+            img.avatar {
+                width: 140px;
+                height: 140px;
+                display: block;
+                border-radius: 100%;
+            }
+        }
+        
+        &__username {
+            font-size: 28px;
+            text-align: center;
+            display: block;
+            margin: 0;
+            color: $c-text-primary;
+            padding: 0;
+            text-decoration: none;
+        }
     }
+    
+        .jck-woosocial-profile-links {
+            margin: 30px 0 0;
+            padding: 0;
+            
+            &__item {
+                list-style: none none outside;
+                margin: 0;
+                padding: 0;
+                height: 51px;
+                border-top: 1px solid $c-border;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                box-sizing: border-box;
+            }
+        }
+            
+            .jck-woosocial-profile-link {
+                padding: 0 20px;
+                height: 50px;
+                line-height: 50px;
+                display: block;
+                color: $c-text-secondary;
+                transition: color 0.2s;
+                
+                &:hover {
+                    color: $c-text-primary;
+                }
+                
+                &--active {
+                    color: $c-text-primary;
+                    background: $c-highlight-primary;
+                }
+                
+                &__count {
+                    float: right;
+                    height: 20px;
+                    line-height: 20px;
+                    padding: 0 8px;
+                    font-size: 12px;
+                    border-radius: 10px;
+                    background: $c-btn-secondary;
+                    color: #fff;
+                    -webkit-font-smoothing: antialiased;
+                    margin: 15px 0;
+                }
+            }
     
     .jck-woosocial-profile-feeds {
         float: right;
         width: 74.5%;
         display: inline;
     }
-    
-    .jck-woosocial-profile-links {
-    
+
+.jck-woosocial-load-more-wrapper {
+    text-align: center;
+}
+
+    .jck-woosocial-load-more {
+        display: inline-block;
+        margin: 20px auto;
     }
-    
-        .jck-woosocial-profile-link {
-    
-            
-            &:hover {
-    
-            }
-            
-            &--active {
-    
-            }
-        }

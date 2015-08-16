@@ -30,6 +30,10 @@
   border-radius: 15px;
   -webkit-font-smoothing: antialiased;
   font-size: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .jck-woosocial-vertical-align {
@@ -111,12 +115,88 @@
   float: left;
   width: 23.5%;
   display: inline;
+  border: 1px solid #e7e9ed;
+  box-sizing: border-box;
+}
+.jck-woosocial-profile-info__avatar {
+  display: block;
+  width: 140px;
+  height: 140px;
+  margin: 30px auto 15px;
+}
+.jck-woosocial-profile-info__avatar img.avatar {
+  width: 140px;
+  height: 140px;
+  display: block;
+  border-radius: 100%;
+}
+.jck-woosocial-profile-info__username {
+  font-size: 28px;
+  text-align: center;
+  display: block;
+  margin: 0;
+  color: #2c3e50;
+  padding: 0;
+  text-decoration: none;
+}
+
+.jck-woosocial-profile-links {
+  margin: 30px 0 0;
+  padding: 0;
+}
+.jck-woosocial-profile-links__item {
+  list-style: none none outside;
+  margin: 0;
+  padding: 0;
+  height: 51px;
+  border-top: 1px solid #e7e9ed;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+}
+
+.jck-woosocial-profile-link {
+  padding: 0 20px;
+  height: 50px;
+  line-height: 50px;
+  display: block;
+  color: #7f8c8d;
+  -webkit-transition: color 0.2s;
+          transition: color 0.2s;
+}
+.jck-woosocial-profile-link:hover {
+  color: #2c3e50;
+}
+.jck-woosocial-profile-link--active {
+  color: #2c3e50;
+  background: #f1f4f8;
+}
+.jck-woosocial-profile-link__count {
+  float: right;
+  height: 20px;
+  line-height: 20px;
+  padding: 0 8px;
+  font-size: 12px;
+  border-radius: 10px;
+  background: #95a5a6;
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+  margin: 15px 0;
 }
 
 .jck-woosocial-profile-feeds {
   float: right;
   width: 74.5%;
   display: inline;
+}
+
+.jck-woosocial-load-more-wrapper {
+  text-align: center;
+}
+
+.jck-woosocial-load-more {
+  display: inline-block;
+  margin: 20px auto;
 }
 
 @font-face {
@@ -432,4 +512,5 @@
   margin-right: 10px;
   margin-left: 0;
   width: auto;
+  padding: 4px 0;
 }

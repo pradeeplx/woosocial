@@ -398,12 +398,13 @@ class JCK_WooSocial {
     *
     ============================= */
     
-    public function get_load_more_button( $type = false ) {
+    public function get_load_more_button( $type = false, $wrap = true ) {
         
         if( !$type )
             return "";
         
         $classes = array(
+            sprintf('%s-btn', $this->slug),
             sprintf('%s-load-more', $this->slug),
             sprintf('%s-load-more--%s', $this->slug, $type)
         );
@@ -414,7 +415,8 @@ class JCK_WooSocial {
             $additional_attributes[] = sprintf( 'data-profile-user-id="%d"', $this->profile_system->user_info->ID );
         
         return sprintf(
-            '<a href="javascript: void(0);" class="%s" data-limit="%d" data-offset="%d" data-user-id="%d" %s><i class="woosocial-ic-loading"></i> %s</a>', 
+            '<div class="%s-load-more-wrapper"><a href="javascript: void(0);" class="%s" data-limit="%d" data-offset="%d" data-user-id="%d" %s><i class="jck-woosocial-ic-loading"></i> %s</a></div>', 
+            $this->slug,
             implode(' ', $classes),
             $this->activity_log->default_limit,
             $this->activity_log->default_offset + $this->activity_log->default_limit,

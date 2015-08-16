@@ -167,7 +167,7 @@
             jck_woosocial.els.$tab_links.on('click', function(){
                 
                 var target = $(this).attr('href'),
-                    active_class = 'jck-woosocial-tab-link--active';
+                    active_class = 'jck-woosocial-profile-link--active';
                 
                 jck_woosocial.els.$tab_links.removeClass(active_class);
                 $(this).addClass(active_class);

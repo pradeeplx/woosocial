@@ -1,7 +1,28 @@
-// Button
+// Buttons
 
 .jck-woosocial-like-action {    
     cursor: pointer;    
+}
+
+.jck-woosocial-btn--like {
+    background: $c-like;
+    height: 25px;
+    line-height: 25px;
+    font-size: 14px;
+    padding: 0 8px;
+    border-radius: 12.5px;
+}
+
+.jck-woosocial-btn--add-to-cart-wrapper {
+    margin: 0;
+    padding: 0;
+    display: block;
+    background: none;
+    box-shadow: none;
+    
+    a {
+        @extend .jck-woosocial-btn;
+    }
 }
 
 // Product Likes
@@ -9,18 +30,10 @@
 .jck-woosocial-product-likes {
     width: 100%;
     margin: 0;
-    padding: 0;
+    padding: 0 10px 0 0;
     overflow: hidden;
     white-space: nowrap;
-    
-    &--loop {
-        border-top: 1px solid $c-border;
-        margin-top: 15px;
-        padding-top: 15px;
-        height: 34px;
-        overflow: hidden;
-        box-sizing: content-box;
-    }
+    height: 34px;
 }
     
     .jck-woosocial-product-likes__item {
@@ -30,9 +43,9 @@
         overflow: hidden;
         white-space: nowrap;
         display: inline-block;
-        margin: 0 0 0 -10px;
+        margin: 0 -10px 0 0;
         padding: 0;
-        float: right;
+        float: left;
         
         img {
             @extend %avatar-small;
@@ -47,18 +60,3 @@
             width: auto;
         }
     }
-
-// Profile - User likes
-
-.jck-woosocial-user-likes {
-    overflow: hidden;
-    margin: 0 -1%;
-    width: 102%;
-    
-    .jck-woosocial-card {
-        float: left;
-        width: 23.5%;
-        margin: 0 1% 2%;
-        box-sizing: border-box;
-    }
-}

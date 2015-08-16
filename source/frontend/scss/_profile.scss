@@ -1,23 +1,31 @@
-// Info
-
-.jck-woosocial-profile-info {
-
+.jck-woosocial-profile-wrapper {
+    
 }
 
-// Tabs
-
-.jck-woosocial-profile-links {
-
-}
-
-    .jck-woosocial-profile-link {
-
-        
-        &:hover {
-
-        }
-        
-        &--active {
-
-        }
+    .jck-woosocial-profile-info {
+        float: left;
+        width: 23.5%;
+        display: inline;
     }
+    
+    .jck-woosocial-profile-feeds {
+        float: right;
+        width: 74.5%;
+        display: inline;
+    }
+    
+    .jck-woosocial-profile-links {
+    
+    }
+    
+        .jck-woosocial-profile-link {
+    
+            
+            &:hover {
+    
+            }
+            
+            &--active {
+    
+            }
+        }

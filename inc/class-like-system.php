@@ -227,6 +227,8 @@ class JCK_WooSocial_LikeSystem {
         $myaccount_page_url = ( $myaccount_page_id ) ? sprintf( '%s?like-product=%d', get_permalink( $myaccount_page_id ), $args['product_id'] ) : "javascript: void(0);";
 
         $button_classes = implode(' ', apply_filters( 'jck_woosocial_like_button_classes', array(
+            sprintf( '%s-btn', $GLOBALS['jck_woosocial']->slug ),
+            sprintf( '%s-btn--like', $GLOBALS['jck_woosocial']->slug ),
             sprintf( '%s-like-action', $GLOBALS['jck_woosocial']->slug ),
             sprintf( '%s-like-action--%s', $GLOBALS['jck_woosocial']->slug, $type )
         ), $product_id, $type, $product_likes_count ));
@@ -306,7 +308,7 @@ class JCK_WooSocial_LikeSystem {
     *
     ============================= */
     
-    public function get_product_likes( $product_id, $limit = 8 ) {
+    public function get_product_likes( $product_id, $limit = 5 ) {
         
         global $wpdb;
         
@@ -368,7 +370,7 @@ class JCK_WooSocial_LikeSystem {
                     
         $product->image_link = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr( $product->url ), esc_attr( $product->title ), get_the_post_thumbnail( $product_id, 'thumbnail' ) );
         
-        $product->add_to_cart_button = do_shortcode( sprintf( '[add_to_cart id="%d" sku="%s" style=""]', $product_id, $product->sku ) );
+        $product->add_to_cart_button = do_shortcode( sprintf( '[add_to_cart id="%d" sku="%s" style="" show_price="false" class="%s-btn--add-to-cart-wrapper"]', $product_id, $product->sku, $GLOBALS['jck_woosocial']->slug ) );
         
         $product->likes_count = $this->get_product_likes_count( $product_id );
         

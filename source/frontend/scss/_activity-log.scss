@@ -1,13 +1,7 @@
 .jck-woosocial-actions {
     position: relative;
     padding: 0;
-    margin-top: 2em;
-    margin-bottom: 2em;
-    
-    @include bp(large) {
-        margin-top: 3em;
-        margin-bottom: 3em;
-    }
+    margin: 0;
     
     &:before {
         /* this is the vertical line */

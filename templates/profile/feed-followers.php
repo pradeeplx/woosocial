@@ -1,4 +1,4 @@
-<div id="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-followers" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-content">
+<div id="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-followers" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-content <?php echo $GLOBALS['jck_woosocial']->slug; ?>-card-grid">
     
     <?php $followers = $GLOBALS['jck_woosocial']->follow_system->get_followers( $GLOBALS['jck_woosocial']->profile_system->user_info->ID ); ?>
     

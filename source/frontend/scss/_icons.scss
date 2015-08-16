@@ -12,6 +12,11 @@
 
 }
 
+[class^="jck-woosocial-ic-"],
+[class*=" jck-woosocial-ic-"] {
+    vertical-align: middle;
+}
+
 [data-icon]:before {
   font-family: "woosocial" !important;
   content: attr(data-icon);

@@ -25,22 +25,27 @@ $user_info = $GLOBALS['jck_woosocial']->profile_system->user_info;
 	do_action( 'jck_woosocial_before_profile' );
 ?>
     
-    <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-wrapper">
+    <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-wrapper <?php echo $GLOBALS['jck_woosocial']->slug; ?>-clear">
     
         <?php include( $GLOBALS['jck_woosocial']->templates->locate_template( 'profile/part-info.php' ) ); ?>
         
-        <?php $feeds = array(
-            'activity',
-            'likes',
-            'followers',
-            'following',
-        ); ?>
         
-        <?php foreach( $feeds as $feed ) { ?>
+        <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-feeds">
+        
+            <?php $feeds = array(
+                'activity',
+                'likes',
+                'followers',
+                'following',
+            ); ?>
             
-            <?php include( $GLOBALS['jck_woosocial']->templates->locate_template( sprintf( 'profile/feed-%s.php', $feed ) ) ); ?>
-            
-        <?php } ?>
+            <?php foreach( $feeds as $feed ) { ?>
+                
+                <?php include( $GLOBALS['jck_woosocial']->templates->locate_template( sprintf( 'profile/feed-%s.php', $feed ) ) ); ?>
+                
+            <?php } ?>
+        
+        </div>
     
     </div>
 

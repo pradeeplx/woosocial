@@ -4,7 +4,7 @@
     
     <?php if( $likes ) { ?>
         
-        <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-user-likes">
+        <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-user-likes <?php echo $GLOBALS['jck_woosocial']->slug; ?>-card-grid">
             
             <?php foreach( $likes as $like ) { ?>
                 

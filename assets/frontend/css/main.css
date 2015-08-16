@@ -20,6 +20,18 @@
   box-sizing: border-box;
 }
 
+.jck-woosocial-btn, .jck-woosocial-btn--add-to-cart-wrapper a {
+  height: 30px;
+  padding: 0 20px;
+  line-height: 30px;
+  background: #3498db;
+  display: inline-block;
+  color: #fff;
+  border-radius: 15px;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+}
+
 .jck-woosocial-vertical-align {
   display: inline-block;
   vertical-align: middle;
@@ -38,22 +50,46 @@
   display: block;
 }
 
+.jck-woosocial-card-grid {
+  overflow: hidden;
+  margin: 0 -0.98%;
+  width: 101.96%;
+}
+.jck-woosocial-card-grid .jck-woosocial-card {
+  float: left;
+  width: 23.04%;
+  margin: 0 0.98% 1.96%;
+  box-sizing: border-box;
+}
+
 .jck-woosocial-card {
   border: 1px solid #e7e9ed;
+  background: #fff;
   padding: 15px;
 }
 .jck-woosocial-card--product__price {
-  margin: 0 0 20px;
+  margin: 0 0 15px;
   display: block;
   line-height: 1.4;
+  height: 22px;
 }
 .jck-woosocial-card__image {
   margin: 0 0 20px;
+  position: relative;
+  background: #000;
 }
 .jck-woosocial-card__image img {
   width: 100%;
   height: auto;
   display: block;
+}
+.jck-woosocial-card__image .jck-woosocial-btn--add-to-cart-wrapper {
+  position: absolute;
+  top: 50%;
+  text-align: center;
+  left: 0;
+  right: 0;
+  margin: -15px 0 0;
 }
 .jck-woosocial-card__title {
   font-size: 18px;
@@ -64,10 +100,23 @@
   color: #2c3e50;
   margin: 0;
   line-height: 1.4;
+  height: 22px;
 }
 .jck-woosocial-card__title a {
   text-decoration: none;
   color: #2c3e50;
+}
+
+.jck-woosocial-profile-info {
+  float: left;
+  width: 23.5%;
+  display: inline;
+}
+
+.jck-woosocial-profile-feeds {
+  float: right;
+  width: 74.5%;
+  display: inline;
 }
 
 @font-face {
@@ -77,6 +126,11 @@
   font-weight: normal;
   font-style: normal;
 }
+[class^="jck-woosocial-ic-"],
+[class*=" jck-woosocial-ic-"] {
+  vertical-align: middle;
+}
+
 [data-icon]:before {
   font-family: "woosocial" !important;
   content: attr(data-icon);
@@ -134,14 +188,7 @@
 .jck-woosocial-actions {
   position: relative;
   padding: 0;
-  margin-top: 2em;
-  margin-bottom: 2em;
-}
-@media (min-width: 1170px) {
-  .jck-woosocial-actions {
-    margin-top: 3em;
-    margin-bottom: 3em;
-  }
+  margin: 0;
 }
 .jck-woosocial-actions:before {
   /* this is the vertical line */
@@ -340,20 +387,30 @@
   cursor: pointer;
 }
 
+.jck-woosocial-btn--like {
+  background: #9b59b6;
+  height: 25px;
+  line-height: 25px;
+  font-size: 14px;
+  padding: 0 8px;
+  border-radius: 12.5px;
+}
+
+.jck-woosocial-btn--add-to-cart-wrapper {
+  margin: 0;
+  padding: 0;
+  display: block;
+  background: none;
+  box-shadow: none;
+}
+
 .jck-woosocial-product-likes {
   width: 100%;
   margin: 0;
-  padding: 0;
+  padding: 0 10px 0 0;
   overflow: hidden;
   white-space: nowrap;
-}
-.jck-woosocial-product-likes--loop {
-  border-top: 1px solid #e7e9ed;
-  margin-top: 15px;
-  padding-top: 15px;
   height: 34px;
-  overflow: hidden;
-  box-sizing: content-box;
 }
 
 .jck-woosocial-product-likes__item {
@@ -363,9 +420,9 @@
   overflow: hidden;
   white-space: nowrap;
   display: inline-block;
-  margin: 0 0 0 -10px;
+  margin: 0 -10px 0 0;
   padding: 0;
-  float: right;
+  float: left;
 }
 .jck-woosocial-product-likes__item img {
   border: 2px solid #fff;
@@ -375,16 +432,4 @@
   margin-right: 10px;
   margin-left: 0;
   width: auto;
-}
-
-.jck-woosocial-user-likes {
-  overflow: hidden;
-  margin: 0 -1%;
-  width: 102%;
-}
-.jck-woosocial-user-likes .jck-woosocial-card {
-  float: left;
-  width: 23.5%;
-  margin: 0 1% 2%;
-  box-sizing: border-box;
 }

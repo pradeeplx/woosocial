@@ -253,7 +253,10 @@ class JCK_WooSocial_LikeSystem {
     *
     ============================= */
     
-    public function get_likes( $user_id, $limit = 12, $offset = 0 ) {
+    public function get_likes( $user_id, $limit = null, $offset = null ) {
+        
+        if( $limit === null ) $limit = $GLOBALS['jck_woosocial']->activity_log->default_limit;
+        if( $offset === null ) $offset = $GLOBALS['jck_woosocial']->activity_log->default_offset;
         
         global $wpdb;
         

@@ -4,7 +4,7 @@
     
     <?php if( $likes ) { ?>
         
-        <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-user-likes <?php echo $GLOBALS['jck_woosocial']->slug; ?>-card-grid">
+        <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-user-likes <?php echo $GLOBALS['jck_woosocial']->slug; ?>-card-grid" data-eq-pts="xsmall: 0, small: 400, medium: 600, large: 802">
             
             <?php foreach( $likes as $like ) { ?>
                 
@@ -15,7 +15,7 @@
             
         </div>
 	
-        <?php echo $GLOBALS['jck_woosocial']->get_load_more_button( 'likes' ); ?>
+        <?php if( $GLOBALS['jck_woosocial']->activity_log->default_limit < $GLOBALS['jck_woosocial']->profile_system->user_info->likes_count ) echo $GLOBALS['jck_woosocial']->get_load_more_button( 'likes' ); ?>
 	
 	<?php } ?>
     

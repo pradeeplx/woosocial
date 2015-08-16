@@ -228,7 +228,8 @@ class JCK_WooSocial {
     ============================= */
     
     public function frontend_scripts() {
-        
+    
+        wp_register_script( 'eq', $this->plugin_url . 'assets/frontend/js/vendor/eq.min.js', array(), $this->version, true);
         wp_register_script( $this->slug.'_scripts', $this->plugin_url . 'assets/frontend/js/main.min.js', array( 'jquery' ), $this->version, true);
         
         $vars = array(
@@ -239,6 +240,7 @@ class JCK_WooSocial {
 		
 		wp_localize_script( $this->slug.'_scripts', $this->alt_slug.'_vars', $vars );
 		
+		wp_enqueue_script( 'eq' );
 		wp_enqueue_script( $this->slug.'_scripts' );
         
     }

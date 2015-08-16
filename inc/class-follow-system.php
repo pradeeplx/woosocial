@@ -195,8 +195,6 @@ class JCK_WooSocial_FollowSystem {
     
     public function get_follow_button( $user_info ) {
         
-        
-        
         $current_user_id = get_current_user_id();
         $is_user_logged_in = is_user_logged_in();
         
@@ -210,9 +208,9 @@ class JCK_WooSocial_FollowSystem {
             $button_type = ( $is_user_logged_in ) ? ( $is_following ? "unfollow" : "follow" ) : "login";
             $button_classes = implode(' ', array(
                 'button',
-                sprintf( '%s-button', $GLOBALS['jck_woosocial']->slug ),
+                sprintf( '%s-btn', $GLOBALS['jck_woosocial']->slug ),
                 sprintf( '%s-follow-action', $GLOBALS['jck_woosocial']->slug ),
-                sprintf( '%s-follow-action--', $GLOBALS['jck_woosocial']->slug, $button_type )
+                sprintf( '%s-follow-action--%s', $GLOBALS['jck_woosocial']->slug, $button_type )
             ));
             $href = ( $is_user_logged_in ) ? "javascript: void(0);" : $myaccount_page_url;
         

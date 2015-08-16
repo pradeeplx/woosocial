@@ -9,6 +9,30 @@
         margin: 0 0.98% 1.96%;
         box-sizing: border-box;
     }
+    
+    @include eq('medium') {
+        
+        .jck-woosocial-card {
+            width: 31.37%;
+        }
+        
+    }
+    
+    @include eq('small') {
+        
+        .jck-woosocial-card {
+            width: 48.04%;
+        }
+        
+    }
+    
+    @include eq('xsmall') {
+        
+        .jck-woosocial-card {
+            width: 98.04%;
+        }
+        
+    }
 }
 
 .jck-woosocial-card {
@@ -30,14 +54,16 @@
             }
         }
         
-        .jck-woosocial-btn--add-to-cart-wrapper {
+        .jck-woosocial-btn--add-to-cart-wrapper,
+        .jck-woosocial-btn--follow-wrapper {
             position: absolute;
             top: 50%;
             text-align: center;
-            left: 0;
-            right: 0;
+            left: 5px;
+            right: 5px;
             margin: -15px 0 0;
         }
+        
     }
     
     &__title {
@@ -58,7 +84,7 @@
     }
     
     &__user-stats {
-        margin: 0;
+        margin: 10px 0 0;
         padding: 0;
         text-align: center;
         

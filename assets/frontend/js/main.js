@@ -174,6 +174,9 @@
                 jck_woosocial.els.$tab_content.hide();
                 $(target).show();
                 
+                eqjs.refreshNodes();
+                eqjs.query();
+                
                 return false;
                 
             });

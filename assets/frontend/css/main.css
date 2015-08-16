@@ -71,21 +71,17 @@
   background: #fff;
   padding: 15px;
 }
-.jck-woosocial-card--product__price {
-  margin: 0 0 15px;
-  display: block;
-  line-height: 1.4;
-  height: 22px;
-}
 .jck-woosocial-card__image {
   margin: 0 0 20px;
   position: relative;
-  background: #000;
 }
 .jck-woosocial-card__image img {
   width: 100%;
   height: auto;
   display: block;
+}
+.jck-woosocial-card__image img.avatar {
+  border-radius: 100%;
 }
 .jck-woosocial-card__image .jck-woosocial-btn--add-to-cart-wrapper {
   position: absolute;
@@ -109,6 +105,35 @@
 .jck-woosocial-card__title a {
   text-decoration: none;
   color: #2c3e50;
+}
+.jck-woosocial-card__user-stats {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+.jck-woosocial-card__user-stats .jck-woosocial-card__user-stat {
+  list-style: none none outside;
+  margin: 0;
+  padding: 0 8px;
+  font-size: 14px;
+  color: #2c3e50;
+  display: inline;
+}
+.jck-woosocial-card--product__price {
+  margin: 0 0 15px;
+  display: block;
+  line-height: 1.4;
+  height: 22px;
+  color: #2c3e50;
+}
+.jck-woosocial-card--product__price ins {
+  text-decoration: none;
+}
+.jck-woosocial-card--product__price del {
+  color: #7f8c8d;
+}
+.jck-woosocial-card--user .jck-woosocial-card__title {
+  text-align: center;
 }
 
 .jck-woosocial-profile-info {

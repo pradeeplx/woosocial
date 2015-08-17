@@ -79,6 +79,7 @@
   border: 1px solid #e7e9ed;
   background: #fff;
   padding: 15px;
+  overflow: hidden;
 }
 .jck-woosocial-card__image {
   margin: 0 0 20px;
@@ -321,15 +322,15 @@
   content: '';
   position: absolute;
   top: 0;
-  left: 18px;
+  left: 20px;
   height: 100%;
-  width: 4px;
-  background: #dddddd;
+  width: 1px;
+  background: #e7e9ed;
 }
 @media (min-width: 1170px) {
   .jck-woosocial-actions:before {
     left: 50%;
-    margin-left: -2px;
+    margin-left: 0;
   }
 }
 
@@ -438,32 +439,32 @@
   height: 0;
   width: 0;
   border: 7px solid transparent;
-  border-right: 7px solid #dddddd;
+  border-right: 7px solid #e7e9ed;
 }
 @media (min-width: 1170px) {
   .jck-woosocial-action__wrapper:before {
-    top: 24px;
+    top: 19px;
     left: 100%;
     border-color: transparent;
-    border-left-color: #dddddd;
+    border-left-color: #e7e9ed;
   }
 }
 .jck-woosocial-action__description {
   display: block;
   width: 100%;
-  height: 60px;
+  height: 50px;
   overflow: hidden;
   background: #e7e9ed;
   border-radius: 5px 5px 0 0;
-  line-height: 60px;
+  line-height: 50px;
   text-overflow: ellipsis;
   white-space: nowrap;
   padding: 0 8px;
   box-sizing: border-box;
 }
 .jck-woosocial-action__description .avatar {
-  width: 44px;
-  height: 44px;
+  width: 34px;
+  height: 34px;
   border-radius: 100%;
   margin: 8px 10px 8px 0;
   float: left;
@@ -471,9 +472,32 @@
   border: none;
 }
 .jck-woosocial-action__content {
-  border: 1px solid #e7e9ed;
   border-top: none;
   border-radius: 0 0 5px 5px;
+}
+.jck-woosocial-action__content .jck-woosocial-card__image {
+  float: left;
+  max-width: 80px;
+  margin: 0;
+  width: 25%;
+  display: inline;
+}
+.jck-woosocial-action__content .jck-woosocial-card__content {
+  float: right;
+  width: 70%;
+  display: inline;
+}
+.jck-woosocial-action__content .jck-woosocial-card__title, .jck-woosocial-action__content .jck-woosocial-card__user-stats {
+  text-align: left;
+}
+.jck-woosocial-action__content .jck-woosocial-card__user-stat {
+  padding: 0 16px 0 0;
+}
+.jck-woosocial-action__content .jck-woosocial-product-likes {
+  clear: both;
+  float: left;
+  max-width: 50%;
+  margin: 15px 0 0;
 }
 .jck-woosocial-action__date {
   display: inline-block;

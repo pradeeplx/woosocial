@@ -8,14 +8,14 @@
         content: '';
         position: absolute;
         top: 0;
-        left: 18px;
+        left: 20px;
         height: 100%;
-        width: 4px;
-        background: #dddddd;
+        width: 1px;
+        background: $c-border;
         
         @include bp(large) {
             left: 50%;
-            margin-left: -2px;
+            margin-left: 0;
         }
     }
 }
@@ -131,13 +131,13 @@
                 height: 0;
                 width: 0;
                 border: 7px solid transparent;
-                border-right: 7px solid #dddddd;
+                border-right: 7px solid $c-border;
                 
                 @include bp(large) {
-                    top: 24px;
+                    top: 19px;
                     left: 100%;
                     border-color: transparent;
-                    border-left-color: #dddddd;
+                    border-left-color: $c-border;
                 }
             }
         }
@@ -145,19 +145,19 @@
         &__description {
             display: block;
             width: 100%;
-            height: 60px;
+            height: 50px;
             overflow: hidden;
             background: $c-border;
             border-radius: $border-radius $border-radius 0 0;
-            line-height: 60px;
+            line-height: 50px;
             text-overflow: ellipsis;
             white-space: nowrap;
             padding: 0 8px;
             box-sizing: border-box;
             
             & .avatar {
-                width: 44px;
-                height: 44px;
+                width: 34px;
+                height: 34px;
                 border-radius: 100%;
                 margin: 8px 10px 8px 0;
                 float: left;
@@ -167,9 +167,40 @@
         }
         
         &__content {
-            border: 1px solid $c-border;
             border-top: none;
             border-radius: 0 0 $border-radius $border-radius;
+            
+            .jck-woosocial-card {
+                &__image {
+                    float: left;
+                    max-width: 80px;
+                    margin: 0;
+                    width: 25%;
+                    display: inline;
+                }
+                
+                &__content {
+                    float: right;
+                    width: 70%;
+                    display: inline;
+                }
+                
+                &__title,
+                &__user-stats {
+                    text-align: left;
+                }
+                
+                &__user-stat {
+                    padding: 0 16px 0 0;
+                }
+            }
+            
+            .jck-woosocial-product-likes {
+                clear: both;
+                float: left;
+                max-width: 50%;
+                margin: 15px 0 0;
+            }
         }
         
         &__date {

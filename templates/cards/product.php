@@ -19,4 +19,6 @@
     
     <?php $GLOBALS['jck_woosocial']->like_system->show_likes_loop( $product->id ); ?>
     
+    <?php echo $product->add_to_cart_button; ?>
+    
 </div>

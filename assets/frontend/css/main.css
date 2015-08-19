@@ -102,6 +102,10 @@
   right: 5px;
   margin: -15px 0 0;
 }
+.jck-woosocial-card .jck-woosocial-btn--add-to-cart-wrapper,
+.jck-woosocial-card .jck-woosocial-btn--follow-wrapper {
+  display: none;
+}
 .jck-woosocial-card__title {
   font-size: 18px;
   font-weight: 400;
@@ -395,13 +399,13 @@
 }
 .jck-woosocial-action__icon i:before {
   display: block;
+  vertical-align: top;
 }
 .jck-woosocial-action__icon--like {
   background: #9b59b6;
   border: 2px solid #8e44ad;
 }
 .jck-woosocial-action__icon--like i {
-  margin-left: -11px;
   margin-top: -9px;
 }
 .jck-woosocial-action__icon--follow {
@@ -409,7 +413,6 @@
   border: 2px solid #27ae60;
 }
 .jck-woosocial-action__icon--follow i {
-  margin-left: -11px;
   margin-top: -11px;
 }
 .jck-woosocial-action__wrapper {
@@ -475,12 +478,27 @@
   border-top: none;
   border-radius: 0 0 5px 5px;
 }
+.jck-woosocial-action__content .jck-woosocial-card--user .jck-woosocial-card__title {
+  margin: 7px 0 0;
+}
+.jck-woosocial-action__content .jck-woosocial-card--user .jck-woosocial-card__content {
+  padding: 0 80px 0 0;
+}
+.jck-woosocial-action__content .jck-woosocial-card--product .jck-woosocial-card__title {
+  margin: 15px 0 0;
+}
 .jck-woosocial-action__content .jck-woosocial-card__image {
   float: left;
   max-width: 80px;
   margin: 0;
   width: 25%;
   display: inline;
+}
+.jck-woosocial-action__content .jck-woosocial-card__image .jck-woosocial-btn--add-to-cart-wrapper,
+.jck-woosocial-action__content .jck-woosocial-card__image .jck-woosocial-btn--follow-wrapper {
+  display: none !important;
+  opacity: 0;
+  visibility: hidden;
 }
 .jck-woosocial-action__content .jck-woosocial-card__content {
   float: right;
@@ -490,14 +508,39 @@
 .jck-woosocial-action__content .jck-woosocial-card__title, .jck-woosocial-action__content .jck-woosocial-card__user-stats {
   text-align: left;
 }
+.jck-woosocial-action__content .jck-woosocial-card__user-stats {
+  position: absolute;
+  top: 70px;
+  right: 0;
+  margin: 0;
+  width: 80px;
+  border-left: 1px solid #e7e9ed;
+  padding: 0 0 0 15px;
+}
 .jck-woosocial-action__content .jck-woosocial-card__user-stat {
-  padding: 0 16px 0 0;
+  padding: 0;
+  display: block;
+  margin: 1px 0;
 }
 .jck-woosocial-action__content .jck-woosocial-product-likes {
   clear: both;
   float: left;
   max-width: 50%;
   margin: 15px 0 0;
+}
+.jck-woosocial-action__content .jck-woosocial-btn--add-to-cart-wrapper {
+  float: right;
+  margin: 15px 0 0;
+  padding: 0;
+  height: 34px;
+  display: block;
+}
+.jck-woosocial-action__content .jck-woosocial-btn--add-to-cart-wrapper a {
+  margin: 2px 0;
+}
+.jck-woosocial-action__content .jck-woosocial-btn--follow-wrapper {
+  display: block;
+  margin: 5px 0 0 -3px;
 }
 .jck-woosocial-action__date {
   display: inline-block;
@@ -583,4 +626,8 @@
   margin-left: 0;
   width: auto;
   padding: 4px 0;
+}
+
+.jck-woosocial-follow-action {
+  background: #31cc71;
 }

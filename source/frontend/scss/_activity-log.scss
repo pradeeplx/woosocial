@@ -80,6 +80,7 @@
                 
                 &:before {
                     display: block;
+                    vertical-align: top;
                 }
             }
             
@@ -88,7 +89,6 @@
                 border: 2px solid $c-like-secondary;
                 
                 i {
-                    margin-left: -11px;
                     margin-top: -9px;
                 }
             }
@@ -98,7 +98,6 @@
                 border: 2px solid $c-follow-secondary;
                 
                 i {
-                    margin-left: -11px;
                     margin-top: -11px;
                 }
             }
@@ -171,12 +170,36 @@
             border-radius: 0 0 $border-radius $border-radius;
             
             .jck-woosocial-card {
+                
+                &--user {
+                    .jck-woosocial-card__title {
+                        margin: 7px 0 0;
+                    }
+                    
+                    .jck-woosocial-card__content {
+                        padding: 0 80px 0 0;
+                    }
+                }
+                
+                &--product {
+                    .jck-woosocial-card__title {
+                        margin: 15px 0 0;
+                    }
+                }
+                
                 &__image {
                     float: left;
                     max-width: 80px;
                     margin: 0;
                     width: 25%;
                     display: inline;
+                    
+                    .jck-woosocial-btn--add-to-cart-wrapper,
+                    .jck-woosocial-btn--follow-wrapper {
+                        display: none !important;
+                        opacity: 0;
+                        visibility: hidden;
+                    }
                 }
                 
                 &__content {
@@ -190,9 +213,21 @@
                     text-align: left;
                 }
                 
-                &__user-stat {
-                    padding: 0 16px 0 0;
+                &__user-stats {
+                    position: absolute;
+                    top: 70px;
+                    right: 0;
+                    margin: 0;
+                    width: 80px;
+                    border-left: 1px solid $c-border;
+                    padding: 0 0 0 15px;
                 }
+                
+                    &__user-stat {
+                        padding: 0;
+                        display: block;
+                        margin: 1px 0;
+                    }
             }
             
             .jck-woosocial-product-likes {
@@ -200,6 +235,23 @@
                 float: left;
                 max-width: 50%;
                 margin: 15px 0 0;
+            }
+            
+            .jck-woosocial-btn--add-to-cart-wrapper {
+                float: right;
+                margin: 15px 0 0;
+                padding: 0;
+                height: 34px;
+                display: block;
+                
+                a {
+                    margin: 2px 0;
+                }
+            }
+            
+            .jck-woosocial-btn--follow-wrapper {
+                display: block;
+                margin: 5px 0 0 -3px;
             }
         }
         

@@ -214,7 +214,7 @@ class JCK_WooSocial_FollowSystem {
             ));
             $href = ( $is_user_logged_in ) ? "javascript: void(0);" : $myaccount_page_url;
         
-            return sprintf('<a href="%s" class="%s" data-user-id="%d" data-type="%s">%s</a>', $href, $button_classes, $user_info->ID, $button_type, $button_text);
+            return sprintf('<div class="%s-btn--follow-wrapper"><a href="%s" class="%s" data-user-id="%d" data-type="%s">%s</a></div>', $GLOBALS['jck_woosocial']->slug, $href, $button_classes, $user_info->ID, $button_type, $button_text);
         
         }
         

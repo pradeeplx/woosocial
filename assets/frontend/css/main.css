@@ -372,6 +372,7 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
+  margin-top: 2px;
 }
 @media (min-width: 1170px) {
   .jck-woosocial-action__icon {
@@ -563,11 +564,11 @@
     float: right;
   }
   .jck-woosocial-action:nth-child(even) .jck-woosocial-action__wrapper:before {
-    top: 24px;
+    top: 20px;
     left: auto;
     right: 100%;
     border-color: transparent;
-    border-right-color: #dddddd;
+    border-right-color: #e7e9ed;
   }
 
   .jck-woosocial-action:nth-child(even) .jck-woosocial-action__wrapper .jck-woosocial-action__date {

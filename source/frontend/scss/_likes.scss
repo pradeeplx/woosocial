@@ -13,7 +13,7 @@
     border-radius: 12.5px;
 }
 
-.jck-woosocial-btn--add-to-cart-wrapper {
+.jck-woosocial-add-to-cart-wrapper {
     margin: 0;
     padding: 0;
     display: block;
@@ -22,6 +22,33 @@
     
     a {
         @extend .jck-woosocial-btn;
+        
+        &.added_to_cart {
+            display: none !important;
+        }
+    }
+    
+    i {
+        margin: 8px 0 6px 5px;
+        float: right;
+        width: 16px;
+        height: 16px;
+        display: inline;
+        line-height: 1;
+    }
+    
+    .jck-woosocial-ic-loading {
+        transform-origin: 50% 44%;
+        transform: translate3d(0,0,0);
+        -webkit-backface-visibility: hidden;
+        font-smoothing: antialiased;
+        
+        &:before {
+            width: 16px;
+            height: 16px;
+            line-height: 1;
+            display: inline-block;
+        }
     }
 }
 

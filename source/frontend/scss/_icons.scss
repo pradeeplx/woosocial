@@ -12,11 +12,6 @@
 
 }
 
-[class^="jck-woosocial-ic-"],
-[class*=" jck-woosocial-ic-"] {
-    vertical-align: middle;
-}
-
 [data-icon]:before {
   font-family: "woosocial" !important;
   content: attr(data-icon);
@@ -63,4 +58,14 @@
 }
 .jck-woosocial-ic-heart-full:before {
   content: "e";
+}
+.jck-woosocial-ic-tick:before {
+  content: "g";
+}
+
+// Custom
+
+[class^="jck-woosocial-ic-"],
+[class*=" jck-woosocial-ic-"] {
+    vertical-align: middle;
 }

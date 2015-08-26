@@ -36,18 +36,6 @@
         }
     }
     
-    .jck-woosocial-profile-wrapper {
-    
-        @include eq('single') {
-            
-            .jck-woosocial-profile-info {
-                width: 100%;
-            }
-            
-        }
-        
-    }
-    
         .jck-woosocial-profile-links {
             margin: 30px 0 0;
             padding: 0;
@@ -100,18 +88,6 @@
         float: right;
         width: 74.5%;
         display: inline;
-    }
-    
-    .jck-woosocial-profile-wrapper {
-    
-        @include eq('single') {
-            
-            .jck-woosocial-profile-feeds {
-                width: 100%;
-            }
-            
-        }
-        
     }
 
 .jck-woosocial-load-more-wrapper {

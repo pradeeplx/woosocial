@@ -25,7 +25,7 @@ $user_info = $GLOBALS['jck_woosocial']->profile_system->user_info;
 	do_action( 'jck_woosocial_before_profile' );
 ?>
     
-    <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-wrapper <?php echo $GLOBALS['jck_woosocial']->slug; ?>-clear" data-eq-pts="single: 0, double: 800">
+    <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-wrapper <?php echo $GLOBALS['jck_woosocial']->slug; ?>-clear">
     
         <?php include( $GLOBALS['jck_woosocial']->templates->locate_template( 'profile/part-info.php' ) ); ?>
         

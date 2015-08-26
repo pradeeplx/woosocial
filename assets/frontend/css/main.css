@@ -101,15 +101,6 @@
 .jck-woosocial-card-grid .jck-woosocial-btn--follow-wrapper {
   margin: 5px 0 15px;
 }
-.jck-woosocial-card-grid[data-eq-state$="medium"] .jck-woosocial-card {
-  width: 31.37%;
-}
-.jck-woosocial-card-grid[data-eq-state$="small"] .jck-woosocial-card {
-  width: 48.04%;
-}
-.jck-woosocial-card-grid[data-eq-state$="xsmall"] .jck-woosocial-card {
-  width: 98.04%;
-}
 
 .jck-woosocial-card {
   border: 1px solid #e7e9ed;
@@ -208,10 +199,6 @@
   text-decoration: none;
 }
 
-.jck-woosocial-profile-wrapper[data-eq-state$="single"] .jck-woosocial-profile-info {
-  width: 100%;
-}
-
 .jck-woosocial-profile-links {
   margin: 30px 0 0;
   padding: 0;
@@ -261,10 +248,6 @@
   float: right;
   width: 74.5%;
   display: inline;
-}
-
-.jck-woosocial-profile-wrapper[data-eq-state$="single"] .jck-woosocial-profile-feeds {
-  width: 100%;
 }
 
 .jck-woosocial-load-more-wrapper {

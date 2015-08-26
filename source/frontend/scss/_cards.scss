@@ -18,29 +18,6 @@
         margin: 5px 0 15px;
     }
     
-    @include eq('medium') {
-        
-        .jck-woosocial-card {
-            width: 31.37%;
-        }
-        
-    }
-    
-    @include eq('small') {
-        
-        .jck-woosocial-card {
-            width: 48.04%;
-        }
-        
-    }
-    
-    @include eq('xsmall') {
-        
-        .jck-woosocial-card {
-            width: 98.04%;
-        }
-        
-    }
 }
 
 .jck-woosocial-card {

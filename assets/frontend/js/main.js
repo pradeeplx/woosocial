@@ -6,6 +6,12 @@
             jck_woosocial.els = {};
             jck_woosocial.vars = {};
             
+            jck_woosocial.vars.is_hidden_class = "jck-woosocial--is-hidden";
+            jck_woosocial.vars.animate_spin_class = "jck-woosocial-spin";
+            jck_woosocial.vars.add_to_cart_buttons_class = '.jck-woosocial-add-to-cart-wrapper .add_to_cart_button';
+            jck_woosocial.vars.card_grid_cards_class = '.jck-woosocial-card-grid .jck-woosocial-card';
+            jck_woosocial.vars.card_hover_class = 'jck-woosocial-card--hover';
+            
             jck_woosocial.els.document_body = $(document.body);
             jck_woosocial.els.actions_list = $('.jck-woosocial-actions');
             jck_woosocial.els.tab_links = $('.jck-woosocial-profile-link');
@@ -17,15 +23,7 @@
             jck_woosocial.els.tick_icon = $('<i class="jck-woosocial-ic-tick"></i>');
             jck_woosocial.els.loading_icon = $('<i class="jck-woosocial-ic-loading jck-woosocial-spin"></i>');
             jck_woosocial.els.card_grids = $('.jck-woosocial-card-grid');
-            jck_woosocial.els.card_grid_cards = jck_woosocial.els.card_grids.find('.jck-woosocial-card');
-            
-            
-            jck_woosocial.vars.action_offset = 1;
-            jck_woosocial.vars.is_hidden_class = "jck-woosocial--is-hidden";
-            jck_woosocial.vars.animate_spin_class = "jck-woosocial-spin";
-            jck_woosocial.vars.add_to_cart_buttons_class = '.jck-woosocial-add-to-cart-wrapper .add_to_cart_button';
-            jck_woosocial.vars.card_grid_cards_class = '.jck-woosocial-card-grid .jck-woosocial-card';
-            jck_woosocial.vars.card_hover_class = 'jck-woosocial-card--hover';
+            jck_woosocial.els.breakpoint_elements = $('[data-breakpoints]');
             
         },
  
@@ -36,15 +34,19 @@
             jck_woosocial.setup_like_action();
             jck_woosocial.setup_tabs();
             jck_woosocial.setup_load_more();
-            jck_woosocial.setup_activity_log();
             jck_woosocial.add_to_cart();
+            jck_woosocial.setup_breakpoints();
             jck_woosocial.setup_cards();
             
         },
         
         on_scroll: function() {
             
-            jck_woosocial.scroll_activity_log();
+        },
+        
+        on_resize: function() {
+            
+            jck_woosocial.setup_breakpoints();
             
         },
      
@@ -187,8 +189,7 @@
                 jck_woosocial.els.tab_content.hide();
                 $(target).show();
                 
-                eqjs.refreshNodes();
-                eqjs.query();
+                jck_woosocial.setup_breakpoints();
                 
                 return false;
                 
@@ -350,52 +351,6 @@
 			});
             
         },
-        
-        setup_activity_log: function() {
-            
-            jck_woosocial.hide_actions(jck_woosocial.els.action_blocks, jck_woosocial.vars.action_offset);
-            
-        },
-        
-        hide_actions: function($action_blocks, action_offset) {
-    		
-    		$action_blocks.each(function(){
-    			
-    			if( $(this).offset().top > $(window).scrollTop()+$(window).height()*action_offset ) {
-        			$(this).find('.jck-woosocial-action__icon, .jck-woosocial-action__wrapper').css({ opacity: 0 }).addClass(jck_woosocial.vars.is_hidden_class);
-                }
-    			
-    		});
-    		
-    	},
-    
-    	show_actions: function($action_blocks, action_offset) {
-    		
-    		$action_blocks.each(function(){
-    			
-    			if( $(this).offset().top <= $(window).scrollTop()+$(window).height()*action_offset && $(this).find('.jck-woosocial-action__icon').hasClass(jck_woosocial.vars.is_hidden_class) ) {
-        			$(this).find('.jck-woosocial-action__icon, .jck-woosocial-action__wrapper')
-        			    .removeClass(jck_woosocial.vars.is_hidden_class)
-        			    .animate({ opacity: 1 });
-                }
-    			
-    		});
-    		
-    	},
-    	
-    	scroll_activity_log: function() {
-        	
-        	if(!window.requestAnimationFrame) {
-            	
-			    setTimeout(function(){ jck_woosocial.show_actions(jck_woosocial.els.action_blocks, jck_woosocial.vars.action_offset); }, 100);
-           
-            } else {
-                
-                window.requestAnimationFrame(function(){ jck_woosocial.show_actions(jck_woosocial.els.action_blocks, jck_woosocial.vars.action_offset); });  
-                
-            }
-            
-    	},
     	
     	add_to_cart: function() {
         	
@@ -433,6 +388,64 @@
         	
     	},
     	
+    	setup_breakpoints: function() {
+        	
+        	if( jck_woosocial.els.breakpoint_elements.length > 0 ) {
+            	
+            	jck_woosocial.els.breakpoint_elements.each(function( index, element ){
+                	
+                	var $element = $(element),
+                	    element_width = $element.innerWidth(),
+                	    breakpoints = $element.attr('data-breakpoints'),
+                	    breakpoints_array = $.parseJSON( breakpoints ),
+                	    current_breakpoint = false;
+                    
+                    if( $element.is(':visible') ) {
+                        
+                        // figure out which breakpoint data we want to use
+                	
+                    	$.each( breakpoints_array, function( index, breakpoint_data ){
+                        	
+                        	if( element_width <= breakpoint_data.max_width ) {
+                            	
+                            	if( ! current_breakpoint ) {
+                            	
+                            	    current_breakpoint = breakpoint_data.max_width;
+                            	
+                            	} else if ( breakpoint_data.max_width <= current_breakpoint ) {
+                                	
+                                	current_breakpoint = breakpoint_data.max_width;
+                                	
+                            	}
+                            	
+                        	}
+                        	
+                    	});
+                    	
+                    	// now we know th breakpoint to use, apply that class and remove the others
+                    	
+                    	$.each( breakpoints_array, function( index, breakpoint_data ){
+                        
+                            if( breakpoint_data.max_width === current_breakpoint ) {
+                                
+                                $element.addClass( breakpoint_data.class );
+                                
+                            } else {
+                                
+                                $element.removeClass( breakpoint_data.class );
+                                
+                            }
+                        
+                        });
+                	
+                	}
+                	
+            	});
+            	
+        	}
+        	
+    	},
+    	
     	setup_cards: function() {
         	
         	jck_woosocial.els.document_body.hoverIntent( 
@@ -460,10 +473,8 @@
      
     };
     
-	$(document).ready( jck_woosocial.on_ready() );
-	
-	$(window).on('scroll', function(){
-    	jck_woosocial.on_scroll();
-    });
+	$(document).ready( jck_woosocial.on_ready() );	
+	$(window).on('scroll', function() { jck_woosocial.on_scroll(); } );
+	$(window).on('resize', function() { jck_woosocial.on_resize(); } );
 
 }(jQuery, document));

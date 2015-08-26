@@ -2,7 +2,6 @@
     
     <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__image">
         <?php echo $product->image_link; ?>
-        <?php echo $product->add_to_cart_button; ?>
     </div>
     
     <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__content">
@@ -17,8 +16,8 @@
     
     </div>
     
-    <?php $GLOBALS['jck_woosocial']->like_system->show_likes_loop( $product->id ); ?>
-    
     <?php echo $product->add_to_cart_button; ?>
+    
+    <?php $GLOBALS['jck_woosocial']->like_system->show_likes_loop( $product->id ); ?>
     
 </div>

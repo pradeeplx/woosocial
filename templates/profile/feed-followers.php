@@ -1,4 +1,4 @@
-<div id="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-followers" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-content <?php echo $GLOBALS['jck_woosocial']->slug; ?>-card-grid" data-eq-pts="xsmall: 0, small: 320, medium: 600, large: 802">
+<div id="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-followers" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-content <?php echo $GLOBALS['jck_woosocial']->slug; ?>-card-grid" data-eq-pts="xsmall: 0, small: 320, medium: 615, large: 850">
     
     <?php $followers = $GLOBALS['jck_woosocial']->follow_system->get_followers( $GLOBALS['jck_woosocial']->profile_system->user_info->ID ); ?>
     

@@ -235,12 +235,16 @@ class JCK_WooSocial {
         $vars = array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
 			'nonce'    => wp_create_nonce( $this->slug ),
-			'user_id'  => is_user_logged_in() ? get_current_user_id() : 0
+			'user_id'  => is_user_logged_in() ? get_current_user_id() : 0,
+			'strings'  => array(
+    			"no_more" => __( "No more to load", "jck-woosocial" )
+			)
 		);
 		
 		wp_localize_script( $this->slug.'_scripts', $this->alt_slug.'_vars', $vars );
 		
 		wp_enqueue_script( 'eq' );
+		wp_enqueue_script( 'hoverIntent' );
 		wp_enqueue_script( $this->slug.'_scripts' );
         
     }
@@ -260,7 +264,7 @@ class JCK_WooSocial {
         // maybe limit this to particular pages, you can use:
 		// if( $post && (get_post_type( $post->ID ) == "product" && ($pagenow == "post.php" || $pagenow == "post-new.php")) ){
         
-        wp_register_style( $this->slug.'_admin_styles', $this->plugin_url . 'assets/admin/css/main.min.css', array(), $this->version );
+        wp_register_style( $this->slug.'_admin_styles', $this->plugin_url . 'assets/admin/css/main.min.css', array( 'jquery', 'eq', 'hoverIntent' ), $this->version );
 		
         wp_enqueue_style( $this->slug.'_admin_styles' );
         

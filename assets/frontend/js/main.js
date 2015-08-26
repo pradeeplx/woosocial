@@ -6,6 +6,7 @@
             jck_woosocial.els = {};
             jck_woosocial.vars = {};
             
+            jck_woosocial.els.document_body = $(document.body);
             jck_woosocial.els.actions_list = $('.jck-woosocial-actions');
             jck_woosocial.els.tab_links = $('.jck-woosocial-profile-link');
             jck_woosocial.els.tab_content = $('.jck-woosocial-tab-content');
@@ -15,10 +16,16 @@
             jck_woosocial.els.add_to_cart_buttons = $('.jck-woosocial-add-to-cart-wrapper .add_to_cart_button');
             jck_woosocial.els.tick_icon = $('<i class="jck-woosocial-ic-tick"></i>');
             jck_woosocial.els.loading_icon = $('<i class="jck-woosocial-ic-loading jck-woosocial-spin"></i>');
+            jck_woosocial.els.card_grids = $('.jck-woosocial-card-grid');
+            jck_woosocial.els.card_grid_cards = jck_woosocial.els.card_grids.find('.jck-woosocial-card');
             
             
             jck_woosocial.vars.action_offset = 1;
             jck_woosocial.vars.is_hidden_class = "jck-woosocial--is-hidden";
+            jck_woosocial.vars.animate_spin_class = "jck-woosocial-spin";
+            jck_woosocial.vars.add_to_cart_buttons_class = '.jck-woosocial-add-to-cart-wrapper .add_to_cart_button';
+            jck_woosocial.vars.card_grid_cards_class = '.jck-woosocial-card-grid .jck-woosocial-card';
+            jck_woosocial.vars.card_hover_class = 'jck-woosocial-card--hover';
             
         },
  
@@ -31,6 +38,7 @@
             jck_woosocial.setup_load_more();
             jck_woosocial.setup_activity_log();
             jck_woosocial.add_to_cart();
+            jck_woosocial.setup_cards();
             
         },
         
@@ -188,30 +196,72 @@
             
         },
         
+        spin_icon_start: function( $icon ){
+            
+            $icon.addClass( jck_woosocial.vars.animate_spin_class );
+            
+        },
+        
+        spin_icon_stop: function( $icon ){
+            
+            $icon.removeClass( jck_woosocial.vars.animate_spin_class );
+            
+        },
+        
+        disable_load_more_button: function( $button ){
+            
+            $button
+            .html( jck_woosocial_vars.strings.no_more )
+            .removeAttr('href')
+            .addClass("jck-woosocial-load-more--disabled");
+            
+        },
+        
         setup_load_more: function() {
             
             jck_woosocial.els.load_more_button.on('click', function(){
+                
+                var $load_more_button = $(this),
+                    $load_more_icon = $load_more_button.find('i');
+                    
+                if( $load_more_button.hasClass("jck-woosocial-load-more--disabled") ) {
+                    return false;
+                }
+                
+                jck_woosocial.spin_icon_start( $load_more_icon );
                
                 if( $(this).hasClass('jck-woosocial-load-more--activity') ) {
-                    jck_woosocial.load_more_activity( $(this) );
+                    
+                    jck_woosocial.load_more_activity( $(this), function(){
+                        
+                        jck_woosocial.spin_icon_stop( $load_more_icon );
+                        
+                    } );
+                    
                 }
                     
                 if( $(this).hasClass('jck-woosocial-load-more--likes') ) {
-                    jck_woosocial.load_more_likes( $(this) );
+                    
+                    jck_woosocial.load_more_likes( $(this), function(){
+                        
+                        jck_woosocial.spin_icon_stop( $load_more_icon );
+                        
+                    } );
+                    
                 }
                 
             });
             
         },
         
-        load_more_activity: function( $load_more_button ) {
+        load_more_activity: function( $load_more_button, callback ) {
             
             var limit = parseInt( $load_more_button.attr('data-limit') ),
                 offset = parseInt( $load_more_button.attr('data-offset') ),
                 next_offset = limit+offset,
                 user_id = $load_more_button.attr('data-user-id'),
                 profile_user_id = $load_more_button.attr('data-profile-user-id'),
-                $load_more_item = $load_more_button.parent();
+                $load_more_item = $load_more_button.closest('li');
                 
             $.ajax({
 				type:        "GET",
@@ -237,9 +287,13 @@
     					
 					} else {
     					
-    					$load_more_item.remove();
+    					jck_woosocial.disable_load_more_button( $load_more_button );
     					
 					}
+					
+					if(callback !== undefined) {
+            			callback(data);
+            		}
 					
 				},
 				
@@ -250,7 +304,7 @@
             
         },
         
-        load_more_likes: function( $load_more_button ) {
+        load_more_likes: function( $load_more_button, callback ) {
             
             var limit = parseInt( $load_more_button.attr('data-limit') ),
                 offset = parseInt( $load_more_button.attr('data-offset') ),
@@ -280,9 +334,13 @@
     					
 					} else {
     					
-    					$load_more_button.remove();
+    					jck_woosocial.disable_load_more_button( $load_more_button );
     					
 					}
+					
+					if(callback !== undefined) {
+            			callback(data);
+            		}
 					
 				},
 				
@@ -341,7 +399,7 @@
     	
     	add_to_cart: function() {
         	
-        	jck_woosocial.els.add_to_cart_buttons.on('click', function(){
+        	jck_woosocial.els.document_body.on('click', jck_woosocial.vars.add_to_cart_buttons_class, function(){
             	
             	var $button = $(this),
             	    button_text = $button.text();
@@ -352,7 +410,7 @@
             	
         	});
         	
-        	$( document.body ).on( 'added_to_cart', function( e, fragments, cart_hash, $button ) {
+        	jck_woosocial.els.document_body.on( 'added_to_cart', function( e, fragments, cart_hash, $button ) {
             
                 var $woosocial_button_wrapper = $button.closest('.jck-woosocial-add-to-cart-wrapper'),
                     button_text = $button.attr('data-button-text');
@@ -372,6 +430,31 @@
                 }
             	
         	});
+        	
+    	},
+    	
+    	setup_cards: function() {
+        	
+        	jck_woosocial.els.document_body.hoverIntent( 
+            	
+        	    function(){
+            	    
+            	    var $card = $(this);
+            	    
+            	    $card.addClass( jck_woosocial.vars.card_hover_class );
+            	    
+        	    }, 
+        	    
+        	    function(){
+            	    
+            	    var $card = $(this);
+            	    
+            	    $card.removeClass( jck_woosocial.vars.card_hover_class );
+            	    
+        	    }, 
+        	    
+        	    jck_woosocial.vars.card_grid_cards_class 
+            );
         	
     	}
      

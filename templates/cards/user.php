@@ -2,7 +2,6 @@
     
     <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__image">
         <?php echo $user->avatar_link; ?>
-        <?php echo $user->follow_button; ?>
     </div>
     
     <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__content">

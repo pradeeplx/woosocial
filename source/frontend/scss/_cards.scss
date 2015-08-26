@@ -1,13 +1,21 @@
 .jck-woosocial-card-grid {
-    overflow: hidden;
     margin: 0 -0.98%;
     width: 101.96%;
+    @include clearfix;
     
     .jck-woosocial-card {
         float: left;
         width: 23.04%;
         margin: 0 0.98% 1.96%;
         box-sizing: border-box;
+        
+        &--hover {
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    }
+    
+    .jck-woosocial-btn--follow-wrapper {
+        margin: 5px 0 15px;
     }
     
     @include eq('medium') {
@@ -55,21 +63,6 @@
             }
         }
         
-        .jck-woosocial-add-to-cart-wrapper,
-        .jck-woosocial-btn--follow-wrapper {
-            position: absolute;
-            top: 50%;
-            text-align: center;
-            left: 5px;
-            right: 5px;
-            margin: -15px 0 0;
-        }
-        
-    }
-    
-    .jck-woosocial-add-to-cart-wrapper,
-    .jck-woosocial-btn--follow-wrapper {
-        display: none;
     }
     
     &__title {
@@ -105,6 +98,7 @@
     }
     
     &--product {
+        
         &__price {
             margin: 0 0 15px;
             display: block;
@@ -120,6 +114,11 @@
                 color: $c-text-secondary;
             }
         }
+        
+        .jck-woosocial-add-to-cart-wrapper {
+            margin: 0 0 15px -3px;
+        }
+        
     }
     
     &--user {

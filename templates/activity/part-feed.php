@@ -1,6 +1,6 @@
 <?php if( $activity_feed ) { ?>
 
-    <ul class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-actions" >
+    <ul class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-actions" data-breakpoints="<?php echo esc_attr( json_encode( $GLOBALS['jck_woosocial']->activity_log->wrapper_breakpoints ) ); ?>">
     
         <?php foreach( $activity_feed as $action ){ ?>
             

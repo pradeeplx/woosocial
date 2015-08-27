@@ -4,9 +4,11 @@ class JCK_WooSocial_ActivityLogSystem {
     
     public $table_name;
     public $db_version = "1.0";
-    public $slug = "jck_woosocial_activity_log";
+    public $slug = "jck-woosocial";
+    public $table_slug = "jck_woosocial_activity_log";
     public $default_limit = 12;
     public $default_offset = 0;
+    public $wrapper_breakpoints;
 
 /**	=============================
     *
@@ -47,7 +49,18 @@ class JCK_WooSocial_ActivityLogSystem {
         
         global $wpdb;
         
-        $this->table_name = $wpdb->prefix . $this->slug;
+        $this->table_name = $wpdb->prefix . $this->table_slug;
+        
+        $this->wrapper_breakpoints = array(
+            array(
+                "max_width" => 800,
+                "class" => sprintf("%s-actions--medium", $this->slug)
+            ),
+            array(
+                "max_width" => 320,
+                "class" => sprintf("%s-actions--small", $this->slug)
+            )
+        );
         
     }
 
@@ -62,7 +75,7 @@ class JCK_WooSocial_ActivityLogSystem {
         global $wpdb;
 		
 		$charset_collate = $wpdb->get_charset_collate();
-		$installed_ver = get_option( $this->slug."_db_version" );	
+		$installed_ver = get_option( $this->table_slug."_db_version" );	
 			
 		if( $installed_ver != $this->db_version ) {
 			
@@ -78,7 +91,7 @@ class JCK_WooSocial_ActivityLogSystem {
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 			dbDelta( $sql );
 			
-			update_option( $this->slug."_db_version", $this->db_version );
+			update_option( $this->table_slug."_db_version", $this->db_version );
 			
 		}
         

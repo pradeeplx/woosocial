@@ -1,4 +1,4 @@
-<div id="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-user-likes" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-content woocommerce">
+<div id="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-user-likes" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-content woocommerce" data-breakpoints="<?php echo esc_attr( json_encode( $GLOBALS['jck_woosocial']->card_grid_breakpoints ) ); ?>">
     
     <?php $likes = $GLOBALS['jck_woosocial']->like_system->get_likes( $GLOBALS['jck_woosocial']->profile_system->user_info->ID ); ?>
     

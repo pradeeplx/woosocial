@@ -101,6 +101,15 @@
 .jck-woosocial-card-grid .jck-woosocial-btn--follow-wrapper {
   margin: 5px 0 15px;
 }
+.jck-woosocial-card-grid--medium .jck-woosocial-card {
+  width: 31.37%;
+}
+.jck-woosocial-card-grid--small .jck-woosocial-card {
+  width: 48.04%;
+}
+.jck-woosocial-card-grid--xsmall .jck-woosocial-card {
+  width: 98.04%;
+}
 
 .jck-woosocial-card {
   border: 1px solid #e7e9ed;

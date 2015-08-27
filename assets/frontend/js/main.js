@@ -24,6 +24,7 @@
             jck_woosocial.els.loading_icon = $('<i class="jck-woosocial-ic-loading jck-woosocial-spin"></i>');
             jck_woosocial.els.card_grids = $('.jck-woosocial-card-grid');
             jck_woosocial.els.breakpoint_elements = $('[data-breakpoints]');
+            jck_woosocial.els.breakpoints = [];
             
         },
  
@@ -36,6 +37,7 @@
             jck_woosocial.setup_load_more();
             jck_woosocial.add_to_cart();
             jck_woosocial.setup_breakpoints();
+            jck_woosocial.check_breakpoints();
             jck_woosocial.setup_cards();
             
         },
@@ -46,7 +48,7 @@
         
         on_resize: function() {
             
-            jck_woosocial.setup_breakpoints();
+            jck_woosocial.check_breakpoints();
             
         },
      
@@ -388,61 +390,101 @@
         	
     	},
     	
-    	setup_breakpoints: function() {
-        	
-        	if( jck_woosocial.els.breakpoint_elements.length > 0 ) {
-            	
-            	jck_woosocial.els.breakpoint_elements.each(function( index, element ){
-                	
-                	var $element = $(element),
-                	    element_width = $element.innerWidth(),
+        setup_breakpoints: function() {
+            
+            if( jck_woosocial.els.breakpoint_elements.length > 0 ) {
+                
+                // store breakpoint data in cache for future reference
+            
+                jck_woosocial.els.breakpoint_elements.each(function( index, element ){
+                
+                    var $element = $(element),
                 	    breakpoints = $element.attr('data-breakpoints'),
                 	    breakpoints_array = $.parseJSON( breakpoints ),
-                	    current_breakpoint = false;
+                        breakpoint_object = {
+                        	element: $element,
+                            breakpoints: breakpoints_array,
+                            width: 0
+                        };
                     
-                    if( $element.is(':visible') ) {
+                    jck_woosocial.els.breakpoints.push( breakpoint_object );
+                    
+                });
+            
+            }
+            
+            // when an element width has changed, trigger breakpoint update
+            
+            jck_woosocial.els.document_body.on('element_width_change', function( event, breakpoint_object ){
+            
+                jck_woosocial.update_breakpoints( breakpoint_object );
+                
+            });
+            
+        },
+        
+        check_breakpoints: function() {
+        
+            if( jck_woosocial.els.breakpoints.length > 0 ) {
+            
+            	$.each(jck_woosocial.els.breakpoints, function(index, breakpoint_object){
+                    
+                    var previous_width = breakpoint_object.width,
+                        current_width = breakpoint_object.element.width();
+                    
+                    if( current_width !== previous_width ) {
                         
-                        // figure out which breakpoint data we want to use
-                	
-                    	$.each( breakpoints_array, function( index, breakpoint_data ){
-                        	
-                        	if( element_width <= breakpoint_data.max_width ) {
-                            	
-                            	if( ! current_breakpoint ) {
-                            	
-                            	    current_breakpoint = breakpoint_data.max_width;
-                            	
-                            	} else if ( breakpoint_data.max_width <= current_breakpoint ) {
-                                	
-                                	current_breakpoint = breakpoint_data.max_width;
-                                	
-                            	}
-                            	
-                        	}
-                        	
-                    	});
+                        breakpoint_object.width = current_width;
                     	
-                    	// now we know th breakpoint to use, apply that class and remove the others
+                        jck_woosocial.els.document_body.trigger('element_width_change', [breakpoint_object]);
+                        
+                    }
+                    
+                });
+                
+            }
+        
+        },
+
+    	update_breakpoints: function( breakpoint_object ) {
+            
+            var current_breakpoint = false;
+            
+            // figure out which breakpoint data we want to use
+            
+            $.each( breakpoint_object.breakpoints, function( index, breakpoint_data ){
+                        	
+                if( breakpoint_object.width <= breakpoint_data.max_width ) {
+                    
+                    if( ! current_breakpoint ) {
+
+                        current_breakpoint = breakpoint_data.max_width;
+
+                    } else if ( breakpoint_data.max_width <= current_breakpoint ) {
+
+                        current_breakpoint = breakpoint_data.max_width;
+
+                    }
+
+                }
+
+            });
+            
+            // now we know the breakpoint to use, apply that class and remove the others
                     	
-                    	$.each( breakpoints_array, function( index, breakpoint_data ){
-                        
-                            if( breakpoint_data.max_width === current_breakpoint ) {
-                                
-                                $element.addClass( breakpoint_data.class );
-                                
-                            } else {
-                                
-                                $element.removeClass( breakpoint_data.class );
-                                
-                            }
-                        
-                        });
-                	
-                	}
-                	
-            	});
-            	
-        	}
+            $.each( breakpoint_object.breakpoints, function( index, breakpoint_data ){
+
+                if( breakpoint_data.max_width === current_breakpoint ) {
+
+                    breakpoint_object.element.addClass( breakpoint_data.class );
+
+                } else {
+
+                    breakpoint_object.element.removeClass( breakpoint_data.class );
+
+                }
+
+            });
         	
     	},
     	

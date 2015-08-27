@@ -1,17 +1,4 @@
-<?php
-$breakpoints = array(
-    array(
-        "max_width" => 768,
-        "class" => sprintf("%s-card-grid--medium", $GLOBALS['jck_woosocial']->slug)
-    ),
-    array(
-        "max_width" => 400,
-        "class" => sprintf("%s-card-grid--small", $GLOBALS['jck_woosocial']->slug)
-    )
-);
-?>
-
-<div id="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-followers" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-content <?php echo $GLOBALS['jck_woosocial']->slug; ?>-card-grid" data-breakpoints="<?php echo esc_attr( json_encode($breakpoints) ); ?>">
+<div id="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-followers" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-content <?php echo $GLOBALS['jck_woosocial']->slug; ?>-card-grid" data-breakpoints="<?php echo esc_attr( json_encode( $GLOBALS['jck_woosocial']->card_grid_breakpoints ) ); ?>">
     
     <?php $followers = $GLOBALS['jck_woosocial']->follow_system->get_followers( $GLOBALS['jck_woosocial']->profile_system->user_info->ID ); ?>
     

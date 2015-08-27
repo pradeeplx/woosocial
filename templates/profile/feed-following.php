@@ -1,4 +1,4 @@
-<div id="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-following" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-content <?php echo $GLOBALS['jck_woosocial']->slug; ?>-card-grid">
+<div id="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-following" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-tab-content <?php echo $GLOBALS['jck_woosocial']->slug; ?>-card-grid" data-breakpoints="<?php echo esc_attr( json_encode( $GLOBALS['jck_woosocial']->card_grid_breakpoints ) ); ?>">
 
     <?php $following = $GLOBALS['jck_woosocial']->follow_system->get_following( $GLOBALS['jck_woosocial']->profile_system->user_info->ID ); ?>
     

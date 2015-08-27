@@ -5,6 +5,8 @@ class JCK_WooSocial_ProfileSystem {
     public $custom_author_levels = array( 'author', 'profile' );
     public $user_info;
     public $profile_base;
+    public $wrapper_breakpoints;
+    public $card_grid_breakpoints;
     
 /**	=============================
     *
@@ -29,6 +31,32 @@ class JCK_WooSocial_ProfileSystem {
 
         $this->profile_base = 'profile';
         
+        $this->wrapper_breakpoints = array(
+            array(
+                "max_width" => 800,
+                "class" => sprintf("%s-profile-wrapper--medium", $GLOBALS['jck_woosocial']->slug)
+            ),
+            array(
+                "max_width" => 320,
+                "class" => sprintf("%s-profile-wrapper--small", $GLOBALS['jck_woosocial']->slug)
+            )
+        );
+        
+        $this->card_grid_breakpoints = array(
+            array(
+                "max_width" => 820,
+                "class" => sprintf("%s-card-grid--medium", $GLOBALS['jck_woosocial']->slug)
+            ),
+            array(
+                "max_width" => 615,
+                "class" => sprintf("%s-card-grid--small", $GLOBALS['jck_woosocial']->slug)
+            ),
+            array(
+                "max_width" => 400,
+                "class" => sprintf("%s-card-grid--xsmall", $GLOBALS['jck_woosocial']->slug)
+            )
+        );
+        
     }
 
 /**	=============================
@@ -52,8 +80,8 @@ class JCK_WooSocial_ProfileSystem {
             add_filter( 'nav_menu_link_attributes',                     array( $this, 'nav_menu_profile_link' ), 10, 4 );
             add_filter( 'wp_get_nav_menu_items',                        array( $this, 'nav_menu_items' ), 10, 3 );
             
-            add_action( 'jck_woosocial_before_profile',                array( $this, 'before_profile' ), 5 );
-            add_action( 'jck_woosocial_after_profile',                 array( $this, 'after_profile' ), 50 );
+            add_action( 'jck_woosocial_before_profile',                 array( $this, 'before_profile' ), 5 );
+            add_action( 'jck_woosocial_after_profile',                  array( $this, 'after_profile' ), 50 );
             
             add_filter('body_class',                                    array( $this, 'body_class' ), 10, 1 );
             

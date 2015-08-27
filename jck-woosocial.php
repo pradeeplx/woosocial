@@ -28,8 +28,6 @@ class JCK_WooSocial {
     public $like_system;
     public $follow_system;
     public $activity_log;
-    public $profile_wrapper_breakpoints;
-    public $card_grid_breakpoints;
 	
 /**	=============================
     *
@@ -61,32 +59,6 @@ class JCK_WooSocial {
 
         $this->options_name = $this->slug.'_options';
         $this->alt_slug = str_replace('-', '_', $this->slug);
-        
-        $this->profile_wrapper_breakpoints = array(
-            array(
-                "max_width" => 800,
-                "class" => sprintf("%s-profile-wrapper--medium", $this->slug)
-            ),
-            array(
-                "max_width" => 320,
-                "class" => sprintf("%s-profile-wrapper--small", $this->slug)
-            )
-        );
-        
-        $this->card_grid_breakpoints = array(
-            array(
-                "max_width" => 820,
-                "class" => sprintf("%s-card-grid--medium", $this->slug)
-            ),
-            array(
-                "max_width" => 615,
-                "class" => sprintf("%s-card-grid--small", $this->slug)
-            ),
-            array(
-                "max_width" => 400,
-                "class" => sprintf("%s-card-grid--xsmall", $this->slug)
-            )
-        );
         
     }
 

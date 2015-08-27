@@ -23,12 +23,11 @@ $user_info = $GLOBALS['jck_woosocial']->profile_system->user_info;
     ============================= */
 
 	do_action( 'jck_woosocial_before_profile' );
-?>
+?>    
     
-    <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-wrapper <?php echo $GLOBALS['jck_woosocial']->slug; ?>-clear">
+    <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-wrapper <?php echo $GLOBALS['jck_woosocial']->slug; ?>-clear" data-breakpoints="<?php echo esc_attr( json_encode( $GLOBALS['jck_woosocial']->profile_wrapper_breakpoints ) ); ?>">
     
-        <?php include( $GLOBALS['jck_woosocial']->templates->locate_template( 'profile/part-info.php' ) ); ?>
-        
+        <?php include( $GLOBALS['jck_woosocial']->templates->locate_template( 'profile/part-info.php' ) ); ?>        
         
         <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-feeds">
         

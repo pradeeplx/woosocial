@@ -191,7 +191,7 @@
                 jck_woosocial.els.tab_content.hide();
                 $(target).show();
                 
-                jck_woosocial.setup_breakpoints();
+                jck_woosocial.check_breakpoints();
                 
                 return false;
                 

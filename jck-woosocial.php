@@ -402,7 +402,7 @@ class JCK_WooSocial {
     *
     ============================= */
     
-    public function get_load_more_button( $type = false, $wrap = true ) {
+    public function get_load_more_button( $type = false ) {
         
         if( !$type )
             return "";
@@ -414,20 +414,46 @@ class JCK_WooSocial {
         );
         
         $additional_attributes = array();
+        $user_id = 0;
         
         if( $this->profile_system->is_profile() )
             $additional_attributes[] = sprintf( 'data-profile-user-id="%d"', $this->profile_system->user_info->ID );
         
+        if( is_author() ) {
+            $user_id = $this->profile_system->user_info->ID;
+        } else {
+            $following = $this->follow_system->get_following( $this->profile_system->user_info->ID, null, null, true );
+            if( $following && !empty( $following ) ) {
+                $user_id = esc_attr(json_encode($following));
+            }
+        }
+        
         return sprintf(
-            '<div class="%s-load-more-wrapper"><a href="javascript: void(0);" class="%s" data-limit="%d" data-offset="%d" data-user-id="%d" %s><i class="jck-woosocial-ic-loading"></i> %s</a></div>', 
+            '<div class="%s-load-more-wrapper"><a href="javascript: void(0);" class="%s" data-limit="%d" data-offset="%d" data-user-id="%s" %s><i class="jck-woosocial-ic-loading"></i> %s</a></div>', 
             $this->slug,
             implode(' ', $classes),
             $this->activity_log->default_limit,
             $this->activity_log->default_offset + $this->activity_log->default_limit,
-            $this->profile_system->user_info->ID,
+            $user_id,
             implode(' ', $additional_attributes),
             __('Load more', 'jck-woosocial')
         );
+        
+    }
+
+/** =============================
+    *
+    * Is Json?
+    *
+    * @param  [str] [$string]
+    * @return [bool]
+    *
+    ============================= */
+    
+    public function is_json( $string ) {
+        
+        json_decode( $string );
+        return (json_last_error() == JSON_ERROR_NONE);
         
     }
   

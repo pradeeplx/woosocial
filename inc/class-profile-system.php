@@ -101,6 +101,10 @@ class JCK_WooSocial_ProfileSystem {
         	
         	$this->user_info = $this->get_user_info();
         	
+    	} else {
+        	
+        	$this->user_info = wp_get_current_user();
+        	
     	}
         
 	}

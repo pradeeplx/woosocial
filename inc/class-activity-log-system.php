@@ -187,7 +187,7 @@ class JCK_WooSocial_ActivityLogSystem {
     *
     * Get Activity Feed
     *
-    * @param int $user_id
+    * @param int/arr $user_id
     * @param int $limit
     * @param int $offset
     * @param int $include_followers include results for who the requested user has followed
@@ -197,7 +197,7 @@ class JCK_WooSocial_ActivityLogSystem {
     *
     ============================= */
     
-    public function get_activity_feed( $user_id, $limit = null, $offset = null, $include_followers = true, $from = null, $to = null ) {
+    public function get_activity_feed( $user_id, $limit = null, $offset = null, $include_followers = true ) {
         
         if( $limit === null ) $limit = $this->default_limit;
         if( $offset === null ) $offset = $this->default_offset;
@@ -205,12 +205,22 @@ class JCK_WooSocial_ActivityLogSystem {
         if( $user_id == "" )
             return 0;
         
+        if( is_array( $user_id ) )
+            $user_id = implode(',', array_map('intval', $user_id));
+        
         global $wpdb;
         
         $and_followers = ( $include_followers ) ? "OR rel_id = $user_id" : "";
-        $time_query = ( $from !== null && $to !== null ) ? "AND time BETWEEN '$to' AND '$from'" : "";
         
-        $activity = $wpdb->get_results( "SELECT * FROM $this->table_name WHERE user_id = $user_id $and_followers $time_query ORDER BY time DESC LIMIT $limit OFFSET $offset" );
+        $activity = $wpdb->get_results( "
+            SELECT * 
+            FROM $this->table_name 
+            WHERE user_id IN ($user_id) 
+            $and_followers 
+            ORDER BY time DESC 
+            LIMIT $limit 
+            OFFSET $offset
+        " );
         
         $this->format_actions( $activity );
         
@@ -226,13 +236,18 @@ class JCK_WooSocial_ActivityLogSystem {
     
     function load_more() {
         
-        
-        
         $response = array(
             'activity_html' => false
         );
         
-        $activity = $this->get_activity_feed( $_GET['user_id'], $_GET['limit'], $_GET['offset'] );
+        // format user id, either a string or array of ids
+        $user_id = stripslashes( $_GET['user_id'] );
+        $user_id = ( $GLOBALS['jck_woosocial']->is_json( $user_id ) ) ? json_decode( $user_id ) : $user_id;
+        
+        // if it's an array, then we're viewing own activity feed and followers should not be included
+        $followers = ( is_array( $user_id ) ) ? false : true;
+        
+        $activity = $this->get_activity_feed( $user_id, $_GET['limit'], $_GET['offset'], $followers );
         
         if( isset( $_GET['profile_user_id'] ) )
             $GLOBALS['jck_woosocial']->profile_system->user_info = $GLOBALS['jck_woosocial']->profile_system->get_user_info( $_GET['profile_user_id'] );
@@ -347,28 +362,15 @@ class JCK_WooSocial_ActivityLogSystem {
     * Get Following Activity Feed
     *
     * @param int $user_id
-    * @param int $from plus/minus days
-    * @param int $to plus/minus days
     * @return arr/obj
     *
     ============================= */
     
-    public function get_following_activity_feed( $user_id, $from = null, $to = null ) {
-        
-        if( $from === null ) $from = 0;
-        if( $to === null ) $to = -7;
+    public function get_following_activity_feed( $user_id ) {
         
         // if no user id, return nothing
         if( $user_id == "" )
             return 0;
-        
-        // set time params        
-        date_default_timezone_set("UTC");
-        
-        $time_offset = get_option('gmt_offset');
-        
-        $from = date("Y-m-d H:i:s", strtotime("$from days, $time_offset hours"));
-        $to = date("Y-m-d H:i:s", strtotime("$to days, $time_offset hours"));
         
         // start query
         
@@ -377,15 +379,7 @@ class JCK_WooSocial_ActivityLogSystem {
         
         if( $following && !empty($following) ) {
             
-            // build array of all following activity
-            foreach( $following as $following_user_id ) {
-                
-                $activity = array_merge( $this->get_activity_feed( $following_user_id, null, null, false, $from, $to ), $activity );
-                
-            }
-            
-            // sort by time
-            uasort( $activity, function ($a, $b) { if ( $a->time == $b->time ) return 0; else return ($a->time > $b->time) ? -1 : 1; });
+           $activity = $this->get_activity_feed( $following, $limit = null, $offset = null, false );
             
         }
         

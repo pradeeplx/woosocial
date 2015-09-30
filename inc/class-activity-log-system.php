@@ -53,11 +53,7 @@ class JCK_WooSocial_ActivityLogSystem {
         
         $this->wrapper_breakpoints = array(
             array(
-                "max_width" => 800,
-                "class" => sprintf("%s-actions--medium", $this->slug)
-            ),
-            array(
-                "max_width" => 320,
+                "max_width" => 480,
                 "class" => sprintf("%s-actions--small", $this->slug)
             )
         );

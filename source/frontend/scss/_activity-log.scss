@@ -1,3 +1,27 @@
+// Placeholders
+
+%small-date {
+    left: -58px;
+    top: 48px;
+    line-height: 0.9em;
+    width: 38px;
+    font-size: 75%;
+    white-space: normal;
+    text-align: center;
+    padding: 5px 0;
+    background-color: #fff;
+}
+
+%small-wrapper {
+    width: auto;
+    float: none;
+    margin-left: 20px;
+    box-sizing: border-box;
+    display: block;
+}
+
+// Styles
+
 .jck-woosocial-actions {
     position: relative;
     padding: 0;
@@ -25,6 +49,14 @@
         .jck-woosocial-load-more {
             margin: 0;
         }
+    }
+    
+    &--small {
+        padding-left: 38px;
+        
+        &:before {
+            left: 19px;
+        }   
     }
 }
 
@@ -90,6 +122,29 @@
                     margin-top: -11px;
                 }
             }
+            
+            .jck-woosocial-actions--small & {
+                left: -38px;
+                width: 38px;
+                height: 38px;
+                margin-left: 0;
+                
+                i {
+                    font-size: 18px;
+                }
+                
+                &--follow {
+                    i {
+                        margin-top: -10px;
+                    }
+                }
+                
+                &--like {
+                    i {
+                        margin-top: -8px;
+                    }
+                }
+            }
         }
         
         &__wrapper {
@@ -98,7 +153,7 @@
             border-radius: 5px;
             margin-left: 0;
             padding: 0;
-            width: 45%;
+            width: 42%;
             
             &:after {
                 content: "";
@@ -109,12 +164,27 @@
             &:before {
                 content: '';
                 position: absolute;
-                top: 19px;
+                top: 18px;
                 left: 100%;
                 height: 0;
                 width: 0;
+                border-style: solid;
+                border-width: 8px 0 8px 10px;
                 border-color: transparent;
                 border-left-color: $c-border;
+            }
+            
+            .jck-woosocial-actions--small & {
+                @extend %small-wrapper;
+                
+                &:before {
+                    top: 13px;
+                    left: auto;
+                    right: 100%;
+                    border-width: 8px 10px 8px 0;
+                    border-color: transparent;
+                    border-right-color: $c-border;
+                }
             }
         }
         
@@ -122,17 +192,30 @@
             float: right;
             
             &:before {
-                top: 20px;
+                top: 18px;
                 left: auto;
                 right: 100%;
+                border-width: 8px 10px 8px 0;
                 border-color: transparent;
                 border-right-color: $c-border;
             }
             
             .jck-woosocial-action__date {
                 left: auto;
-                right: 122%;
+                right: 133%;
                 text-align: right;
+                
+                .jck-woosocial-actions--small & {
+                    @extend %small-date;
+                }
+            }
+            
+            .jck-woosocial-actions--small & {
+                @extend %small-wrapper;
+                
+                &:before {
+                    top: 13px;
+                }
             }
         }
         
@@ -158,99 +241,35 @@
                 display: inline;
                 border: none;
             }
+            
+            .jck-woosocial-actions--small & {
+                height: 40px;
+                line-height: 40px;
+                
+                & .avatar {
+                    height: 24px;
+                    width: 24px;
+                }
+            }
         }
         
         &__content {
             border-top: none;
             border-radius: 0 0 $border-radius $border-radius;
-            
-            .jck-woosocial-card {
-                
-                &--user {
-                    .jck-woosocial-card__title {
-                        margin: 7px 0 0;
-                    }
-                    
-                    .jck-woosocial-card__content {
-                        padding: 0 80px 0 0;
-                    }
-                }
-                
-                &--product {
-                    .jck-woosocial-card__title {
-                        margin: 15px 0 0;
-                    }
-                }
-                
-                &__image {
-                    float: left;
-                    max-width: 80px;
-                    margin: 0;
-                    width: 25%;
-                    display: inline;
-                }
-                
-                &__content {
-                    float: right;
-                    width: 70%;
-                    display: inline;
-                }
-                
-                &__title,
-                &__user-stats {
-                    text-align: left;
-                }
-                
-                &__user-stats {
-                    position: absolute;
-                    top: 70px;
-                    right: 0;
-                    margin: 0;
-                    width: 80px;
-                    border-left: 1px solid $c-border;
-                    padding: 0 0 0 15px;
-                }
-                
-                    &__user-stat {
-                        padding: 0;
-                        display: block;
-                        margin: 1px 0;
-                    }
-            }
-            
-            .jck-woosocial-product-likes {
-                float: left;
-                max-width: 50%;
-                margin: 15px 0 0;
-            }
-            
-            .jck-woosocial-add-to-cart-wrapper {
-                clear: both;
-                float: right;
-                margin: 15px 0 0;
-                padding: 0;
-                height: 34px;
-                display: block;
-                
-                a {
-                    margin: 2px 0;
-                }
-            }
-            
-            .jck-woosocial-btn--follow-wrapper {
-                display: block;
-                margin: 5px 0 0 -3px;
-                text-align: left;
-            }
         }
         
         &__date {
             position: absolute;
             width: 100%;
-            left: 122%;
+            left: 135%;
             top: 0;
             line-height: 50px;
             white-space: nowrap;
             overflow: hidden;
+            color: #888;
+            
+            .jck-woosocial-actions--small & {
+                @extend %small-date;
+            }
         }
     }

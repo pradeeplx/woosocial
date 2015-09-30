@@ -98,9 +98,6 @@
 .jck-woosocial-card-grid .jck-woosocial-card--hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-.jck-woosocial-card-grid .jck-woosocial-btn--follow-wrapper {
-  margin: 5px 0 15px;
-}
 .jck-woosocial-card-grid--medium .jck-woosocial-card {
   width: 31.37%;
 }
@@ -346,6 +343,26 @@
   vertical-align: middle;
 }
 
+.jck-woosocial-actions--small .jck-woosocial-action:nth-child(even) .jck-woosocial-action__wrapper .jck-woosocial-action__date, .jck-woosocial-actions--small .jck-woosocial-action__date {
+  left: -58px;
+  top: 48px;
+  line-height: 0.9em;
+  width: 38px;
+  font-size: 75%;
+  white-space: normal;
+  text-align: center;
+  padding: 5px 0;
+  background-color: #fff;
+}
+
+.jck-woosocial-actions--small .jck-woosocial-action__wrapper, .jck-woosocial-actions--small .jck-woosocial-action:nth-child(even) .jck-woosocial-action__wrapper {
+  width: auto;
+  float: none;
+  margin-left: 20px;
+  box-sizing: border-box;
+  display: block;
+}
+
 .jck-woosocial-actions {
   position: relative;
   padding: 0;
@@ -371,6 +388,12 @@
 }
 .jck-woosocial-actions__load-more .jck-woosocial-load-more {
   margin: 0;
+}
+.jck-woosocial-actions--small {
+  padding-left: 38px;
+}
+.jck-woosocial-actions--small:before {
+  left: 19px;
 }
 
 .jck-woosocial-action {
@@ -430,13 +453,28 @@
 .jck-woosocial-action__icon--follow i {
   margin-top: -11px;
 }
+.jck-woosocial-actions--small .jck-woosocial-action__icon {
+  left: -38px;
+  width: 38px;
+  height: 38px;
+  margin-left: 0;
+}
+.jck-woosocial-actions--small .jck-woosocial-action__icon i {
+  font-size: 18px;
+}
+.jck-woosocial-actions--small .jck-woosocial-action__icon--follow i {
+  margin-top: -10px;
+}
+.jck-woosocial-actions--small .jck-woosocial-action__icon--like i {
+  margin-top: -8px;
+}
 .jck-woosocial-action__wrapper {
   position: relative;
   background: #fff;
   border-radius: 5px;
   margin-left: 0;
   padding: 0;
-  width: 45%;
+  width: 42%;
 }
 .jck-woosocial-action__wrapper:after {
   content: "";
@@ -446,27 +484,41 @@
 .jck-woosocial-action__wrapper:before {
   content: '';
   position: absolute;
-  top: 19px;
+  top: 18px;
   left: 100%;
   height: 0;
   width: 0;
+  border-style: solid;
+  border-width: 8px 0 8px 10px;
   border-color: transparent;
   border-left-color: #e7e9ed;
+}
+.jck-woosocial-actions--small .jck-woosocial-action__wrapper:before {
+  top: 13px;
+  left: auto;
+  right: 100%;
+  border-width: 8px 10px 8px 0;
+  border-color: transparent;
+  border-right-color: #e7e9ed;
 }
 .jck-woosocial-action:nth-child(even) .jck-woosocial-action__wrapper {
   float: right;
 }
 .jck-woosocial-action:nth-child(even) .jck-woosocial-action__wrapper:before {
-  top: 20px;
+  top: 18px;
   left: auto;
   right: 100%;
+  border-width: 8px 10px 8px 0;
   border-color: transparent;
   border-right-color: #e7e9ed;
 }
 .jck-woosocial-action:nth-child(even) .jck-woosocial-action__wrapper .jck-woosocial-action__date {
   left: auto;
-  right: 122%;
+  right: 133%;
   text-align: right;
+}
+.jck-woosocial-actions--small .jck-woosocial-action:nth-child(even) .jck-woosocial-action__wrapper:before {
+  top: 13px;
 }
 .jck-woosocial-action__description {
   display: block;
@@ -490,77 +542,27 @@
   display: inline;
   border: none;
 }
+.jck-woosocial-actions--small .jck-woosocial-action__description {
+  height: 40px;
+  line-height: 40px;
+}
+.jck-woosocial-actions--small .jck-woosocial-action__description .avatar {
+  height: 24px;
+  width: 24px;
+}
 .jck-woosocial-action__content {
   border-top: none;
   border-radius: 0 0 5px 5px;
 }
-.jck-woosocial-action__content .jck-woosocial-card--user .jck-woosocial-card__title {
-  margin: 7px 0 0;
-}
-.jck-woosocial-action__content .jck-woosocial-card--user .jck-woosocial-card__content {
-  padding: 0 80px 0 0;
-}
-.jck-woosocial-action__content .jck-woosocial-card--product .jck-woosocial-card__title {
-  margin: 15px 0 0;
-}
-.jck-woosocial-action__content .jck-woosocial-card__image {
-  float: left;
-  max-width: 80px;
-  margin: 0;
-  width: 25%;
-  display: inline;
-}
-.jck-woosocial-action__content .jck-woosocial-card__content {
-  float: right;
-  width: 70%;
-  display: inline;
-}
-.jck-woosocial-action__content .jck-woosocial-card__title, .jck-woosocial-action__content .jck-woosocial-card__user-stats {
-  text-align: left;
-}
-.jck-woosocial-action__content .jck-woosocial-card__user-stats {
-  position: absolute;
-  top: 70px;
-  right: 0;
-  margin: 0;
-  width: 80px;
-  border-left: 1px solid #e7e9ed;
-  padding: 0 0 0 15px;
-}
-.jck-woosocial-action__content .jck-woosocial-card__user-stat {
-  padding: 0;
-  display: block;
-  margin: 1px 0;
-}
-.jck-woosocial-action__content .jck-woosocial-product-likes {
-  float: left;
-  max-width: 50%;
-  margin: 15px 0 0;
-}
-.jck-woosocial-action__content .jck-woosocial-add-to-cart-wrapper {
-  clear: both;
-  float: right;
-  margin: 15px 0 0;
-  padding: 0;
-  height: 34px;
-  display: block;
-}
-.jck-woosocial-action__content .jck-woosocial-add-to-cart-wrapper a {
-  margin: 2px 0;
-}
-.jck-woosocial-action__content .jck-woosocial-btn--follow-wrapper {
-  display: block;
-  margin: 5px 0 0 -3px;
-  text-align: left;
-}
 .jck-woosocial-action__date {
   position: absolute;
   width: 100%;
-  left: 122%;
+  left: 135%;
   top: 0;
   line-height: 50px;
   white-space: nowrap;
   overflow: hidden;
+  color: #888;
 }
 
 .jck-woosocial-like-action {
@@ -645,6 +647,7 @@
 .jck-woosocial-btn--follow-wrapper {
   height: 30px;
   text-align: center;
+  margin: 5px 0 15px;
 }
 
 .jck-woosocial-follow-action {

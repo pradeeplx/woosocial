@@ -14,10 +14,10 @@
             <?php echo $product->price_html; ?>
         </span>
     
+        <?php echo $product->add_to_cart_button; ?>
+    
+        <?php $GLOBALS['jck_woosocial']->like_system->show_likes_loop( $product->id ); ?>
+    
     </div>
-    
-    <?php echo $product->add_to_cart_button; ?>
-    
-    <?php $GLOBALS['jck_woosocial']->like_system->show_likes_loop( $product->id ); ?>
     
 </div>

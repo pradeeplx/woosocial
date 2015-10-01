@@ -22,7 +22,7 @@ class JCK_WooSocial_LikeSystem {
    	
 	public function initiate_hook() {
     	
-    	add_action( 'wp_ajax_jck_woosocial_like_action',                 array( $this, 'like_action' ) );
+    	add_action( 'wp_ajax_jck_woosocial_product_like_action',                 array( $this, 'like_action' ) );
         
         add_action( 'wp_ajax_jck_woosocial_load_more_likes',             array( $this, 'load_more' ) );
         add_action( 'wp_ajax_nopriv_jck_woosocial_load_more_likes',      array( $this, 'load_more' ) );
@@ -67,7 +67,7 @@ class JCK_WooSocial_LikeSystem {
             $action = $GLOBALS['jck_woosocial']->activity_log->remove_like( $current_user_id, $_GET['product_id'] );
             
             $response['button']['type'] = 'like';
-            $response['remove_like_class'] = sprintf( '.%s-likes__item--%s', $GLOBALS['jck_woosocial']->slug, $current_user_id );
+            $response['remove_like_class'] = sprintf( '.%s-product-likes__item--%s', $GLOBALS['jck_woosocial']->slug, $current_user_id );
             
         }
     
@@ -229,8 +229,8 @@ class JCK_WooSocial_LikeSystem {
         $button_classes = implode(' ', apply_filters( 'jck_woosocial_like_button_classes', array(
             sprintf( '%s-btn', $GLOBALS['jck_woosocial']->slug ),
             sprintf( '%s-btn--like', $GLOBALS['jck_woosocial']->slug ),
-            sprintf( '%s-like-action', $GLOBALS['jck_woosocial']->slug ),
-            sprintf( '%s-like-action--%s', $GLOBALS['jck_woosocial']->slug, $type )
+            sprintf( '%s-product-like-action', $GLOBALS['jck_woosocial']->slug ),
+            sprintf( '%s-product-like-action--%s', $GLOBALS['jck_woosocial']->slug, $type )
         ), $product_id, $type, $product_likes_count ));
         $href = ( is_user_logged_in() ) ? "javascript: void(0);" : $myaccount_page_url;
         

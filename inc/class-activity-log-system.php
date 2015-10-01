@@ -444,7 +444,7 @@ class JCK_WooSocial_ActivityLogSystem {
         
         }
         
-        return $following;
+        return $result;
         
     }
     

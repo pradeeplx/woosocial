@@ -32,7 +32,7 @@
             
             jck_woosocial.cache();
             jck_woosocial.setup_follow_actions();
-            jck_woosocial.setup_like_action();
+            jck_woosocial.setup_product_like_action();
             jck_woosocial.setup_tabs();
             jck_woosocial.setup_load_more();
             jck_woosocial.add_to_cart();
@@ -94,10 +94,6 @@
             					if(data.add_follow_html) {
                 					jck_woosocial.els.actions_list.prepend(data.add_follow_html);
             					}
-            					
-            					if(data.remove_follow_class) {
-                					$(data.remove_follow_class).remove();
-            					}
             				},
             				
             				error: function( data ) {
@@ -113,16 +109,18 @@
             
         },
         
-        setup_like_action: function() {
+        setup_product_like_action: function() {
             
-            $(document).on('click', '.jck-woosocial-like-action', function(){
+            $(document).on('click', '.jck-woosocial-product-like-action', function(){
                 
                 var $button = $(this),
-                    $current_likes_list = $button.closest('.jck-woosocial-likes'),
+                    $current_likes_list = $button.closest('.jck-woosocial-product-likes'),
                     product_id = $button.attr('data-product-id'),
                     type = $button.attr('data-type'),
-                    $count = $button.find('.jck-woosocial-like-button__count'),
-                    loading_class = 'jck-woosocial-follow-action--loading';
+                    $count = $button.find('.jck-woosocial-product-like-button__count'),
+                    loading_class = 'jck-woosocial-product-like-action--loading',
+                    $icon = $button.find('i'),
+                    $action = $button.closest('.jck-woosocial-action');
                     
                 if( !$button.hasClass(loading_class) ) {
                         
@@ -135,7 +133,7 @@
         				dataType: "jsonp",				
         				crossDomain: true,
         				data: {
-        					action: 'jck_woosocial_like_action',
+        					action: 'jck_woosocial_product_like_action',
         					nonce: jck_woosocial_vars.nonce,
         					product_id: product_id,
         					type: type
@@ -152,16 +150,23 @@
             					$button.attr('data-type', data.button.type);
             					
             					$button.removeClass(loading_class);
-            					$button.removeClass('jck-woosocial-like-action--'+type);
-            					$button.addClass('jck-woosocial-like-action--'+data.button.type);
+            					
+            					$button.removeClass('jck-woosocial-product-like-action--'+type);
+            					$button.addClass('jck-woosocial-product-like-action--'+data.button.type);
+            					
+            					if( data.button.type === "unlike" ) {
+                					$icon.attr('class','jck-woosocial-ic-heart-full');
+            					} else {
+                					$icon.attr('class','jck-woosocial-ic-heart');
+            					}
             					
             					if(data.add_like_html) {
-                					$current_likes_list.find('.jck-woosocial-likes__item--like-button').after(data.add_like_html);
+                					$current_likes_list.find('.jck-woosocial-product-likes__item--like-button').after(data.add_like_html);
             					}
             					
             					if(data.remove_like_class) {
                 					$current_likes_list.find(data.remove_like_class).remove();
-            					}     					
+            					}				
             					
         					}
         				},

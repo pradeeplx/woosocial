@@ -1,11 +1,11 @@
 // Placeholders
 
 %small-date {
-    left: -58px;
+    left: -68px;
     top: 48px;
     line-height: 0.9em;
-    width: 38px;
-    font-size: 75%;
+    width: 48px;
+    font-size: 12px;
     white-space: normal;
     text-align: center;
     padding: 5px 0;
@@ -52,10 +52,10 @@
     }
     
     &--small {
-        padding-left: 38px;
+        padding-left: 48px;
         
         &:before {
-            left: 19px;
+            left: 24px;
         }   
     }
 }
@@ -124,7 +124,7 @@
             }
             
             .jck-woosocial-actions--small & {
-                left: -38px;
+                left: -43px;
                 width: 38px;
                 height: 38px;
                 margin-left: 0;

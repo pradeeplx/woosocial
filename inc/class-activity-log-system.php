@@ -252,6 +252,9 @@ class JCK_WooSocial_ActivityLogSystem {
         if( isset( $_GET['profile_user_id'] ) )
             $GLOBALS['jck_woosocial']->profile_system->user_info = $GLOBALS['jck_woosocial']->profile_system->get_user_info( $_GET['profile_user_id'] );
         
+        if( !$GLOBALS['jck_woosocial']->profile_system->user_info )
+            $GLOBALS['jck_woosocial']->profile_system->user_info = wp_get_current_user();
+        
         $response['activity'] = $activity;
         
         if( $activity ) {

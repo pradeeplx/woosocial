@@ -61,9 +61,7 @@
                     type = $button.attr('data-type'),
                     loading_class = 'jck-woosocial-follow-action--loading';
                 
-                if( type === "login" ) {
-                    
-                } else {
+                if( type !== "login" ) {
                 
                     if( !$button.hasClass(loading_class) ) {
                         
@@ -121,64 +119,68 @@
                     loading_class = 'jck-woosocial-product-like-action--loading',
                     $icon = $button.find('i'),
                     $action = $button.closest('.jck-woosocial-action');
-                    
-                if( !$button.hasClass(loading_class) ) {
-                        
-                    $button.addClass(loading_class);
-                    
-                    $.ajax({
-        				type: "GET",
-        				url: jck_woosocial_vars.ajax_url,
-        				cache: false,
-        				dataType: "jsonp",				
-        				crossDomain: true,
-        				data: {
-        					action: 'jck_woosocial_product_like_action',
-        					nonce: jck_woosocial_vars.nonce,
-        					product_id: product_id,
-        					type: type
-        				},
-        				
-        				success: function( data ) {
-        					
-        					if( $count.length > 0 ) {
-            					
-            					var count = parseInt($count.text()),
-            					    new_count = type === "like" ? count+1 : count-1;
-            					
-            					$count.text( new_count ); 
-            					$button.attr('data-type', data.button.type);
-            					
-            					$button.removeClass(loading_class);
-            					
-            					$button.removeClass('jck-woosocial-product-like-action--'+type);
-            					$button.addClass('jck-woosocial-product-like-action--'+data.button.type);
-            					
-            					if( data.button.type === "unlike" ) {
-                					$icon.attr('class','jck-woosocial-ic-heart-full');
-            					} else {
-                					$icon.attr('class','jck-woosocial-ic-heart');
-            					}
-            					
-            					if(data.add_like_html) {
-                					$current_likes_list.find('.jck-woosocial-product-likes__item--like-button').after(data.add_like_html);
-            					}
-            					
-            					if(data.remove_like_class) {
-                					$current_likes_list.find(data.remove_like_class).remove();
-            					}				
-            					
-        					}
-        				},
-        				
-        				error: function( data ) {
-            				
-        				}
-        			});
-        
-                }
                 
-                return false;
+                if( type !== "login" ) {
+                    
+                    if( !$button.hasClass(loading_class) ) {
+                            
+                        $button.addClass(loading_class);
+                        
+                        $.ajax({
+            				type: "GET",
+            				url: jck_woosocial_vars.ajax_url,
+            				cache: false,
+            				dataType: "jsonp",				
+            				crossDomain: true,
+            				data: {
+            					action: 'jck_woosocial_product_like_action',
+            					nonce: jck_woosocial_vars.nonce,
+            					product_id: product_id,
+            					type: type
+            				},
+            				
+            				success: function( data ) {
+            					
+            					if( $count.length > 0 ) {
+                					
+                					var count = parseInt($count.text()),
+                					    new_count = type === "like" ? count+1 : count-1;
+                					
+                					$count.text( new_count ); 
+                					$button.attr('data-type', data.button.type);
+                					
+                					$button.removeClass(loading_class);
+                					
+                					$button.removeClass('jck-woosocial-product-like-action--'+type);
+                					$button.addClass('jck-woosocial-product-like-action--'+data.button.type);
+                					
+                					if( data.button.type === "unlike" ) {
+                    					$icon.attr('class','jck-woosocial-ic-heart-full');
+                					} else {
+                    					$icon.attr('class','jck-woosocial-ic-heart');
+                					}
+                					
+                					if(data.add_like_html) {
+                    					$current_likes_list.find('.jck-woosocial-product-likes__item--like-button').after(data.add_like_html);
+                					}
+                					
+                					if(data.remove_like_class) {
+                    					$current_likes_list.find(data.remove_like_class).remove();
+                					}				
+                					
+            					}
+            				},
+            				
+            				error: function( data ) {
+                				
+            				}
+            			});
+            
+                    }
+                    
+                    return false;
+                
+                }
                 
             });
             

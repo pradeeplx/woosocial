@@ -219,7 +219,7 @@ class JCK_WooSocial_LikeSystem {
         if( !$args['product_id'] )
             return "";
             
-        $product_id = $args['product_id'];            
+        $product_id = $args['product_id'];      
         $type = $this->has_liked( get_current_user_id(), $product_id ) ? "unlike" : "like";
         $product_likes_count = $this->get_product_likes_count( $product_id );
         

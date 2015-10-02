@@ -1,4 +1,4 @@
-<a href="<?php echo $href; ?>" class="<?php echo $button_classes; ?>" data-type="<?php echo $type; ?>" data-product-id="<?php echo $product_id; ?>">
+<a href="<?php echo $href; ?>" class="<?php echo $button_classes; ?>" data-type="<?php echo is_user_logged_in() ? $type : "login"; ?>" data-product-id="<?php echo $product_id; ?>">
     
     <?php $icon = ( $type == "like" ) ? "heart" : "heart-full"; ?>
     

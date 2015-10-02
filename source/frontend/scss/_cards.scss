@@ -49,6 +49,7 @@
     &__image {
         margin: 0 0 20px;
         position: relative;
+        overflow: hidden;
         
         img {
             width: 100%;
@@ -62,6 +63,7 @@
         
     }
     
+    .entry-content &__title,
     &__title {
         font-size: 18px;
         font-weight: 400;

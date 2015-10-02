@@ -6,4 +6,9 @@
 
     .jck-woosocial-follow-action {
         background: $c-follow;
+        
+        &:focus,
+        &:hover {
+            background: darken( $c-follow, 5% );
+        }
     }

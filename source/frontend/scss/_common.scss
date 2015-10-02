@@ -20,6 +20,19 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
+    text-shadow: none;
+    border: none;
+    text-transform: capitalize;
+    text-decoration: none;
+    
+    &:focus,
+    &:hover {
+        color: #fff;
+        text-shadow: none;
+        background: darken( $c-btn-primary, 5% );
+        text-decoration: none;
+        outline: none;
+    }
 }
 
 // Helpers

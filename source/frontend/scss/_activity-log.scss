@@ -232,6 +232,10 @@
             padding: 0 8px;
             box-sizing: border-box;
             
+            a {
+                border: none;
+            }
+            
             & .avatar {
                 width: 34px;
                 height: 34px;

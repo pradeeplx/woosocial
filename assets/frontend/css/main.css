@@ -128,7 +128,7 @@
   overflow: hidden;
 }
 .jck-woosocial-card__image {
-  margin: 0 0 20px;
+  margin: 0 auto 20px;
   position: relative;
   overflow: hidden;
 }
@@ -183,6 +183,10 @@
 }
 .jck-woosocial-card--product .jck-woosocial-add-to-cart-wrapper {
   margin: 0 0 15px -3px;
+}
+.jck-woosocial-card--user .jck-woosocial-card__image {
+  max-width: 280px;
+  margin-top: 10px;
 }
 .jck-woosocial-card--user .jck-woosocial-card__title {
   text-align: center;

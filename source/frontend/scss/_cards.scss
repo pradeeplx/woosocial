@@ -47,7 +47,7 @@
     overflow: hidden;
     
     &__image {
-        margin: 0 0 20px;
+        margin: 0 auto 20px;
         position: relative;
         overflow: hidden;
         
@@ -121,6 +121,11 @@
     }
     
     &--user {
+        
+        .jck-woosocial-card__image {
+            max-width: 280px;
+            margin-top: 10px;
+        }
         
         .jck-woosocial-card__title {
             text-align: center;

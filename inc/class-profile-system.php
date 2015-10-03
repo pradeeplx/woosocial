@@ -204,6 +204,10 @@ class JCK_WooSocial_ProfileSystem {
                 $redirect = $this->get_profile_url( $referer_params['profile'] );
             }
             
+            if( isset( $referer_params['like-product'] ) ) {
+                $redirect = get_permalink( (int)$referer_params['like-product'] );
+            }
+            
         }
         
         return $redirect;

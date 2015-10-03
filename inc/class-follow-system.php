@@ -52,10 +52,6 @@ class JCK_WooSocial_FollowSystem {
             
             $response['button']['text'] = __('Unfollow', 'jck-woosocial');
             $response['button']['type'] = 'unfollow';
-            
-            ob_start();
-            include($GLOBALS['jck_woosocial']->templates->locate_template( 'profile/part-action.php' ));
-            $response['add_follow_html'] = ob_get_clean();
         
         } else {
             

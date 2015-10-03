@@ -441,6 +441,31 @@ class JCK_WooSocial {
         
     }
 
+/**	=============================
+    *
+    * Message Wrapper
+    *
+    * Wrap Text in a nice wrapper for displaying messages
+    *
+    * @param str $message
+    * @param str $type
+    * @return str
+    *
+    ============================= */
+    
+    public function wrap_message( $message, $type = "notice" ) {
+        
+        echo sprintf( 
+            '<div class="%s-message-wrapper %s-message-wrapper--%s">%s</div>', 
+            $this->slug,
+            $this->slug,
+            $type,
+            $message
+        );
+        
+    }
+
+
 /** =============================
     *
     * Is Json?

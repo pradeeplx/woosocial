@@ -14,4 +14,8 @@
     
     </ul>
     
-<?PHP } ?>
+<?php } else { ?>
+    
+    <?php $GLOBALS['jck_woosocial']->wrap_message( sprintf( __("%s has no activity, yet!", 'jck-woosocial'), $GLOBALS['jck_woosocial']->profile_system->user_info->display_name ) ); ?>
+    
+<?php } ?>

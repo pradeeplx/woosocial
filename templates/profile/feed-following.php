@@ -19,7 +19,7 @@
 
     <?php } else { ?>
     
-        None
+        <?php $GLOBALS['jck_woosocial']->wrap_message( sprintf( __("%s hasn't followed anyone, yet!", 'jck-woosocial'), $GLOBALS['jck_woosocial']->profile_system->user_info->display_name ) ); ?>
     
     <?php } ?>
 

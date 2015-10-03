@@ -17,6 +17,10 @@
 	
         <?php if( $GLOBALS['jck_woosocial']->activity_log->default_limit < $GLOBALS['jck_woosocial']->profile_system->user_info->likes_count ) echo $GLOBALS['jck_woosocial']->get_load_more_button( 'likes' ); ?>
 	
+	<?php } else { ?>
+	
+	    <?php $GLOBALS['jck_woosocial']->wrap_message( sprintf( __("%s hasn't liked any products, yet!", 'jck-woosocial'), $GLOBALS['jck_woosocial']->profile_system->user_info->display_name ) ); ?>
+	
 	<?php } ?>
     
 </div>

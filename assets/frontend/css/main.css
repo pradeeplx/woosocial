@@ -75,6 +75,13 @@
   outline: none;
 }
 
+.jck-woosocial-message-wrapper {
+  background-color: #fff;
+  text-align: center;
+  padding: 15px;
+  border: 1px solid #e7e9ed;
+}
+
 .jck-woosocial-vertical-align {
   display: inline-block;
   vertical-align: middle;

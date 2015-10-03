@@ -1,4 +1,4 @@
-<div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card <?php echo $GLOBALS['jck_woosocial']->slug; ?>-card--user">
+<div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card <?php echo $GLOBALS['jck_woosocial']->slug; ?>-card--user <?php if( get_current_user_id() == $user->ID ) echo $GLOBALS['jck_woosocial']->slug . "-card--self"; ?>">
     
     <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__image">
         <?php echo $user->avatar_link; ?>

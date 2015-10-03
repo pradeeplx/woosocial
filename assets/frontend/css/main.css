@@ -187,6 +187,9 @@
 .jck-woosocial-card--user .jck-woosocial-card__title {
   text-align: center;
 }
+.jck-woosocial-card--self .jck-woosocial-card__title {
+  margin-bottom: 50px;
+}
 
 .jck-woosocial-profile-wrapper {
   margin: 0 auto;

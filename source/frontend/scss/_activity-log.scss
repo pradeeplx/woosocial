@@ -31,10 +31,10 @@
         /* this is the vertical line */
         content: '';
         position: absolute;
-        top: 0;
+        top: 5px;
+        bottom: 5px;
         left: 50%;
         margin-left: 0;
-        height: 100%;
         width: 1px;
         background: $c-border;
     }

@@ -19,6 +19,8 @@
             jck_woosocial.els.load_more_button = $('.jck-woosocial-load-more');
             jck_woosocial.els.action_blocks = $('.jck-woosocial-action');            
             jck_woosocial.els.likes_container = $('.jck-woosocial-user-likes');
+            jck_woosocial.els.following_container = $('.jck-woosocial-following');
+            jck_woosocial.els.followers_container = $('.jck-woosocial-followers');
             jck_woosocial.els.add_to_cart_buttons = $('.jck-woosocial-add-to-cart-wrapper .add_to_cart_button');
             jck_woosocial.els.tick_icon = $('<i class="jck-woosocial-ic-tick"></i>');
             jck_woosocial.els.loading_icon = $('<i class="jck-woosocial-ic-loading jck-woosocial-spin"></i>');
@@ -260,6 +262,26 @@
                     
                 }
                 
+                if( $(this).hasClass('jck-woosocial-load-more--followers') ) {
+                    
+                    jck_woosocial.load_more_followers( $(this), function(){
+                        
+                        jck_woosocial.spin_icon_stop( $load_more_icon );
+                        
+                    } );
+                    
+                }
+                
+                if( $(this).hasClass('jck-woosocial-load-more--following') ) {
+                    
+                    jck_woosocial.load_more_following( $(this), function(){
+                        
+                        jck_woosocial.spin_icon_stop( $load_more_icon );
+                        
+                    } );
+                    
+                }
+                
             });
             
         },
@@ -340,6 +362,105 @@
 					if( data.likes_html ) {
     					
     					jck_woosocial.els.likes_container.append( data.likes_html );
+    					$load_more_button.attr('data-offset', next_offset) ;
+    					
+					} else {
+    					
+    					jck_woosocial.disable_load_more_button( $load_more_button );
+    					
+					}
+					
+					if(callback !== undefined) {
+            			callback(data);
+            		}
+					
+				},
+				
+				error: function( data ) {
+    				
+				}
+			});
+            
+        },
+        
+        load_more_followers: function( $load_more_button, callback ) {
+        
+            
+            var limit = parseInt( $load_more_button.attr('data-limit') ),
+                offset = parseInt( $load_more_button.attr('data-offset') ),
+                next_offset = limit+offset,
+                user_id = $load_more_button.attr('data-user-id');
+            
+            $.ajax({
+				type:        "GET",
+				url:         jck_woosocial_vars.ajax_url,
+				cache:       false,
+				dataType:    "jsonp",				
+				crossDomain: true,
+				data: {
+					action:  'jck_woosocial_load_more_followers',
+					nonce:   jck_woosocial_vars.nonce,
+					limit:   limit,
+					offset:  offset,
+					user_id: user_id
+				},
+				
+				success: function( data ) {
+    				
+    				console.log(data);
+					
+					if( data.followers_html ) {
+    					
+    					jck_woosocial.els.followers_container.append( data.followers_html );
+    					$load_more_button.attr('data-offset', next_offset) ;
+    					
+					} else {
+    					
+    					jck_woosocial.disable_load_more_button( $load_more_button );
+    					
+					}
+					
+					if(callback !== undefined) {
+            			callback(data);
+            		}
+					
+				},
+				
+				error: function( data ) {
+    				
+				}
+			});
+              
+        },
+        
+        load_more_following: function( $load_more_button, callback ) {
+            
+            var limit = parseInt( $load_more_button.attr('data-limit') ),
+                offset = parseInt( $load_more_button.attr('data-offset') ),
+                next_offset = limit+offset,
+                user_id = $load_more_button.attr('data-user-id');
+            
+            $.ajax({
+				type:        "GET",
+				url:         jck_woosocial_vars.ajax_url,
+				cache:       false,
+				dataType:    "jsonp",				
+				crossDomain: true,
+				data: {
+					action:  'jck_woosocial_load_more_following',
+					nonce:   jck_woosocial_vars.nonce,
+					limit:   limit,
+					offset:  offset,
+					user_id: user_id
+				},
+				
+				success: function( data ) {
+    				
+    				console.log(data);
+					
+					if( data.following_html ) {
+    					
+    					jck_woosocial.els.following_container.append( data.following_html );
     					$load_more_button.attr('data-offset', next_offset) ;
     					
 					} else {

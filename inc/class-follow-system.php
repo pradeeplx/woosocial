@@ -25,6 +25,12 @@ class JCK_WooSocial_FollowSystem {
         add_action( 'wp_ajax_jck_woosocial_follow_action',                array( $this, 'jck_woosocial_follow_action' ) );
         add_action( 'wp_ajax_nopriv_jck_woosocial_follow_action',         array( $this, 'jck_woosocial_follow_action' ) );
         
+        add_action( 'wp_ajax_jck_woosocial_load_more_following',             array( $this, 'load_more_following' ) );
+        add_action( 'wp_ajax_nopriv_jck_woosocial_load_more_following',      array( $this, 'load_more_following' ) );
+        
+        add_action( 'wp_ajax_jck_woosocial_load_more_followers',             array( $this, 'load_more_followers' ) );
+        add_action( 'wp_ajax_nopriv_jck_woosocial_load_more_followers',      array( $this, 'load_more_followers' ) );
+        
 	}
 
 /**	=============================
@@ -76,6 +82,98 @@ class JCK_WooSocial_FollowSystem {
     	echo htmlspecialchars($_GET['callback']) . '(' . json_encode( $response ) . ')';
     
     	wp_die();
+    }
+
+/**	=============================
+    *
+    * Ajax: Load More Following Action
+    *
+    ============================= */
+    
+    function load_more_following() {
+        
+        $response = array(
+            'following_html' => false
+        );
+        
+        $following = $GLOBALS['jck_woosocial']->follow_system->get_following( $_GET['user_id'], $_GET['limit'], $_GET['offset'] );
+        
+        $response['following'] = $following;
+        
+        if( $following ) {
+            
+            ob_start();
+            
+            foreach( $following as $user ) {
+                
+                $user = $GLOBALS['jck_woosocial']->profile_system->get_user_info( $user->rel_id );
+                include( $GLOBALS['jck_woosocial']->templates->locate_template( 'cards/user.php' ) );
+                
+            }
+            
+            $response['following_html'] = ob_get_clean();
+            
+        }
+        
+    	// generate the response
+    	$response['get'] = $_GET;
+    	
+    	// response output
+    	header('Content-Type: text/javascript; charset=utf8');
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Max-Age: 3628800');
+        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+    
+    	echo htmlspecialchars($_GET['callback']) . '(' . json_encode( $response ) . ')';
+    
+    	wp_die();
+    	
+    }
+
+/**	=============================
+    *
+    * Ajax: Load More Followers Action
+    *
+    ============================= */
+    
+    function load_more_followers() {
+        
+        $response = array(
+            'following_html' => false
+        );
+        
+        $followers = $GLOBALS['jck_woosocial']->follow_system->get_followers( $_GET['user_id'], $_GET['limit'], $_GET['offset'] );
+        
+        $response['followers'] = $followers;
+        
+        if( $followers ) {
+            
+            ob_start();
+            
+            foreach( $followers as $user ) {
+                
+                $user = $GLOBALS['jck_woosocial']->profile_system->get_user_info( $user->user_id );
+                include( $GLOBALS['jck_woosocial']->templates->locate_template( 'cards/user.php' ) );
+                
+            }
+            
+            $response['followers_html'] = ob_get_clean();
+            
+        }
+        
+    	// generate the response
+    	$response['get'] = $_GET;
+    	
+    	// response output
+    	header('Content-Type: text/javascript; charset=utf8');
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Max-Age: 3628800');
+        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+    
+    	echo htmlspecialchars($_GET['callback']) . '(' . json_encode( $response ) . ')';
+    
+    	wp_die();
+    	
     }
     
 /**	=============================

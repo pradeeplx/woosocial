@@ -16,14 +16,16 @@
         &__avatar {
             display: block;
             width: 140px;
-            height: 140px;
             margin: 30px auto 15px;
+            max-width: 100%;
+            padding: 0 15px;
             
             img.avatar {
                 width: 140px;
-                height: 140px;
+                height: auto;
                 display: block;
                 border-radius: 100%;
+                max-width: 100%;
             }
         }
         
@@ -32,10 +34,11 @@
             line-height: 1.2;
             text-align: center;
             display: block;
-            margin: 0 0 10px;
+            margin: 0 15px 10px;
             color: $c-text-primary;
             padding: 0;
             text-decoration: none;
+            word-wrap: break-word;
         }
         
         .jck-woosocial-profile-wrapper--medium &,

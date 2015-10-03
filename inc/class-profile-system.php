@@ -302,7 +302,7 @@ class JCK_WooSocial_ProfileSystem {
             $user->following_count = $GLOBALS['jck_woosocial']->activity_log->get_following_count( $user->ID );
             $user->profile_url = $this->get_profile_url( $user->user_nicename );
             $user->profile_link = $this->get_profile_link( $user );
-            $user->avatar = get_avatar( $user->ID, get_option( 'thumbnail_size_w' ) );
+            $user->avatar = get_avatar( $user->ID, 280 );
             $user->avatar_link = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr($user->profile_url), esc_attr($user->display_name), $user->avatar );
             
             $user->likes_count_formatted = sprintf('<i class="%s-ic-heart"></i> %d', $GLOBALS['jck_woosocial']->slug, $user->likes_count );

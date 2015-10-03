@@ -371,7 +371,7 @@ class JCK_WooSocial_LikeSystem {
         $product->sku = $product->get_sku();
         $product->price_html = $product->get_price_html();
                     
-        $product->image_link = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr( $product->url ), esc_attr( $product->title ), get_the_post_thumbnail( $product_id, 'thumbnail' ) );
+        $product->image_link = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr( $product->url ), esc_attr( $product->title ), get_the_post_thumbnail( $product_id, 'shop_catalog' ) );
         
         $product->add_to_cart_button = do_shortcode( sprintf( '[add_to_cart id="%d" sku="%s" style="" show_price="false" class="%s-add-to-cart-wrapper"]', $product_id, $product->sku, $GLOBALS['jck_woosocial']->slug ) );
         

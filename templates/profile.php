@@ -11,6 +11,7 @@ get_header(); ?>
 <?php 
 
 $user_info = $GLOBALS['jck_woosocial']->profile_system->user_info;
+
 ?>
 
 <?php

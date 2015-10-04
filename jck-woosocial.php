@@ -21,13 +21,16 @@ class JCK_WooSocial {
     public $version = "1.0.0";
     public $plugin_path = JCK_WOOSOCIAL_PLUGIN_PATH;
     public $plugin_url = JCK_WOOSOCIAL_PLUGIN_URL;
-    public $options_name;
     public $options;
     public $templates;
     public $profile_system;
     public $like_system;
     public $follow_system;
     public $activity_log;
+    private $wpsf;
+    private $wpsf_2;
+    public $settings_name;
+    public $settings;
 	
 /**	=============================
     *
@@ -40,12 +43,13 @@ class JCK_WooSocial {
         $this->set_constants();        
         $this->load_classes();
         
+        $this->settings = $this->wpsf->get_settings();
+        
         register_activation_hook( __FILE__, array( $this, 'install' ) );
         
         // Hook up to the init and plugins_loaded actions
         add_action( 'plugins_loaded', array( $this, 'plugins_loaded_hook' ) );
         add_action( 'init',           array( $this, 'initiate_hook' ) );
-        add_action( 'wp',             array( $this, 'wp_hook' ) );
         
     }
 
@@ -57,8 +61,8 @@ class JCK_WooSocial {
     
     public function set_constants() {
 
-        $this->options_name = $this->slug.'_options';
-        $this->alt_slug = str_replace('-', '_', $this->slug);
+        $this->alt_slug      = str_replace('-', '_', $this->slug);
+        $this->settings_name = $this->alt_slug;
         
     }
 
@@ -71,7 +75,7 @@ class JCK_WooSocial {
     public function install() {
         
         $this->activity_log->setup_activity_log();
-        $this->activity_log->create_activity_page();
+        flush_rewrite_rules();
         
     }
 
@@ -83,12 +87,14 @@ class JCK_WooSocial {
     
     private function load_classes() {
         
+        require_once( $this->plugin_path.'/inc/vendor/class-wordpress-settings-framework.php' );
         require_once( $this->plugin_path.'/inc/class-template-loader.php' );
         require_once( $this->plugin_path.'/inc/class-profile-system.php' );
         require_once( $this->plugin_path.'/inc/class-like-system.php' );
         require_once( $this->plugin_path.'/inc/class-follow-system.php' );
         require_once( $this->plugin_path.'/inc/class-activity-log-system.php' );
         
+        $this->wpsf           = new WordPressSettingsFramework( $this->plugin_path.'/inc/settings-main.php', $this->settings_name );
         $this->templates      = new JCK_WooSocial_TemplateLoader();
         $this->profile_system = new JCK_WooSocial_ProfileSystem();
         $this->like_system    = new JCK_WooSocial_LikeSystem();
@@ -122,6 +128,7 @@ class JCK_WooSocial {
             add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) ); 
             add_action( 'admin_enqueue_scripts', array( $this, 'admin_styles' ) ); 
             add_action( 'admin_init',            array( $this, 'nav_menu_add_meta_boxes' ) );
+            add_action( 'admin_menu',            array( $this, 'init_settings' ), 99 );
             
         } else {
             
@@ -132,23 +139,23 @@ class JCK_WooSocial {
         
 	}
 
-/**	=============================
+/** =============================
     *
-    * Run after wp is fully set up and $post is accessible (http://codex.wordpress.org/Plugin_API/Action_Reference)
+    * Initiate Settings
     *
     ============================= */
-	
-	public function wp_hook() {
-    	
-        global $post;
+    
+    public function init_settings() {
         
-    	if(!is_admin()) {
-        	
-        	$this->options = ( $post ) ? get_post_meta( $post->ID, $this->options_name, true ) : false;
-        	
-    	}
+        $this->wpsf->add_settings_page( array(
+            'page_slug'   => 'settings',
+            'parent_slug' => 'woocommerce',
+            'page_title'  => __( 'WooSocial Settings', 'jck-woosocial' ),
+            'menu_title'  => __( 'WooSocial', 'jck-woosocial' ),
+            'capability'  => 'manage_options'
+        ) );
         
-	}
+    }
 
 /**	=============================
     *
@@ -213,9 +220,13 @@ class JCK_WooSocial {
     
     public function frontend_styles() {
         
-        wp_register_style( $this->slug.'_styles', $this->plugin_url . 'assets/frontend/css/main.min.css', array(), $this->version );
+        if( $this->profile_system->is_profile() || $this->activity_log->is_activity_page() ) {
+        
+            wp_register_style( $this->slug.'_styles', $this->plugin_url . 'assets/frontend/css/main.min.css', array(), $this->version );
 		
-        wp_enqueue_style( $this->slug.'_styles' );
+            wp_enqueue_style( $this->slug.'_styles' );
+        
+        }
         
     }
     
@@ -228,22 +239,26 @@ class JCK_WooSocial {
     ============================= */
     
     public function frontend_scripts() {
-    
-        wp_register_script( $this->slug.'_scripts', $this->plugin_url . 'assets/frontend/js/main.min.js', array( 'jquery' ), $this->version, true);
         
-        $vars = array(
-			'ajax_url' => admin_url( 'admin-ajax.php' ),
-			'nonce'    => wp_create_nonce( $this->slug ),
-			'user_id'  => is_user_logged_in() ? get_current_user_id() : 0,
-			'strings'  => array(
-    			"no_more" => __( "No more to load", "jck-woosocial" )
-			)
-		);
+        if( $this->profile_system->is_profile() || $this->activity_log->is_activity_page() ) {
+    
+            wp_register_script( $this->slug.'_scripts', $this->plugin_url . 'assets/frontend/js/main.min.js', array( 'jquery' ), $this->version, true);
+            
+            $vars = array(
+    			'ajax_url' => admin_url( 'admin-ajax.php' ),
+    			'nonce'    => wp_create_nonce( $this->slug ),
+    			'user_id'  => is_user_logged_in() ? get_current_user_id() : 0,
+    			'strings'  => array(
+        			"no_more" => __( "No more to load", "jck-woosocial" )
+    			)
+    		);
+    		
+    		wp_localize_script( $this->slug.'_scripts', $this->alt_slug.'_vars', $vars );
+    		
+    		wp_enqueue_script( 'hoverIntent' );
+    		wp_enqueue_script( $this->slug.'_scripts' );
 		
-		wp_localize_script( $this->slug.'_scripts', $this->alt_slug.'_vars', $vars );
-		
-		wp_enqueue_script( 'hoverIntent' );
-		wp_enqueue_script( $this->slug.'_scripts' );
+		}
         
     }
 

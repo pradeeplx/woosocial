@@ -6,6 +6,8 @@ class JCK_WooSocial_ActivityLogSystem {
     public $db_version = "1.0";
     public $slug = "jck-woosocial";
     public $table_slug = "jck_woosocial_activity_log";
+    public $activity_query_var;
+    public $activity_slug = "activity";
     public $default_limit = 12;
     public $default_offset = 0;
     public $wrapper_breakpoints;
@@ -37,6 +39,8 @@ class JCK_WooSocial_ActivityLogSystem {
         
         add_shortcode( 'woosocial-activity-log',                        array( $this, 'activity_log_shortcode' ) );
         
+        $this->enable_activity_page();
+        
     }
 
 /**	=============================
@@ -50,6 +54,7 @@ class JCK_WooSocial_ActivityLogSystem {
         global $wpdb;
         
         $this->table_name = $wpdb->prefix . $this->table_slug;
+        $this->activity_query_var = $this->slug.'-activity';
         
         $this->wrapper_breakpoints = array(
             array(
@@ -102,21 +107,69 @@ class JCK_WooSocial_ActivityLogSystem {
     *
     ============================= */
     
-    public function create_activity_page() {
+    public function enable_activity_page() {
         
-        if( get_page_by_title( 'activity' ) === null ) {
+        add_rewrite_rule( $this->activity_slug.'$', 'index.php?'.$this->activity_query_var.'=1', 'top' );
         
-            $activity = array(
-            	'post_title' => 'Activity',
-            	'post_content' => '[jck-woosocial-activity-log]',
-            	'post_status' => 'publish',
-            	'post_type' => 'page',
-            	'post_slug' => 'activity'
-            );
+        add_filter( 'query_vars', array( $this, 'query_vars' ) );
+        add_action( 'parse_request', array( $this, 'parse_request' ) );
+        
+    }
+
+/** =============================
+    *
+    * Add Query Var
+    *
+    * @param  [arr] [$query_vars]
+    * @return [arr] [$query_vars]
+    *
+    ============================= */
+    
+    public function query_vars( $query_vars ) {
+        
+        $query_vars[] = $this->activity_query_var;
+        return $query_vars;
+        
+    }
+
+/** =============================
+    *
+    * Parse Query Var
+    *
+    * If we're on the activity feed page, show the template
+    *
+    * @param [obj] [$wp]
+    *
+    ============================= */
+    
+    public function parse_request( &$wp ) {
+        
+        if ( array_key_exists( $this->activity_query_var, $wp->query_vars ) ) {
             
-            $post_id = wp_insert_post($activity);
-        
+            $GLOBALS['jck_woosocial_is_activity_page'] = true;
+            
+            $GLOBALS['jck_woosocial']->templates->get_template_part( 'activity' );
+            
+            exit();
         }
+        
+        return;
+        
+    }
+
+/** =============================
+    *
+    * Is Activity Page?
+    *
+    ============================= */
+    
+    public function is_activity_page() {
+        
+        if( isset( $GLOBALS['jck_woosocial_is_activity_page'] ) && $GLOBALS['jck_woosocial_is_activity_page'] === true ) {
+            return true;
+        } 
+        
+        return false;
         
     }
 

@@ -11,6 +11,7 @@ class JCK_WooSocial_LikeSystem {
     public function __construct() {
         
         add_action( 'init', array( $this, 'initiate_hook' ) );
+        add_action( 'wp',   array( $this, 'wp_hook' ) );
         
     }
     
@@ -22,21 +23,44 @@ class JCK_WooSocial_LikeSystem {
    	
 	public function initiate_hook() {
     	
-    	add_action( 'wp_ajax_jck_woosocial_product_like_action',                 array( $this, 'like_action' ) );
+    	add_action( 'wp_ajax_jck_woosocial_product_like_action',         array( $this, 'like_action' ) );
         
         add_action( 'wp_ajax_jck_woosocial_load_more_likes',             array( $this, 'load_more' ) );
         add_action( 'wp_ajax_nopriv_jck_woosocial_load_more_likes',      array( $this, 'load_more' ) );
+        
+	}
 
-        if(!is_admin()) {
+/**	=============================
+    *
+    * Run after wp is fully set up and $post is accessible (http://codex.wordpress.org/Plugin_API/Action_Reference)
+    *
+    ============================= */
+	
+	public function wp_hook() {    	
+        
+    	if(!is_admin()) {
+        	
+        	$settings = $GLOBALS['jck_woosocial']->settings;
             
-            // @jck: make this position an option
-            add_action( 'woocommerce_after_shop_loop_item',              array( $this, 'show_likes_loop' ) );
-            add_action( 'woocommerce_single_product_summary',            array( $this, 'show_likes_loop' ), 1 );
+            if( $settings['likes_category_display'] !== "none" && ( is_product_category() || is_shop() ) && !is_search() )
+                add_action( $settings['likes_category_display'],         array( $this, 'show_likes_loop' ) );
+            
+            if( $settings['likes_search_display'] !== "none" && is_search() )
+                add_action( $settings['likes_search_display'],           array( $this, 'show_likes_loop' ) );
+            
+            if( $settings['likes_product_display'] !== "none" && is_product() ) {
+                
+                $position = explode('/', $settings['likes_product_display']);
+                $priority = isset( $position[1] ) ? (int)$position[1] : 10; 
+                
+                add_action( $position[0],                                array( $this, 'show_likes_loop' ), $priority );
+                
+            }
             
         }
         
 	}
-
+	
 /**	=============================
     *
     * Ajax: Follow Action

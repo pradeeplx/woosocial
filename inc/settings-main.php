@@ -211,12 +211,13 @@ function jck_woosocial_settings( $wpsf_settings ) {
                 'title' => __('Product Page Display','jck-woosocial'),
                 'desc' => __('Where to display the like button on a product page.','jck-woosocial'),
                 'type' => 'select',
-                'default' => 'woocommerce_before_single_product_summary',
+                'default' => 'woocommerce_single_product_summary/1',
                 'choices' => array(
                     'none'                                      => __('None','jck-woosocial'),
                     'woocommerce_before_single_product'         => __('Before Product','jck-woosocial'),
                     'woocommerce_before_single_product_summary' => __('Before Summary','jck-woosocial'),
-                    'woocommerce_single_product_summary'        => __('In Summary','jck-woosocial'),
+                    'woocommerce_single_product_summary/1'      => __('In Summary - Start','jck-woosocial'),
+                    'woocommerce_single_product_summary/99'     => __('In Summary - End','jck-woosocial'),
                     'woocommerce_after_single_product_summary'  => __('After Summary','jck-woosocial'),
                     'woocommerce_after_single_product'          => __('After Product','jck-woosocial'),
                 )

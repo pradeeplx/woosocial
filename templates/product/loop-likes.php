@@ -6,7 +6,7 @@
         
     <li class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-product-likes__item <?php echo $GLOBALS['jck_woosocial']->slug; ?>-product-likes__item--like-button"><?php echo $like_button; ?></li>
             
-    <?php if( $product_likes && !empty($product_likes) ) { ?>
+    <?php if( $product_likes && !empty($product_likes) && $GLOBALS['jck_woosocial']->settings['likes_show_avatars'] ) { ?>
             
         <?php foreach($product_likes as $product_like ) { ?>
                     

@@ -223,7 +223,7 @@ class JCK_WooSocial {
     
     public function frontend_styles() {
         
-        if( $this->profile_system->is_profile() || $this->activity_log->is_activity_page() ) {
+        if( $this->can_load_assets() ) {
         
             wp_register_style( $this->slug.'_styles', $this->plugin_url . 'assets/frontend/css/main.min.css', array(), $this->version );
 		
@@ -243,7 +243,7 @@ class JCK_WooSocial {
     
     public function frontend_scripts() {
         
-        if( $this->profile_system->is_profile() || $this->activity_log->is_activity_page() ) {
+        if( $this->can_load_assets() ) {
     
             wp_register_script( $this->slug.'_scripts', $this->plugin_url . 'assets/frontend/js/main.min.js', array( 'jquery' ), $this->version, true);
             
@@ -262,6 +262,31 @@ class JCK_WooSocial {
     		wp_enqueue_script( $this->slug.'_scripts' );
 		
 		}
+        
+    }
+
+/** =============================
+    *
+    * Can Load Assets?
+    *
+    * @return [bool]
+    *
+    ============================= */
+    
+    public function can_load_assets() {
+        
+        if( 
+            $this->profile_system->is_profile() || 
+            $this->activity_log->is_activity_page() || 
+            ( is_shop() && $this->settings['likes_category_display'] !== "none" ) || 
+            ( $this->settings['likes_category_display'] !== "none" && is_product_category() && !is_search() ) || 
+            ( $this->settings['likes_product_display'] !== "none" && is_product() ) ||
+            ( $this->settings['likes_search_display'] !== "none" && is_search() ) 
+        ) {
+            return true;
+        }
+        
+        return false;
         
     }
 

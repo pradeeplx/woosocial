@@ -23,6 +23,7 @@ class JCK_WooSocial {
     public $plugin_url = JCK_WOOSOCIAL_PLUGIN_URL;
     public $options;
     public $templates;
+    private $hooks;
     public $profile_system;
     public $like_system;
     public $follow_system;
@@ -88,6 +89,7 @@ class JCK_WooSocial {
     private function load_classes() {
         
         require_once( $this->plugin_path.'/inc/vendor/class-wordpress-settings-framework.php' );
+        require_once( $this->plugin_path.'/inc/class-hooks.php' );
         require_once( $this->plugin_path.'/inc/class-template-loader.php' );
         require_once( $this->plugin_path.'/inc/class-profile-system.php' );
         require_once( $this->plugin_path.'/inc/class-like-system.php' );
@@ -95,6 +97,7 @@ class JCK_WooSocial {
         require_once( $this->plugin_path.'/inc/class-activity-log-system.php' );
         
         $this->wpsf           = new WordPressSettingsFramework( $this->plugin_path.'/inc/settings-main.php', $this->settings_name );
+        $this->hooks          = new JCK_WooSocial_Hooks();
         $this->templates      = new JCK_WooSocial_TemplateLoader();
         $this->profile_system = new JCK_WooSocial_ProfileSystem();
         $this->like_system    = new JCK_WooSocial_LikeSystem();

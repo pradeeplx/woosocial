@@ -529,7 +529,7 @@ class JCK_WooSocial_ActivityLogSystem {
             'user_id' => $user_id, 
             'type' => 'follow',
             'rel_id' => $follow_user_id,
-            'time' => current_time("Y-m-d H:i:s")
+            'time' => current_time("mysql")
         );
         
         $wpdb->insert( 

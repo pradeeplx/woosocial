@@ -30,6 +30,10 @@ class JCK_WooSocial_Hooks {
         add_action( 'jck_woosocial_product_card_content',        array( $this, 'product_likes' ),       40, 1 );
         
         // User cards
+        add_action( 'jck_woosocial_user_card_before_content',    array( $this, 'user_image' ),          10, 1 );
+        add_action( 'jck_woosocial_user_card_content',           array( $this, 'user_name' ),           10, 1 );
+        add_action( 'jck_woosocial_user_card_content',           array( $this, 'user_follow_button' ),  20, 1 );
+        add_action( 'jck_woosocial_user_card_content',           array( $this, 'user_stats' ),          30, 1 );
         
 	}
 	
@@ -107,6 +111,70 @@ class JCK_WooSocial_Hooks {
         
         $GLOBALS['jck_woosocial']->like_system->show_likes_loop( $product->id );
                    
+    }
+
+/** =============================
+    *
+    * User Image
+    *
+    * @param  [obj] [$user]
+    *
+    ============================= */
+    
+    public function user_image( $user ) {
+        ?>
+        <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__image">
+            <?php echo $user->avatar_link; ?>
+        </div>
+        <?php        
+    }
+
+/** =============================
+    *
+    * User Name
+    *
+    * @param  [obj] [$user]
+    *
+    ============================= */
+    
+    public function user_name( $user ) {
+        ?>
+        <h2 class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__title">
+            <a href="<?php echo $user->profile_url; ?>"><?php echo $user->display_name; ?></a>
+        </h2>
+        <?php        
+    }
+    
+/** =============================
+    *
+    * User Follow Button
+    *
+    * @param  [obj] [$user]
+    *
+    ============================= */
+    
+    public function user_follow_button( $user ) {
+        
+        echo $user->follow_button;
+                  
+    }
+    
+/** =============================
+    *
+    * User Stats
+    *
+    * @param  [obj] [$user]
+    *
+    ============================= */
+    
+    public function user_stats( $user ) {
+        ?>
+        <ul class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__user-stats">
+            <li class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__user-stat"><?php echo $user->likes_count_formatted; ?></li>
+            <li class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__user-stat"><?php echo $user->followers_count_formatted; ?></li>
+            <li class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__user-stat"><?php echo $user->following_count_formatted; ?></li>
+        </ul>
+        <?php        
     }
 	
 }

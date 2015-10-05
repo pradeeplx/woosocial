@@ -1,22 +1,63 @@
-<div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card <?php echo $GLOBALS['jck_woosocial']->slug; ?>-card--user <?php if( get_current_user_id() == $user->ID ) echo $GLOBALS['jck_woosocial']->slug . "-card--self"; ?>">
-    
-    <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__image">
-        <?php echo $user->avatar_link; ?>
-    </div>
-    
-    <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__content">
-    
-        <h2 class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__title">
-            <a href="<?php echo $user->profile_url; ?>"><?php echo $user->display_name; ?></a>
-        </h2>
+<?php
+/**	=============================
+    *
+    * jck_woosocial_before_user_card hook
+    *
+    ============================= */
+
+	do_action( 'jck_woosocial_before_user_card', $user );
+?> 
+
+    <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card <?php echo $GLOBALS['jck_woosocial']->slug; ?>-card--user <?php if( get_current_user_id() == $user->ID ) echo $GLOBALS['jck_woosocial']->slug . "-card--self"; ?>">
         
-        <?php echo $user->follow_button; ?>
+        <?php
+        /**	=============================
+            *
+            * jck_woosocial_user_card_before_content hook
+            *
+            * @hooked user_image - 10
+            *
+            ============================= */
         
-        <ul class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__user-stats">
-            <li class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__user-stat"><?php echo $user->likes_count_formatted; ?></li>
-            <li class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__user-stat"><?php echo $user->followers_count_formatted; ?></li>
-            <li class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__user-stat"><?php echo $user->following_count_formatted; ?></li>
-        </ul>
-    
+        	do_action( 'jck_woosocial_user_card_before_content', $user );
+        ?>
+        
+        <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__content">
+        
+            <?php
+            /**	=============================
+                *
+                * jck_woosocial_user_card_content hook
+                *
+                * @hooked user_name - 10
+                * @hooked user_follow_button - 20
+                * @hooked user_stats - 30
+                *
+                ============================= */
+            
+            	do_action( 'jck_woosocial_user_card_content', $user );
+            ?>
+        
+        </div>
+        
+        <?php
+        /**	=============================
+            *
+            * jck_woosocial_user_card_after_content hook
+            *
+            ============================= */
+        
+        	do_action( 'jck_woosocial_user_card_after_content', $user );
+        ?>
+        
     </div>
-</div>
+
+<?php
+/**	=============================
+    *
+    * jck_woosocial_after_user_card hook
+    *
+    ============================= */
+
+	do_action( 'jck_woosocial_after_user_card', $user );
+?> 

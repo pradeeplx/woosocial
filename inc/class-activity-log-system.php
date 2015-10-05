@@ -273,14 +273,14 @@ class JCK_WooSocial_ActivityLogSystem {
         
         global $wpdb;
         
-        $and_followers = ( $include_followers ) ? "OR rel_id = $user_id" : "";
+        $and_followers = ( $include_followers ) ? "OR `rel_id` = $user_id AND `type` != 'like'" : "";
         
         $activity = $wpdb->get_results( "
             SELECT * 
             FROM $this->table_name 
-            WHERE user_id IN ($user_id) 
+            WHERE `user_id` IN ($user_id) 
             $and_followers 
-            ORDER BY time DESC 
+            ORDER BY `time` DESC 
             LIMIT $limit 
             OFFSET $offset
         " );

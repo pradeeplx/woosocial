@@ -25,7 +25,7 @@ get_header(); ?>
 	do_action( 'jck_woosocial_before_activity_feed' );
 ?>    
     
-    <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-activity-wrapper <?php echo $GLOBALS['jck_woosocial']->slug; ?>-clear">
+    <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-container <?php echo $GLOBALS['jck_woosocial']->slug; ?>-activity-wrapper <?php echo $GLOBALS['jck_woosocial']->slug; ?>-clear">
     
         <?php $GLOBALS['jck_woosocial']->templates->get_template_part( 'activity/feed', 'following' ); ?>    
     

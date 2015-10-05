@@ -128,15 +128,16 @@ class JCK_WooSocial {
 
         if(is_admin()) {
             
-            add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) ); 
-            add_action( 'admin_enqueue_scripts', array( $this, 'admin_styles' ) ); 
-            add_action( 'admin_init',            array( $this, 'nav_menu_add_meta_boxes' ) );
-            add_action( 'admin_menu',            array( $this, 'init_settings' ), 99 );
+            add_action( 'admin_enqueue_scripts',    array( $this, 'admin_scripts' ) ); 
+            add_action( 'admin_enqueue_scripts',    array( $this, 'admin_styles' ) ); 
+            add_action( 'admin_init',               array( $this, 'nav_menu_add_meta_boxes' ) );
+            add_action( 'admin_menu',               array( $this, 'init_settings' ), 99 );
             
         } else {
             
-            add_action( 'wp_enqueue_scripts',    array( $this, 'frontend_scripts' ) );
-            add_action( 'wp_enqueue_scripts',    array( $this, 'frontend_styles' ) );
+            add_action( 'wp_enqueue_scripts',       array( $this, 'frontend_scripts' ) );
+            add_action( 'wp_enqueue_scripts',       array( $this, 'frontend_styles' ) );
+            add_filter( 'nav_menu_link_attributes', array( $this, 'nav_menu_profile_link' ), 10, 3 );
             
         }
         
@@ -212,6 +213,27 @@ class JCK_WooSocial {
 		</div>
 		<?php
 	}
+
+/**	=============================
+    *
+    * Replace Profile and Activity Feed Links in menu Item
+    *
+    ============================= */
+    
+    public function nav_menu_profile_link( $atts, $item, $args ) {
+        
+        if( is_user_logged_in() ) {
+            
+            $current_user = wp_get_current_user();
+        
+            $atts['href'] = str_replace('/jck-woosocial', get_bloginfo('url'), $atts['href']);
+            $atts['href'] = str_replace('%nicename%', $current_user->user_nicename, $atts['href']);
+        
+        }
+        
+        return $atts;
+        
+    }
 
 /**	=============================
     *

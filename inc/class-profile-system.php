@@ -39,7 +39,6 @@ class JCK_WooSocial_ProfileSystem {
             add_filter( 'author_rewrite_rules',                         array( $this, 'author_rewrite_rules' ) );
             add_filter( 'template_include',                             array( $this, 'profile_template' ), 99 );
             add_filter( 'woocommerce_login_redirect',                   array( $this, 'login_redirect' ), 10, 2 );
-            add_filter( 'nav_menu_link_attributes',                     array( $this, 'nav_menu_profile_link' ), 10, 4 );
             add_filter( 'wp_get_nav_menu_items',                        array( $this, 'nav_menu_items' ), 10, 3 );
             
             add_action( 'jck_woosocial_before_profile',                 array( $this, 'before_profile' ), 5 );
@@ -137,27 +136,6 @@ class JCK_WooSocial_ProfileSystem {
         }
         
         return $author_rewrite_rules;
-        
-    }
-
-/**	=============================
-    *
-    * Replace Profile Link in menu Item
-    *
-    ============================= */
-    
-    public function nav_menu_profile_link( $atts, $item, $args, $depth ) {
-        
-        if( is_user_logged_in() ) {
-            
-            $current_user = wp_get_current_user();
-        
-            $atts['href'] = str_replace('/jck-woosocial', '', $atts['href']);
-            $atts['href'] = str_replace('%nicename%', $current_user->user_nicename, $atts['href']);
-        
-        }
-        
-        return $atts;
         
     }
     
@@ -326,7 +304,7 @@ class JCK_WooSocial_ProfileSystem {
     
     public function before_profile() {
         
-        echo '<div class="jck_woosocial-container jck_woosocial-container--profile">';
+        echo '<div class="jck-woosocial-container jck-woosocial-container--profile">';
         
     }
 

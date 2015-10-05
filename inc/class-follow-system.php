@@ -302,6 +302,7 @@ class JCK_WooSocial_FollowSystem {
             $button_type = ( $is_user_logged_in ) ? ( $is_following ? "unfollow" : "follow" ) : "login";
             $button_classes = implode(' ', array(
                 sprintf( '%s-btn', $GLOBALS['jck_woosocial']->slug ),
+                sprintf( '%s-btn--follow', $GLOBALS['jck_woosocial']->slug ),
                 sprintf( '%s-follow-action', $GLOBALS['jck_woosocial']->slug ),
                 sprintf( '%s-follow-action--%s', $GLOBALS['jck_woosocial']->slug, $button_type )
             ));

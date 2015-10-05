@@ -228,9 +228,158 @@ class JCK_WooSocial {
             wp_register_style( $this->slug.'_styles', $this->plugin_url . 'assets/frontend/css/main.min.css', array(), $this->version );
 		
             wp_enqueue_style( $this->slug.'_styles' );
+            
+            // custom colours
+            
+            $custom_css = sprintf("
+                .jck-woosocial-add-to-cart-wrapper a.button, .jck-woosocial-btn {
+                    background: %s;
+                    color: %s;
+                }
+                
+                .jck-woosocial-add-to-cart-wrapper a.button:hover, .jck-woosocial-btn:hover,
+                .jck-woosocial-add-to-cart-wrapper a.button:focus, .jck-woosocial-btn:focus {
+                    background: %s;
+                    color: %s;
+                }
+                
+                .jck-woosocial-action__icon--like {
+                    border-color: %s;
+                }
+                
+                .jck-woosocial-action__icon--like,
+                .jck-woosocial-btn--like {
+                    background: %s;
+                    color: %s;
+                }
+                
+                .jck-woosocial-btn--like:hover,
+                .jck-woosocial-btn--like:focus {
+                    background: %s;
+                    color: %s;
+                }
+                
+                .jck-woosocial-action__icon--follow {
+                    border-color: %s;
+                }
+                
+                .jck-woosocial-action__icon--follow,
+                .jck-woosocial-btn--follow {
+                    background: %s;
+                    color: %s;
+                }
+                
+                .jck-woosocial-btn--follow:hover,
+                .jck-woosocial-btn--follow:focus {
+                    background: %s;
+                    color: %s;
+                }
+                
+                .jck-woosocial-action__description,
+                .jck-woosocial-actions:before {
+                    background: %s;
+                }
+                
+                .jck-woosocial-card {
+                    border-color: %s;
+                    background: %s;
+                }
+                
+                .jck-woosocial-action__wrapper:before {
+                    border-left-color: %s;
+                }
+                
+                .jck-woosocial-action:nth-child(even) .jck-woosocial-action__wrapper:before {
+                    border-right-color: %s;
+                }
+                
+                .jck-woosocial-profile-info,
+                .jck-woosocial-profile-links__item {
+                    border-color: %s;
+                }
+                
+                .jck-woosocial-profile-info,
+                .jck-woosocial-profile-link {
+                    background: %s;
+                }
+                
+                .jck-woosocial-profile-link {
+                    color: %s;
+                }
+                
+                .jck-woosocial-profile-link:hover,
+                .jck-woosocial-profile-link:focus {
+                    background: %s;
+                    color: %s;
+                }
+                
+                .jck-woosocial-profile-link__count {
+                    background: %s;
+                    color: %s;
+                }
+                
+                .jck-woosocial-profile-link:hover .jck-woosocial-profile-link__count
+                .jck-woosocial-profile-link:focus .jck-woosocial-profile-link__count {
+                    background: %s;
+                    color: %s;
+                }
+                
+                .jck-woosocial-profile-link--active,
+                .jck-woosocial-profile-link--active:hover,
+                .jck-woosocial-profile-link--active:focus {
+                    background: %s;
+                    color: %s;
+                }
+                ",
+                $this->settings['colours_general_button_background'],
+                $this->settings['colours_general_button_foreground'],
+                $this->settings['colours_general_button_background_hover'],
+                $this->settings['colours_general_button_foreground_hover'],
+                $this->settings['colours_likes_border'],
+                $this->settings['colours_likes_background'],
+                $this->settings['colours_likes_foreground'],
+                $this->settings['colours_likes_background_hover'],
+                $this->settings['colours_likes_foreground_hover'],
+                $this->settings['colours_follow_border'],
+                $this->settings['colours_follow_background'],
+                $this->settings['colours_follow_foreground'],
+                $this->settings['colours_follow_background_hover'],
+                $this->settings['colours_follow_foreground_hover'],
+                $this->settings['colours_cards_border'],
+                $this->settings['colours_cards_border'],
+                $this->settings['colours_cards_background'],
+                $this->settings['colours_cards_border'],
+                $this->settings['colours_cards_border'],
+                $this->settings['colours_profile_tabs_border'],
+                $this->settings['colours_profile_tabs_background'],
+                $this->settings['colours_profile_tabs_foreground'],
+                $this->settings['colours_profile_tabs_background_hover'],
+                $this->settings['colours_profile_tabs_foreground_hover'],
+                $this->settings['colours_profile_tabs_count_background'],
+                $this->settings['colours_profile_tabs_count_foreground'],
+                $this->settings['colours_profile_tabs_count_background_hover'],
+                $this->settings['colours_profile_tabs_count_foreground_hover'],
+                $this->settings['colours_profile_tabs_active_background'],
+                $this->settings['colours_profile_tabs_active_foreground']
+            );
+                
+            wp_add_inline_style( $this->slug.'_styles', $this->minify_css( $custom_css ) );
         
         }
         
+    }
+
+/** =============================
+    *
+    * Minify CSS
+    *
+    * @param  [str] [$css]
+    * @return [str] [$css]
+    *
+    ============================= */
+    
+    public function minify_css( $css ) {
+        return str_replace('; ',';',str_replace(' }','}',str_replace('{ ','{',str_replace(array("\r\n","\r","\n","\t",'  ','    ','    '),"",preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!','',$css)))));
     }
     
 /**	=============================

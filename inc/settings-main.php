@@ -235,16 +235,28 @@ function jck_woosocial_settings( $wpsf_settings ) {
         'section_order' => 5,
         'fields' => array(
             array(
-                'id' => 'general_button',
+                'id' => 'button_background',
                 'title' => __('General Button','jck-woosocial'),
                 'type' => 'color',
                 'default' => '#3498db'
             ),
             array(
-                'id' => 'general_button_hover',
+                'id' => 'button_background_hover',
                 'title' => __('General Button Hover','jck-woosocial'),
                 'type' => 'color',
                 'default' => '#258cd1'
+            ),
+            array(
+                'id' => 'button_foreground',
+                'title' => __('General Button','jck-woosocial'),
+                'type' => 'color',
+                'default' => '#ffffff'
+            ),
+            array(
+                'id' => 'button_foreground_hover',
+                'title' => __('General Button Hover','jck-woosocial'),
+                'type' => 'color',
+                'default' => '#ffffff'
             ),
         )
     );
@@ -266,7 +278,13 @@ function jck_woosocial_settings( $wpsf_settings ) {
                 'id' => 'background_hover',
                 'title' => __('Background Hover','jck-woosocial'),
                 'type' => 'color',
-                'default' => '#9b59b6'
+                'default' => '#8e44ad'
+            ),
+            array(
+                'id' => 'border',
+                'title' => __('Icon Border','jck-woosocial'),
+                'type' => 'color',
+                'default' => '#8e44ad'
             ),
             array(
                 'id' => 'foreground',
@@ -300,7 +318,13 @@ function jck_woosocial_settings( $wpsf_settings ) {
                 'id' => 'background_hover',
                 'title' => __('Background Hover','jck-woosocial'),
                 'type' => 'color',
-                'default' => '#31cc71'
+                'default' => '#27ae60'
+            ),
+            array(
+                'id' => 'border',
+                'title' => __('Icon Border','jck-woosocial'),
+                'type' => 'color',
+                'default' => '#27ae60'
             ),
             array(
                 'id' => 'foreground',
@@ -347,6 +371,12 @@ function jck_woosocial_settings( $wpsf_settings ) {
         'section_order' => 25,
         'fields' => array(
             array(
+                'id' => 'border',
+                'title' => __('Border','jck-woosocial'),
+                'type' => 'color',
+                'default' => '#e7e9ed'
+            ),
+            array(
                 'id' => 'background',
                 'title' => __('Background','jck-woosocial'),
                 'type' => 'color',
@@ -369,6 +399,30 @@ function jck_woosocial_settings( $wpsf_settings ) {
                 'title' => __('Foreground Hover','jck-woosocial'),
                 'type' => 'color',
                 'default' => '#2c3e50'
+            ),
+            array(
+                'id' => 'count_background',
+                'title' => __('Count Background','jck-woosocial'),
+                'type' => 'color',
+                'default' => '#95a5a6'
+            ),
+            array(
+                'id' => 'count_background_hover',
+                'title' => __('Count Background Hover','jck-woosocial'),
+                'type' => 'color',
+                'default' => '#95a5a6'
+            ),
+            array(
+                'id' => 'count_foreground',
+                'title' => __('Count Foreground','jck-woosocial'),
+                'type' => 'color',
+                'default' => '#ffffff'
+            ),
+            array(
+                'id' => 'count_foreground_hover',
+                'title' => __('Count Foreground Hover','jck-woosocial'),
+                'type' => 'color',
+                'default' => '#ffffff'
             ),
             array(
                 'id' => 'active_background',

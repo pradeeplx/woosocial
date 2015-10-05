@@ -60,13 +60,32 @@
 
 // Product Likes
 
+.jck-woosocial-product-likes-wrapper {
+    
+    &--centre {
+        text-align: center;
+    }
+    
+    &--left {
+        text-align: left;
+    }
+    
+    &--right {
+        text-align: right;
+    }
+    
+}
+
 .jck-woosocial-product-likes {
-    width: 100%;
-    margin: 0;
+    width: auto;
+    max-width: 100%;
+    margin: 10px auto;
     padding: 0 10px 0 0;
     overflow: hidden;
     white-space: nowrap;
     height: 34px;
+    text-align: left;
+    display: inline-block;
 }
     
     .jck-woosocial-product-likes__item {

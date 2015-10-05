@@ -193,6 +193,17 @@ function jck_woosocial_settings( $wpsf_settings ) {
                 )
             ),
             array(
+                'id' => 'category_align',
+                'title' => __('Category Alignment','jck-woosocial'),
+                'type' => 'select',
+                'default' => 'left',
+                'choices' => array(
+                    'left'   => __('Left','jck-woosocial'),
+                    'right'  => __('Right','jck-woosocial'),
+                    'centre' => __('Centre','jck-woosocial')
+                )
+            ),
+            array(
                 'id' => 'search_display',
                 'title' => __('Search Results Display','jck-woosocial'),
                 'desc' => __('Where to display the like button on a search results page.','jck-woosocial'),
@@ -204,6 +215,17 @@ function jck_woosocial_settings( $wpsf_settings ) {
                     'woocommerce_before_shop_loop_item_title' => __('Before Title','jck-woosocial'),
                     'woocommerce_after_shop_loop_item_title'  => __('After Title','jck-woosocial'),
                     'woocommerce_after_shop_loop_item'        => __('After Item','jck-woosocial'),
+                )
+            ),
+            array(
+                'id' => 'search_align',
+                'title' => __('Search Alignment','jck-woosocial'),
+                'type' => 'select',
+                'default' => 'left',
+                'choices' => array(
+                    'left'   => __('Left','jck-woosocial'),
+                    'right'  => __('Right','jck-woosocial'),
+                    'centre' => __('Centre','jck-woosocial')
                 )
             ),
             array(
@@ -220,6 +242,17 @@ function jck_woosocial_settings( $wpsf_settings ) {
                     'woocommerce_single_product_summary/99'     => __('In Summary - End','jck-woosocial'),
                     'woocommerce_after_single_product_summary'  => __('After Summary','jck-woosocial'),
                     'woocommerce_after_single_product'          => __('After Product','jck-woosocial'),
+                )
+            ),
+            array(
+                'id' => 'product_align',
+                'title' => __('Product Page Alignment','jck-woosocial'),
+                'type' => 'select',
+                'default' => 'left',
+                'choices' => array(
+                    'left'   => __('Left','jck-woosocial'),
+                    'right'  => __('Right','jck-woosocial'),
+                    'centre' => __('Centre','jck-woosocial')
                 )
             ),
         )

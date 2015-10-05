@@ -404,5 +404,35 @@ class JCK_WooSocial_LikeSystem {
         return $product;
         
     }
+
+/** =============================
+    *
+    * Get "Likes" Alignment Class
+    *
+    * @return [str]
+    *
+    ============================= */
+    
+    public function get_likes_alignment_class() {
+        
+        $class = sprintf("%s-product-likes-wrapper--", $GLOBALS['jck_woosocial']->slug);
+        
+        if( ( is_category() || is_shop() ) && !is_search() ) {
+            
+            $class .= $GLOBALS['jck_woosocial']->settings['likes_category_align'];
+            
+        } elseif( is_search() ) {
+            
+            $class .= $GLOBALS['jck_woosocial']->settings['likes_search_align'];
+            
+        } else {
+            
+            $class .= $GLOBALS['jck_woosocial']->settings['likes_product_align'];
+            
+        }
+        
+        return $class;
+        
+    }
     
 }

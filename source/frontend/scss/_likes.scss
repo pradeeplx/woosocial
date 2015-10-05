@@ -29,9 +29,20 @@
     a.button {
         @extend .jck-woosocial-btn;
         
-        &.added_to_cart {
-            display: none !important;
+        &.loading {
+            opacity: 1 !important;
         }
+        
+        &.added {
+            &:before,
+            &:after {
+                display: none !important;
+            }
+        }
+    }
+    
+    .added_to_cart {
+        display: none !important;
     }
     
     i {

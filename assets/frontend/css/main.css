@@ -633,7 +633,13 @@
   box-shadow: none;
   height: 30px;
 }
-.jck-woosocial-add-to-cart-wrapper a.button.added_to_cart {
+.jck-woosocial-add-to-cart-wrapper a.button.loading {
+  opacity: 1 !important;
+}
+.jck-woosocial-add-to-cart-wrapper a.button.added:before, .jck-woosocial-add-to-cart-wrapper a.button.added:after {
+  display: none !important;
+}
+.jck-woosocial-add-to-cart-wrapper .added_to_cart {
   display: none !important;
 }
 .jck-woosocial-add-to-cart-wrapper i {

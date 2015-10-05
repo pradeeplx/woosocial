@@ -21,19 +21,30 @@ class JCK_WooSocial_Hooks {
     ============================= */
    	
 	public function initiate_hook() {
+    	
+    	$settings = $GLOBALS['jck_woosocial']->settings;
 	
 	    // Product cards
-        add_action( 'jck_woosocial_product_card_before_content', array( $this, 'product_image' ),       10, 1 );
-        add_action( 'jck_woosocial_product_card_content',        array( $this, 'product_title' ),       10, 1 );
-        add_action( 'jck_woosocial_product_card_content',        array( $this, 'product_price' ),       20, 1 );
-        add_action( 'jck_woosocial_product_card_content',        array( $this, 'product_add_to_cart' ), 30, 1 );
-        add_action( 'jck_woosocial_product_card_content',        array( $this, 'product_likes' ),       40, 1 );
+	    if( $settings['product_cards_show_image'] )
+            add_action( 'jck_woosocial_product_card_before_content', array( $this, 'product_image' ),       10, 1 );
+        if( $settings['product_cards_show_title'] )
+            add_action( 'jck_woosocial_product_card_content',        array( $this, 'product_title' ),       10, 1 );
+        if( $settings['product_cards_show_price'] )
+            add_action( 'jck_woosocial_product_card_content',        array( $this, 'product_price' ),       20, 1 );
+        if( $settings['product_cards_show_add_to_cart_button'] )
+            add_action( 'jck_woosocial_product_card_content',        array( $this, 'product_add_to_cart' ), 30, 1 );
+        if( $settings['product_cards_show_likes'] )
+            add_action( 'jck_woosocial_product_card_content',        array( $this, 'product_likes' ),       40, 1 );
         
         // User cards
-        add_action( 'jck_woosocial_user_card_before_content',    array( $this, 'user_image' ),          10, 1 );
-        add_action( 'jck_woosocial_user_card_content',           array( $this, 'user_name' ),           10, 1 );
-        add_action( 'jck_woosocial_user_card_content',           array( $this, 'user_follow_button' ),  20, 1 );
-        add_action( 'jck_woosocial_user_card_content',           array( $this, 'user_stats' ),          30, 1 );
+        if( $settings['user_cards_show_image'] )
+            add_action( 'jck_woosocial_user_card_before_content',    array( $this, 'user_image' ),          10, 1 );
+        if( $settings['user_cards_show_name'] )
+            add_action( 'jck_woosocial_user_card_content',           array( $this, 'user_name' ),           10, 1 );
+        if( $settings['user_cards_show_follow_button'] )
+            add_action( 'jck_woosocial_user_card_content',           array( $this, 'user_follow_button' ),  20, 1 );
+        if( $settings['user_cards_show_user_stats'] )
+            add_action( 'jck_woosocial_user_card_content',           array( $this, 'user_stats' ),          30, 1 );
         
 	}
 	

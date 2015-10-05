@@ -64,7 +64,7 @@ function jck_woosocial_settings( $wpsf_settings ) {
                 'desc' => __('The number of activity items to display before the "load more" button','jck-woosocial'),
                 'placeholder' => '',
                 'type' => 'text',
-                'default' => '5'
+                'default' => '8'
             ),
         )
     );

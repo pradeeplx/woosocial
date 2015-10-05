@@ -430,6 +430,16 @@
 .jck-woosocial-actions__load-more .jck-woosocial-load-more {
   margin: 0;
 }
+.jck-woosocial-actions--small .jck-woosocial-actions__load-more {
+  overflow: visible;
+}
+.jck-woosocial-actions--small .jck-woosocial-actions__load-more .jck-woosocial-load-more-wrapper {
+  margin-left: -48px;
+  text-align: left;
+}
+.jck-woosocial-actions--small .jck-woosocial-actions__load-more .jck-woosocial-load-more-wrapper .jck-woosocial-btn, .jck-woosocial-actions--small .jck-woosocial-actions__load-more .jck-woosocial-load-more-wrapper .jck-woosocial-add-to-cart-wrapper a.button, .jck-woosocial-add-to-cart-wrapper .jck-woosocial-actions--small .jck-woosocial-actions__load-more .jck-woosocial-load-more-wrapper a.button {
+  padding: 0 15px;
+}
 .jck-woosocial-actions--small {
   padding-left: 48px;
 }
@@ -623,6 +633,13 @@
 }
 .jck-woosocial-btn--like:focus, .jck-woosocial-btn--like:hover {
   background: #8f4bab;
+}
+.jck-woosocial-btn--like i {
+  display: inline-block;
+  height: 14px;
+}
+.jck-woosocial-btn--like i:before {
+  vertical-align: top;
 }
 
 .jck-woosocial-add-to-cart-wrapper {

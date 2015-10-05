@@ -49,6 +49,19 @@
         .jck-woosocial-load-more {
             margin: 0;
         }
+        
+        .jck-woosocial-actions--small & {
+            overflow: visible;
+            
+            .jck-woosocial-load-more-wrapper {
+                margin-left: -48px;
+                text-align: left;
+                
+                .jck-woosocial-btn {
+                    padding: 0 15px;
+                }
+            }
+        }
     }
     
     &--small {

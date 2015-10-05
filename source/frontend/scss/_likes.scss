@@ -16,6 +16,15 @@
     &:hover {
         background: darken( $c-like, 5% );
     }
+    
+    i {
+        display: inline-block;
+        height: 14px;
+        
+        &:before {
+            vertical-align: top;
+        }
+    }
 }
 
 .jck-woosocial-add-to-cart-wrapper {

@@ -2,7 +2,7 @@
     
 class JCK_WooSocial_ProfileSystem {
     
-    public $custom_author_levels = array( 'author', 'profile' );
+    public $custom_author_levels = array( 'author' );
     public $user_info;
     public $profile_base;
     public $wrapper_breakpoints;
@@ -18,45 +18,6 @@ class JCK_WooSocial_ProfileSystem {
         
         add_action( 'init',             array( $this, 'initiate_hook' ) );
         add_action( 'wp',               array( $this, 'wp_hook' ) );
-        
-    }
-
-/**	=============================
-    *
-    * Setup Constants for this class
-    *
-    ============================= */
-    
-    public function set_constants() {
-        
-        $this->user_info = wp_get_current_user();
-        $this->profile_base = 'profile';
-        
-        $this->wrapper_breakpoints = array(
-            array(
-                "max_width" => 800,
-                "class" => sprintf("%s-profile-wrapper--medium", $GLOBALS['jck_woosocial']->slug)
-            ),
-            array(
-                "max_width" => 320,
-                "class" => sprintf("%s-profile-wrapper--small", $GLOBALS['jck_woosocial']->slug)
-            )
-        );
-        
-        $this->card_grid_breakpoints = array(
-            array(
-                "max_width" => 820,
-                "class" => sprintf("%s-card-grid--medium", $GLOBALS['jck_woosocial']->slug)
-            ),
-            array(
-                "max_width" => 615,
-                "class" => sprintf("%s-card-grid--small", $GLOBALS['jck_woosocial']->slug)
-            ),
-            array(
-                "max_width" => 400,
-                "class" => sprintf("%s-card-grid--xsmall", $GLOBALS['jck_woosocial']->slug)
-            )
-        );
         
     }
 
@@ -105,6 +66,49 @@ class JCK_WooSocial_ProfileSystem {
     	}
         
 	}
+
+/**	=============================
+    *
+    * Setup Constants for this class
+    *
+    ============================= */
+    
+    public function set_constants() {
+        
+        $settings = $GLOBALS['jck_woosocial']->settings;
+        
+        $this->user_info = wp_get_current_user();
+        $this->profile_base = $settings['profile_profile_slug'];
+        
+        $this->custom_author_levels[] = $this->profile_base;
+        
+        $this->wrapper_breakpoints = array(
+            array(
+                "max_width" => 800,
+                "class" => sprintf("%s-profile-wrapper--medium", $GLOBALS['jck_woosocial']->slug)
+            ),
+            array(
+                "max_width" => 320,
+                "class" => sprintf("%s-profile-wrapper--small", $GLOBALS['jck_woosocial']->slug)
+            )
+        );
+        
+        $this->card_grid_breakpoints = array(
+            array(
+                "max_width" => 820,
+                "class" => sprintf("%s-card-grid--medium", $GLOBALS['jck_woosocial']->slug)
+            ),
+            array(
+                "max_width" => 615,
+                "class" => sprintf("%s-card-grid--small", $GLOBALS['jck_woosocial']->slug)
+            ),
+            array(
+                "max_width" => 400,
+                "class" => sprintf("%s-card-grid--xsmall", $GLOBALS['jck_woosocial']->slug)
+            )
+        );
+        
+    }
 
 /**	=============================
     *
@@ -255,7 +259,7 @@ class JCK_WooSocial_ProfileSystem {
 
     function profile_template( $template ) {
         
-    	if ( is_author() && strpos( $_SERVER['REQUEST_URI'], 'profile/' ) !== false ) {
+    	if ( is_author() && strpos( $_SERVER['REQUEST_URI'], $this->profile_base.'/' ) !== false ) {
     		
     		$profile_template = $GLOBALS['jck_woosocial']->templates->get_template_part( 'profile', '', false );
     		

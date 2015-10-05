@@ -85,20 +85,22 @@ class JCK_WooSocial_ActivityLogSystem {
 		
 		$charset_collate = $wpdb->get_charset_collate();
 		$installed_ver = get_option( $this->table_slug."_db_version" );	
-			
+		
 		if( $installed_ver != $this->db_version ) {
 			
-			$sql = "CREATE TABLE $this->table_name (
-			id mediumint(9) NOT NULL AUTO_INCREMENT,
-			user_id mediumint(9),
-			type text,
-			rel_id mediumint(9),
-			time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+			$sql = "CREATE TABLE `{$wpdb->prefix}{$this->table_slug}` (
+			`id` mediumint(9) NOT NULL AUTO_INCREMENT,
+			`user_id` mediumint(9),
+			`type` text,
+			`rel_id` mediumint(9),
+			`time` datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 			UNIQUE KEY user_id (id)
 			) $charset_collate;";
 			
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-			dbDelta( $sql );
+			$return = dbDelta( $sql );
+			
+			error_log( print_r( $return, true ) );
 			
 			update_option( $this->table_slug."_db_version", $this->db_version );
 			

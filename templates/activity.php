@@ -5,6 +5,11 @@
  * @package jck-woosocial
  * @since WooCommerce Social 1.0.0
  */
+ 
+if( !is_user_logged_in() ) {
+    $myaccount_page_id = get_option( 'woocommerce_myaccount_page_id' );
+    wp_safe_redirect( get_permalink( $myaccount_page_id ) ); die;
+}
 
 get_header(); ?>
 

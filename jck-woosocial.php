@@ -436,7 +436,7 @@ class JCK_WooSocial {
         
         if( is_author() ) {
             $user_id = $this->profile_system->user_info->ID;
-        } else {
+        } else {            
             $following = $this->follow_system->get_following( $this->profile_system->user_info->ID, null, null, true );
             if( $following && !empty( $following ) ) {
                 $user_id = esc_attr(json_encode($following));

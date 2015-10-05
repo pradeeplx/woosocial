@@ -20,8 +20,6 @@ class JCK_WooSocial_ActivityLogSystem {
     
     public function __construct() {
         
-        $this->set_constants();
-        
         add_action( 'init', array( $this, 'initiate_hook' ) );
         
     }
@@ -33,6 +31,8 @@ class JCK_WooSocial_ActivityLogSystem {
     ============================= */
     
     public function initiate_hook() {
+        
+        $this->set_constants();
         
         add_action( 'wp_ajax_jck_woosocial_load_more_activity',         array( $this, 'load_more' ) );
         add_action( 'wp_ajax_nopriv_jck_woosocial_load_more_activity',  array( $this, 'load_more' ) );
@@ -53,8 +53,16 @@ class JCK_WooSocial_ActivityLogSystem {
         
         global $wpdb;
         
+        $settings = $GLOBALS['jck_woosocial']->settings;
+        
         $this->table_name = $wpdb->prefix . $this->table_slug;
         $this->activity_query_var = $this->slug.'-activity';
+        
+        if( isset( $settings['activity_feed_slug'] ) )
+            $this->activity_slug = $settings['activity_feed_slug'];
+            
+        if( isset( $settings['activity_feed_items_per_page'] ) )
+            $this->default_limit = $settings['activity_feed_items_per_page'];
         
         $this->wrapper_breakpoints = array(
             array(

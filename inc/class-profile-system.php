@@ -28,7 +28,8 @@ class JCK_WooSocial_ProfileSystem {
     ============================= */
     
     public function set_constants() {
-
+        
+        $this->user_info = wp_get_current_user();
         $this->profile_base = 'profile';
         
         $this->wrapper_breakpoints = array(
@@ -100,10 +101,6 @@ class JCK_WooSocial_ProfileSystem {
     	if( ( !is_admin() && is_author() ) || ( defined('DOING_AJAX') && DOING_AJAX ) ) {
         	
         	$this->user_info = $this->get_user_info();
-        	
-    	} else {
-        	
-        	$this->user_info = wp_get_current_user();
         	
     	}
         

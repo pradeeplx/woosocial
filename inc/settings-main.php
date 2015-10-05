@@ -53,7 +53,7 @@ function jck_woosocial_settings( $wpsf_settings ) {
             array(
                 'id' => 'slug',
                 'title' => __('Activity Feed Slug','jck-woosocial'),
-                'desc' => __("The slug to use for the logged in user's activity feed. E.g. yourdomain.com/activity/",'jck-woosocial'),
+                'desc' => __("The slug to use for the logged in user's activity feed. E.g. yourdomain.com/activity/ <br>If you change this, make sure to visit the <a href='".admin_url('options-permalink.php')."' target='_blank'>permalinks page</a>. This will refresh your URLs; you don't need to click anything, just visit the page!",'jck-woosocial'),
                 'placeholder' => '',
                 'type' => 'text',
                 'default' => 'activity'
@@ -155,7 +155,7 @@ function jck_woosocial_settings( $wpsf_settings ) {
             array(
                 'id' => 'profile_slug',
                 'title' => __('Profile Slug','jck-woosocial'),
-                'desc' => __("The slug to use in a user's profile URL. E.g. yourdomain.com/profile/username",'jck-woosocial'),
+                'desc' => __("The slug to use in a user's profile URL. E.g. yourdomain.com/profile/username <br>If you change this, make sure to visit the <a href='".admin_url('options-permalink.php')."' target='_blank'>permalinks page</a>. This will refresh your URLs; you don't need to click anything, just visit the page!",'jck-woosocial'),
                 'placeholder' => '',
                 'type' => 'text',
                 'default' => 'profile'

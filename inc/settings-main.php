@@ -269,25 +269,25 @@ function jck_woosocial_settings( $wpsf_settings ) {
         'fields' => array(
             array(
                 'id' => 'button_background',
-                'title' => __('General Button','jck-woosocial'),
+                'title' => __('General Button Background','jck-woosocial'),
                 'type' => 'color',
                 'default' => '#3498db'
             ),
             array(
                 'id' => 'button_background_hover',
-                'title' => __('General Button Hover','jck-woosocial'),
+                'title' => __('General Button BackgroundHover','jck-woosocial'),
                 'type' => 'color',
                 'default' => '#258cd1'
             ),
             array(
                 'id' => 'button_foreground',
-                'title' => __('General Button','jck-woosocial'),
+                'title' => __('General Button Foreground','jck-woosocial'),
                 'type' => 'color',
                 'default' => '#ffffff'
             ),
             array(
                 'id' => 'button_foreground_hover',
-                'title' => __('General Button Hover','jck-woosocial'),
+                'title' => __('General Button Foreground Hover','jck-woosocial'),
                 'type' => 'color',
                 'default' => '#ffffff'
             ),

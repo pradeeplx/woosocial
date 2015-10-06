@@ -3,7 +3,7 @@
  * The template for displaying a profile page
  *
  * @package jck-woosocial
- * @since WooCommerce Social 1.0.0
+ * @since WooSocial 1.0.0
  */
 
 get_header(); ?>

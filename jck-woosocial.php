@@ -168,7 +168,7 @@ class JCK_WooSocial {
     ============================= */
 
 	public function nav_menu_add_meta_boxes() {
-		add_meta_box( 'jck_woosocial_nav_link', __( 'WooCommerce Social', 'jck-woosocial' ), array( $this, 'nav_menu_links' ), 'nav-menus', 'side', 'low' );
+		add_meta_box( 'jck_woosocial_nav_link', __( 'WooSocial', 'jck-woosocial' ), array( $this, 'nav_menu_links' ), 'nav-menus', 'side', 'low' );
 	}
 
 	public function nav_menu_links() {

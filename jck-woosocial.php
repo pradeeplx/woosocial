@@ -3,7 +3,7 @@
 Plugin Name: WooSocial
 Plugin URI: http://www.jckemp.com
 Description: Profiles, likes, and followers - WooSocial
-Version: 1.0.0
+Version: 1.0.1
 Author: James Kemp
 Author URI: http://www.jckemp.com
 Text Domain: jck-woosocial
@@ -13,12 +13,12 @@ defined('JCK_WOOSOCIAL_PLUGIN_PATH') or define('JCK_WOOSOCIAL_PLUGIN_PATH', plug
 defined('JCK_WOOSOCIAL_PLUGIN_URL') or define('JCK_WOOSOCIAL_PLUGIN_URL', plugin_dir_url( __FILE__ ));
 
 class JCK_WooSocial {
-    
+
     public $name = 'WooSocial';
     public $shortname = 'WooSocial';
     public $slug = 'jck-woosocial';
     public $alt_slug;
-    public $version = "1.0.0";
+    public $version = "1.0.1";
     public $plugin_path = JCK_WOOSOCIAL_PLUGIN_PATH;
     public $plugin_url = JCK_WOOSOCIAL_PLUGIN_URL;
     public $options;
@@ -32,26 +32,26 @@ class JCK_WooSocial {
     private $wpsf_2;
     public $settings_name;
     public $settings;
-	
+
 /**	=============================
     *
     * Construct the plugin
     *
     ============================= */
-   	
+
     public function __construct() {
-        
-        $this->set_constants();        
+
+        $this->set_constants();
         $this->load_classes();
-        
+
         $this->settings = $this->wpsf->get_settings();
-        
+
         register_activation_hook( __FILE__, array( $this, 'install' ) );
-        
+
         // Hook up to the init and plugins_loaded actions
         add_action( 'plugins_loaded', array( $this, 'plugins_loaded_hook' ) );
         add_action( 'init',           array( $this, 'initiate_hook' ) );
-        
+
     }
 
 /**	=============================
@@ -59,12 +59,12 @@ class JCK_WooSocial {
     * Setup Constants for this class
     *
     ============================= */
-    
+
     public function set_constants() {
 
         $this->alt_slug      = str_replace('-', '_', $this->slug);
         $this->settings_name = $this->alt_slug;
-        
+
     }
 
 /**	=============================
@@ -72,12 +72,12 @@ class JCK_WooSocial {
     * Install Plugin on Activation
     *
     ============================= */
-    
+
     public function install() {
-        
+
         $this->activity_log->setup_activity_log();
         flush_rewrite_rules();
-        
+
     }
 
 /**	=============================
@@ -85,9 +85,9 @@ class JCK_WooSocial {
     * Load Classes
     *
     ============================= */
-    
+
     private function load_classes() {
-        
+
         require_once( $this->plugin_path.'/inc/vendor/class-wordpress-settings-framework.php' );
         require_once( $this->plugin_path.'/inc/class-hooks.php' );
         require_once( $this->plugin_path.'/inc/class-template-loader.php' );
@@ -95,7 +95,7 @@ class JCK_WooSocial {
         require_once( $this->plugin_path.'/inc/class-like-system.php' );
         require_once( $this->plugin_path.'/inc/class-follow-system.php' );
         require_once( $this->plugin_path.'/inc/class-activity-log-system.php' );
-        
+
         $this->wpsf           = new WordPressSettingsFramework( $this->plugin_path.'/inc/settings-main.php', $this->settings_name );
         $this->hooks          = new JCK_WooSocial_Hooks();
         $this->templates      = new JCK_WooSocial_TemplateLoader();
@@ -103,7 +103,7 @@ class JCK_WooSocial {
         $this->like_system    = new JCK_WooSocial_LikeSystem();
         $this->follow_system  = new JCK_WooSocial_FollowSystem();
         $this->activity_log   = new JCK_WooSocial_ActivityLogSystem();
-        
+
     }
 
 /**	=============================
@@ -111,11 +111,11 @@ class JCK_WooSocial {
     * Run quite near the start (http://codex.wordpress.org/Plugin_API/Action_Reference)
     *
     ============================= */
-   	
+
 	public function plugins_loaded_hook() {
-    	
+
     	load_plugin_textdomain( "jck-woosocial", false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-        
+
 	}
 
 /**	=============================
@@ -123,24 +123,25 @@ class JCK_WooSocial {
     * Run after the current user is set (http://codex.wordpress.org/Plugin_API/Action_Reference)
     *
     ============================= */
-   	
+
 	public function initiate_hook() {
 
         if(is_admin()) {
-            
-            add_action( 'admin_enqueue_scripts',    array( $this, 'admin_scripts' ) ); 
-            add_action( 'admin_enqueue_scripts',    array( $this, 'admin_styles' ) ); 
+
+            add_action( 'admin_enqueue_scripts',    array( $this, 'admin_scripts' ) );
+            add_action( 'admin_enqueue_scripts',    array( $this, 'admin_styles' ) );
             add_action( 'admin_init',               array( $this, 'nav_menu_add_meta_boxes' ) );
             add_action( 'admin_menu',               array( $this, 'init_settings' ), 99 );
-            
+
         } else {
-            
+
             add_action( 'wp_enqueue_scripts',       array( $this, 'frontend_scripts' ) );
             add_action( 'wp_enqueue_scripts',       array( $this, 'frontend_styles' ) );
             add_filter( 'nav_menu_link_attributes', array( $this, 'nav_menu_profile_link' ), 10, 3 );
-            
+            add_filter( 'walker_nav_menu_start_el', array( $this, 'nav_menu_profile_link_walker' ), 10, 4 );
+
         }
-        
+
 	}
 
 /** =============================
@@ -148,9 +149,9 @@ class JCK_WooSocial {
     * Initiate Settings
     *
     ============================= */
-    
+
     public function init_settings() {
-        
+
         $this->wpsf->add_settings_page( array(
             'page_slug'   => 'settings',
             'parent_slug' => 'woocommerce',
@@ -158,7 +159,7 @@ class JCK_WooSocial {
             'menu_title'  => __( 'WooSocial', 'jck-woosocial' ),
             'capability'  => 'manage_options'
         ) );
-        
+
     }
 
 /**	=============================
@@ -172,12 +173,12 @@ class JCK_WooSocial {
 	}
 
 	public function nav_menu_links() {
-    	
+
     	$links = array(
         	__('Activity Feed', 'jck-woosocial') => '/jck-woosocial/activity/',
         	__('Your Profile', 'jck-woosocial')  => '/jck-woosocial/profile/%nicename%/'
     	);
-    	
+
 		?>
 		<div id="posttype-woocommerce-social" class="posttypediv">
 			<div id="tabs-panel-woocommerce-social" class="tabs-panel tabs-panel-active">
@@ -219,20 +220,66 @@ class JCK_WooSocial {
     * Replace Profile and Activity Feed Links in menu Item
     *
     ============================= */
-    
+
     public function nav_menu_profile_link( $atts, $item, $args ) {
-        
+
         if( is_user_logged_in() ) {
-            
-            $current_user = wp_get_current_user();
-        
-            $atts['href'] = str_replace('/jck-woosocial', get_bloginfo('url'), $atts['href']);
-            $atts['href'] = str_replace('%nicename%', $current_user->user_nicename, $atts['href']);
-        
+
+            $atts['href'] = $this->replace_url( $atts['href'] );
+
         }
-        
+
         return $atts;
-        
+
+    }
+
+/** =============================
+    *
+    * Helper: Replace menu URLs with proper links
+    *
+    * @param  [str] [$url]
+    * @return [str]
+    *
+    ============================= */
+
+    public function replace_url( $url ) {
+
+        $current_user = wp_get_current_user();
+
+        $url = str_replace('/jck-woosocial', get_bloginfo('url'), $url);
+        $url = str_replace('%nicename%', $current_user->user_nicename, $url);
+
+        return $url;
+
+    }
+
+/** =============================
+    *
+    * Frontend: Replace URLs for themes with this custom walker (like Atelier)
+    *
+    * @param  [str] [$item_output]
+    * @param  [obj] [$item]
+    * @param  [int] [$depth]
+    * @param  [arr] [$args]
+    * @return [str]
+    *
+    ============================= */
+
+    public function nav_menu_profile_link_walker( $item_output, $item, $depth, $args ) {
+
+        if( is_user_logged_in() ) {
+
+            $item_output_parts = new SimpleXMLElement( $item_output );
+            $href = $item_output_parts['href'];
+            $new_url = $this->replace_url( $href );
+            $pattern = "/(?<=href=(\"|'))[^\"']+(?=(\"|'))/";
+
+            $item_output = preg_replace( $pattern, $new_url, $item_output );
+
+        }
+
+        return $item_output;
+
     }
 
 /**	=============================
@@ -242,110 +289,110 @@ class JCK_WooSocial {
     * @access public
     *
     ============================= */
-    
+
     public function frontend_styles() {
-        
+
         if( $this->can_load_assets() ) {
-        
+
             wp_register_style( $this->slug.'_styles', $this->plugin_url . 'assets/frontend/css/main.min.css', array(), $this->version );
-		
+
             wp_enqueue_style( $this->slug.'_styles' );
-            
+
             // custom colours
-            
+
             $custom_css = sprintf("
                 .jck-woosocial-add-to-cart-wrapper a.button, .jck-woosocial-btn {
                     background: %s;
                     color: %s;
                 }
-                
+
                 .jck-woosocial-add-to-cart-wrapper a.button:hover, .jck-woosocial-btn:hover,
                 .jck-woosocial-add-to-cart-wrapper a.button:focus, .jck-woosocial-btn:focus {
                     background: %s;
                     color: %s;
                 }
-                
+
                 .jck-woosocial-action__icon--like {
                     border-color: %s;
                 }
-                
+
                 .jck-woosocial-action__icon--like,
                 .jck-woosocial-btn--like {
                     background: %s;
                     color: %s;
                 }
-                
+
                 .jck-woosocial-btn--like:hover,
                 .jck-woosocial-btn--like:focus {
                     background: %s;
                     color: %s;
                 }
-                
+
                 .jck-woosocial-action__icon--follow {
                     border-color: %s;
                 }
-                
+
                 .jck-woosocial-action__icon--follow,
                 .jck-woosocial-btn--follow {
                     background: %s;
                     color: %s;
                 }
-                
+
                 .jck-woosocial-btn--follow:hover,
                 .jck-woosocial-btn--follow:focus {
                     background: %s;
                     color: %s;
                 }
-                
+
                 .jck-woosocial-action__description,
                 .jck-woosocial-actions:before {
                     background: %s;
                 }
-                
+
                 .jck-woosocial-card {
                     border-color: %s;
                     background: %s;
                 }
-                
+
                 .jck-woosocial-action__wrapper:before {
                     border-left-color: %s;
                 }
-                
+
                 .jck-woosocial-action:nth-child(even) .jck-woosocial-action__wrapper:before {
                     border-right-color: %s;
                 }
-                
+
                 .jck-woosocial-profile-info,
                 .jck-woosocial-profile-links__item {
                     border-color: %s;
                 }
-                
+
                 .jck-woosocial-profile-info,
                 .jck-woosocial-profile-link {
                     background: %s;
                 }
-                
+
                 .jck-woosocial-profile-link {
                     color: %s;
                 }
-                
+
                 .jck-woosocial-profile-link:hover,
                 .jck-woosocial-profile-link:focus {
                     background: %s;
                     color: %s;
                 }
-                
+
                 .jck-woosocial-profile-link__count {
                     background: %s;
                     color: %s;
                 }
-                
+
                 .jck-woosocial-profile-link:hover .jck-woosocial-profile-link__count
                 .jck-woosocial-profile-link:focus .jck-woosocial-profile-link__count {
                     background: %s;
                     color: %s;
                 }
-                
+
                 .jck-woosocial-profile-link--active,
                 .jck-woosocial-profile-link--active:hover,
                 .jck-woosocial-profile-link--active:focus {
@@ -384,11 +431,11 @@ class JCK_WooSocial {
                 $this->settings['colours_profile_tabs_active_background'],
                 $this->settings['colours_profile_tabs_active_foreground']
             );
-                
+
             wp_add_inline_style( $this->slug.'_styles', $this->minify_css( $custom_css ) );
-        
+
         }
-        
+
     }
 
 /** =============================
@@ -399,11 +446,11 @@ class JCK_WooSocial {
     * @return [str] [$css]
     *
     ============================= */
-    
+
     public function minify_css( $css ) {
         return str_replace('; ',';',str_replace(' }','}',str_replace('{ ','{',str_replace(array("\r\n","\r","\n","\t",'  ','    ','    '),"",preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!','',$css)))));
     }
-    
+
 /**	=============================
     *
     * Frontend Scripts
@@ -411,13 +458,13 @@ class JCK_WooSocial {
     * @access public
     *
     ============================= */
-    
+
     public function frontend_scripts() {
-        
+
         if( $this->can_load_assets() ) {
-    
+
             wp_register_script( $this->slug.'_scripts', $this->plugin_url . 'assets/frontend/js/main.min.js', array( 'jquery' ), $this->version, true);
-            
+
             $vars = array(
     			'ajax_url' => admin_url( 'admin-ajax.php' ),
     			'nonce'    => wp_create_nonce( $this->slug ),
@@ -426,14 +473,14 @@ class JCK_WooSocial {
         			"no_more" => __( "No more to load", "jck-woosocial" )
     			)
     		);
-    		
+
     		wp_localize_script( $this->slug.'_scripts', $this->alt_slug.'_vars', $vars );
-    		
+
     		wp_enqueue_script( 'hoverIntent' );
     		wp_enqueue_script( $this->slug.'_scripts' );
-		
+
 		}
-        
+
     }
 
 /** =============================
@@ -443,22 +490,22 @@ class JCK_WooSocial {
     * @return [bool]
     *
     ============================= */
-    
+
     public function can_load_assets() {
-        
-        if( 
-            $this->profile_system->is_profile() || 
-            $this->activity_log->is_activity_page() || 
-            ( is_shop() && $this->settings['likes_category_display'] !== "none" ) || 
-            ( $this->settings['likes_category_display'] !== "none" && is_product_category() && !is_search() ) || 
+
+        if(
+            $this->profile_system->is_profile() ||
+            $this->activity_log->is_activity_page() ||
+            ( is_shop() && $this->settings['likes_category_display'] !== "none" ) ||
+            ( $this->settings['likes_category_display'] !== "none" && is_product_category() && !is_search() ) ||
             ( $this->settings['likes_product_display'] !== "none" && is_product() ) ||
-            ( $this->settings['likes_search_display'] !== "none" && is_search() ) 
+            ( $this->settings['likes_search_display'] !== "none" && is_search() )
         ) {
             return true;
         }
-        
+
         return false;
-        
+
     }
 
 /**	=============================
@@ -468,20 +515,20 @@ class JCK_WooSocial {
     * @access public
     *
     ============================= */
-    
+
     public function admin_styles() {
-        
+
         global $post, $pagenow;
 
         // maybe limit this to particular pages, you can use:
 		// if( $post && (get_post_type( $post->ID ) == "product" && ($pagenow == "post.php" || $pagenow == "post-new.php")) ){
-        
+
         wp_register_style( $this->slug.'_admin_styles', $this->plugin_url . 'assets/admin/css/main.min.css', array( 'jquery', 'eq', 'hoverIntent' ), $this->version );
-		
+
         wp_enqueue_style( $this->slug.'_admin_styles' );
-        
+
     }
-    
+
 /**	=============================
     *
     * Admin Scripts
@@ -489,18 +536,18 @@ class JCK_WooSocial {
     * @access public
     *
     ============================= */
-    
+
     public function admin_scripts() {
-        
+
         global $post, $pagenow;
 
         // maybe limit this to particular pages, you can use:
 		// if( $post && (get_post_type( $post->ID ) == "product" && ($pagenow == "post.php" || $pagenow == "post-new.php")) ){
-    		
+
 		wp_register_script( $this->slug.'_admin_scripts', $this->plugin_url . 'assets/admin/js/main.min.js', array( 'jquery' ), $this->version, true);
-	
+
         wp_enqueue_script( $this->slug.'_admin_scripts' );
-        
+
     }
 
 /** =============================
@@ -514,15 +561,15 @@ class JCK_WooSocial {
     * @priority:	  The priority of which the above method has in the add_action
     *
     ============================= */
-   	
+
 	private function remove_filters_for_anonymous_class( $hook_name = '', $class_name ='', $method_name = '', $priority = 0 ) {
-    	
+
         global $wp_filter;
-        
+
         // Take only filters on right hook name and priority
         if ( !isset($wp_filter[$hook_name][$priority]) || !is_array($wp_filter[$hook_name][$priority]) )
                 return false;
-        
+
         // Loop on filters registered
         foreach( (array) $wp_filter[$hook_name][$priority] as $unique_id => $filter_array ) {
                 // Test if filter is an array ! (always for class/method)
@@ -532,11 +579,11 @@ class JCK_WooSocial {
                                 unset($wp_filter[$hook_name][$priority][$unique_id]);
                         }
                 }
-                
+
         }
-        
+
         return false;
-        
+
 	}
 
 /**	=============================
@@ -546,29 +593,29 @@ class JCK_WooSocial {
     * @return mixed bool/str NULL or Woo version number
     *
     ============================= */
-    
+
     private function get_woo_version_number() {
-        
+
         // If get_plugins() isn't available, require it
         if ( ! function_exists( 'get_plugins' ) )
             require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-        
+
             // Create the plugins folder and file variables
         $plugin_folder = get_plugins( '/' . 'woocommerce' );
         $plugin_file   = 'woocommerce.php';
-        
-        // If the plugin version number is set, return it 
+
+        // If the plugin version number is set, return it
         if ( isset( $plugin_folder[$plugin_file]['Version'] ) ) {
-            
+
             return $plugin_folder[$plugin_file]['Version'];
-    
+
         // Otherwise return null
         } else {
-            
+
             return NULL;
-            
+
         }
-        
+
     }
 
 /**	=============================
@@ -581,29 +628,29 @@ class JCK_WooSocial {
     ============================= */
 
     function shorten_number($number) {
-        
-        if( $number == 0 ) 
+
+        if( $number == 0 )
             return $number;
-        
+
         $abbrevs = array(
-            12 => "T", 
-            9  => "B", 
-            6  => "M", 
+            12 => "T",
+            9  => "B",
+            6  => "M",
             3  => "K",
             0  => "",
         );
-    
+
         foreach($abbrevs as $exponent => $abbrev) {
-            
+
             if( $number >= pow(10, $exponent) ) {
-            	
+
             	$display_num = $number / pow(10, $exponent);
             	$decimals    = ($exponent >= 3 && round($display_num) < 100) ? 1 : 0;
-                
+
                 return number_format($display_num,$decimals) . $abbrev;
-                
+
             }
-            
+
         }
     }
 
@@ -615,35 +662,35 @@ class JCK_WooSocial {
     * @return str
     *
     ============================= */
-    
+
     public function get_load_more_button( $type = false ) {
-        
+
         if( !$type )
             return "";
-        
+
         $classes = array(
             sprintf('%s-btn', $this->slug),
             sprintf('%s-load-more', $this->slug),
             sprintf('%s-load-more--%s', $this->slug, $type)
         );
-        
+
         $additional_attributes = array();
         $user_id = 0;
-        
+
         if( $this->profile_system->is_profile() )
             $additional_attributes[] = sprintf( 'data-profile-user-id="%d"', $this->profile_system->user_info->ID );
-        
+
         if( is_author() ) {
             $user_id = $this->profile_system->user_info->ID;
-        } else {            
+        } else {
             $following = $this->follow_system->get_following( $this->profile_system->user_info->ID, null, null, true );
             if( $following && !empty( $following ) ) {
                 $user_id = esc_attr(json_encode($following));
             }
         }
-        
+
         return sprintf(
-            '<div class="%s-load-more-wrapper"><a href="javascript: void(0);" class="%s" data-limit="%d" data-offset="%d" data-user-id="%s" %s><i class="jck-woosocial-ic-loading"></i> %s</a></div>', 
+            '<div class="%s-load-more-wrapper"><a href="javascript: void(0);" class="%s" data-limit="%d" data-offset="%d" data-user-id="%s" %s><i class="jck-woosocial-ic-loading"></i> %s</a></div>',
             $this->slug,
             implode(' ', $classes),
             $this->activity_log->default_limit,
@@ -652,7 +699,7 @@ class JCK_WooSocial {
             implode(' ', $additional_attributes),
             __('Load more', 'jck-woosocial')
         );
-        
+
     }
 
 /**	=============================
@@ -666,17 +713,17 @@ class JCK_WooSocial {
     * @return str
     *
     ============================= */
-    
+
     public function wrap_message( $message, $type = "notice" ) {
-        
-        echo sprintf( 
-            '<div class="%s-message-wrapper %s-message-wrapper--%s">%s</div>', 
+
+        echo sprintf(
+            '<div class="%s-message-wrapper %s-message-wrapper--%s">%s</div>',
             $this->slug,
             $this->slug,
             $type,
             $message
         );
-        
+
     }
 
 
@@ -688,14 +735,14 @@ class JCK_WooSocial {
     * @return [bool]
     *
     ============================= */
-    
+
     public function is_json( $string ) {
-        
+
         json_decode( $string );
         return (json_last_error() == JSON_ERROR_NONE);
-        
+
     }
-  
+
 }
 
 $GLOBALS['jck_woosocial'] = new JCK_WooSocial();

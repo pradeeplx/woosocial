@@ -350,7 +350,7 @@ class JCK_WooSocial_ProfileSystem {
 
     public function is_profile() {
 
-        $current_url = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+        $current_url = $_SERVER[HTTP_HOST] . $_SERVER[REQUEST_URI];
         $profile_url = str_replace( array( 'http://', 'https://' ), '', home_url( $this->profile_base.'/' ) );
 
         return (strpos( $current_url, $profile_url ) !== false) ? true : false;

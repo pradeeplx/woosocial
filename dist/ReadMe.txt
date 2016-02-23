@@ -41,7 +41,7 @@ The activity feed is visible on a user's profile, and also on their "Activity Fe
 ==Activity Feed Settings==
 
 * Activity Feed Slug
-  The slug to use for the logged in user's activity feed. E.g. yourdomain.com/activity/ 
+  The slug to use for the logged in user's activity feed. E.g. yourdomain.com/activity/
   If you change this, make sure to visit the Settings > Permalinks page. This will refresh your URLs; you don't need to click anything, just visit the page!
 * Items per Page
   The number of activity items to display before the "load more" button.
@@ -214,6 +214,9 @@ There are 2 types of activity feeds. The first is the activity feed on a user's 
 Overriding a template is simple. Templates that can be overridden are in the "templates" folder within the plugin. Simply copy them over to a folder named "jck-woosocial" within your theme folder.
 
 =====Changelog=====
+
+v1.0.1 (23/02/2016)
+[update] Settings framework
 
 v1.0.0 (06/10/2015)
 Initial Release

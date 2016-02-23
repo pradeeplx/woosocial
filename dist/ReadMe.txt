@@ -218,6 +218,7 @@ Overriding a template is simple. Templates that can be overridden are in the "te
 v1.0.1 (23/02/2016)
 [update] Settings framework
 [fix] is_profile check
+[fix] Fix URLs for certain themes, like Atelier
 
 v1.0.0 (06/10/2015)
 Initial Release

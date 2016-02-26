@@ -219,6 +219,8 @@ v1.0.1 (23/02/2016)
 [update] Settings framework
 [fix] is_profile check
 [fix] Fix URLs for certain themes, like Atelier
+[fix] Delete "like" when a product is completely removed
+[fix] Don't show users/products if they've been deleted
 
 v1.0.0 (06/10/2015)
 Initial Release

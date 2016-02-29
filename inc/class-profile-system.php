@@ -124,6 +124,7 @@ class JCK_WooSocial_ProfileSystem {
         // Define the tag and use it in the rewrite rule
         add_rewrite_tag( '%author_level%', '(' . implode( '|', $this->custom_author_levels ) . ')' );
         $wp_rewrite->author_base = '%author_level%';
+        $wp_rewrite->author_structure = "/" . $wp_rewrite->author_base . '/%author%';
 
     }
 

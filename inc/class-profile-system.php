@@ -77,7 +77,7 @@ class JCK_WooSocial_ProfileSystem {
         $settings = $GLOBALS['jck_woosocial']->settings;
 
         $this->user_info = wp_get_current_user();
-        $this->profile_base = $settings['profile_profile_slug'];
+        $this->profile_base = $settings['profile_profile_profile_slug'];
 
         $this->custom_author_levels[] = $this->profile_base;
 

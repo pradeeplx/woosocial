@@ -60,11 +60,11 @@ class JCK_WooSocial_ActivityLogSystem {
         $this->table_name = $wpdb->prefix . $this->table_slug;
         $this->activity_query_var = $this->slug.'-activity';
 
-        if( isset( $settings['activity_feed_slug'] ) )
-            $this->activity_slug = $settings['activity_feed_slug'];
+        if( isset( $settings['activity_activity_feed_slug'] ) )
+            $this->activity_slug = $settings['activity_activity_feed_slug'];
 
-        if( isset( $settings['activity_feed_items_per_page'] ) )
-            $this->default_limit = $settings['activity_feed_items_per_page'];
+        if( isset( $settings['activity_activity_feed_items_per_page'] ) )
+            $this->default_limit = $settings['activity_activity_feed_items_per_page'];
 
         $this->wrapper_breakpoints = array(
             array(

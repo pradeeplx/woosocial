@@ -166,14 +166,28 @@ class JCK_WooSocial {
 
         $this->set_constants();
         $this->load_classes();
-
-        $this->settings = $this->wpsf->get_settings();
+        $this->load_settings_framework();
 
         register_activation_hook( __FILE__, array( $this, 'install' ) );
 
         // Hook up to the init and plugins_loaded actions
         add_action( 'plugins_loaded', array( $this, 'plugins_loaded_hook' ) );
         add_action( 'init',           array( $this, 'initiate_hook' ) );
+
+    }
+
+    /**
+     * Load settings framework
+     */
+    public function load_settings_framework() {
+
+        require_once( $this->plugin_path .'inc/admin/wp-settings-framework/wp-settings-framework.php' );
+
+        $this->option_group = $this->slug_alt;
+
+        $this->wpsf = new WordPressSettingsFramework( $this->plugin_path .'inc/admin/settings.php', $this->option_group );
+
+        $this->settings = wpsf_get_settings( $this->option_group );
 
     }
 
@@ -204,7 +218,6 @@ class JCK_WooSocial {
      */
     private function load_classes() {
 
-        require_once( $this->plugin_path.'/inc/vendor/class-wordpress-settings-framework.php' );
         require_once( $this->plugin_path.'/inc/class-hooks.php' );
         require_once( $this->plugin_path.'/inc/class-template-loader.php' );
         require_once( $this->plugin_path.'/inc/class-profile-system.php' );
@@ -212,7 +225,6 @@ class JCK_WooSocial {
         require_once( $this->plugin_path.'/inc/class-follow-system.php' );
         require_once( $this->plugin_path.'/inc/class-activity-log-system.php' );
 
-        $this->wpsf = new WordPressSettingsFramework( $this->plugin_path.'/inc/settings-main.php', $this->settings_name );
         $this->hooks = new JCK_WooSocial_Hooks();
         $this->templates = new Iconic_Template_Loader( $this->slug_alt, 'jck-woosocial', $this->plugin_path );
         $this->profile_system = new JCK_WooSocial_ProfileSystem();
@@ -492,36 +504,36 @@ class JCK_WooSocial {
                     color: %s;
                 }
                 ",
-                $this->settings['colours_general_button_background'],
-                $this->settings['colours_general_button_foreground'],
-                $this->settings['colours_general_button_background_hover'],
-                $this->settings['colours_general_button_foreground_hover'],
-                $this->settings['colours_likes_border'],
-                $this->settings['colours_likes_background'],
-                $this->settings['colours_likes_foreground'],
-                $this->settings['colours_likes_background_hover'],
-                $this->settings['colours_likes_foreground_hover'],
-                $this->settings['colours_follow_border'],
-                $this->settings['colours_follow_background'],
-                $this->settings['colours_follow_foreground'],
-                $this->settings['colours_follow_background_hover'],
-                $this->settings['colours_follow_foreground_hover'],
-                $this->settings['colours_cards_border'],
-                $this->settings['colours_cards_border'],
-                $this->settings['colours_cards_background'],
-                $this->settings['colours_cards_border'],
-                $this->settings['colours_cards_border'],
-                $this->settings['colours_profile_tabs_border'],
-                $this->settings['colours_profile_tabs_background'],
-                $this->settings['colours_profile_tabs_foreground'],
-                $this->settings['colours_profile_tabs_background_hover'],
-                $this->settings['colours_profile_tabs_foreground_hover'],
-                $this->settings['colours_profile_tabs_count_background'],
-                $this->settings['colours_profile_tabs_count_foreground'],
-                $this->settings['colours_profile_tabs_count_background_hover'],
-                $this->settings['colours_profile_tabs_count_foreground_hover'],
-                $this->settings['colours_profile_tabs_active_background'],
-                $this->settings['colours_profile_tabs_active_foreground']
+                $this->settings['colours_colours_general_button_background'],
+                $this->settings['colours_colours_general_button_foreground'],
+                $this->settings['colours_colours_general_button_background_hover'],
+                $this->settings['colours_colours_general_button_foreground_hover'],
+                $this->settings['colours_colours_likes_border'],
+                $this->settings['colours_colours_likes_background'],
+                $this->settings['colours_colours_likes_foreground'],
+                $this->settings['colours_colours_likes_background_hover'],
+                $this->settings['colours_colours_likes_foreground_hover'],
+                $this->settings['colours_colours_follow_border'],
+                $this->settings['colours_colours_follow_background'],
+                $this->settings['colours_colours_follow_foreground'],
+                $this->settings['colours_colours_follow_background_hover'],
+                $this->settings['colours_colours_follow_foreground_hover'],
+                $this->settings['colours_colours_cards_border'],
+                $this->settings['colours_colours_cards_border'],
+                $this->settings['colours_colours_cards_background'],
+                $this->settings['colours_colours_cards_border'],
+                $this->settings['colours_colours_cards_border'],
+                $this->settings['colours_colours_profile_tabs_border'],
+                $this->settings['colours_colours_profile_tabs_background'],
+                $this->settings['colours_colours_profile_tabs_foreground'],
+                $this->settings['colours_colours_profile_tabs_background_hover'],
+                $this->settings['colours_colours_profile_tabs_foreground_hover'],
+                $this->settings['colours_colours_profile_tabs_count_background'],
+                $this->settings['colours_colours_profile_tabs_count_foreground'],
+                $this->settings['colours_colours_profile_tabs_count_background_hover'],
+                $this->settings['colours_colours_profile_tabs_count_foreground_hover'],
+                $this->settings['colours_colours_profile_tabs_active_background'],
+                $this->settings['colours_colours_profile_tabs_active_foreground']
             );
 
             wp_add_inline_style( $this->slug.'_styles', $this->minify_css( $custom_css ) );
@@ -579,10 +591,10 @@ class JCK_WooSocial {
         if(
             $this->profile_system->is_profile() ||
             $this->activity_log->is_activity_page() ||
-            ( is_shop() && $this->settings['likes_category_display'] !== "none" ) ||
-            ( $this->settings['likes_category_display'] !== "none" && is_product_category() && !is_search() ) ||
-            ( $this->settings['likes_product_display'] !== "none" && is_product() ) ||
-            ( $this->settings['likes_search_display'] !== "none" && is_search() )
+            ( is_shop() && $this->settings['likes_likes_category_display'] !== "none" ) ||
+            ( $this->settings['likes_likes_category_display'] !== "none" && is_product_category() && !is_search() ) ||
+            ( $this->settings['likes_likes_product_display'] !== "none" && is_product() ) ||
+            ( $this->settings['likes_likes_search_display'] !== "none" && is_search() )
         ) {
             return true;
         }

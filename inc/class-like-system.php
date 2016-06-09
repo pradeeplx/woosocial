@@ -42,15 +42,15 @@ class JCK_WooSocial_LikeSystem {
 
         	$settings = $GLOBALS['jck_woosocial']->settings;
 
-            if( $settings['likes_category_display'] !== "none" && ( is_product_category() || is_shop() ) && !is_search() )
-                add_action( $settings['likes_category_display'],         array( $this, 'show_likes_loop' ) );
+            if( $settings['likes_likes_category_display'] !== "none" && ( is_product_category() || is_shop() ) && !is_search() )
+                add_action( $settings['likes_likes_category_display'],         array( $this, 'show_likes_loop' ) );
 
-            if( $settings['likes_search_display'] !== "none" && is_search() )
-                add_action( $settings['likes_search_display'],           array( $this, 'show_likes_loop' ) );
+            if( $settings['likes_likes_search_display'] !== "none" && is_search() )
+                add_action( $settings['likes_likes_search_display'],           array( $this, 'show_likes_loop' ) );
 
-            if( $settings['likes_product_display'] !== "none" && is_product() ) {
+            if( $settings['likes_likes_product_display'] !== "none" && is_product() ) {
 
-                $position = explode('/', $settings['likes_product_display']);
+                $position = explode('/', $settings['likes_likes_product_display']);
                 $priority = isset( $position[1] ) ? (int)$position[1] : 10;
 
                 add_action( $position[0],                                array( $this, 'show_likes_loop' ), $priority );
@@ -118,7 +118,7 @@ class JCK_WooSocial_LikeSystem {
     function load_more() {
 
         $response = array(
-            'likes_html' => false
+            'likes_likes_html' => false
         );
 
         $likes = $GLOBALS['jck_woosocial']->like_system->get_likes( $_GET['user_id'], $_GET['limit'], $_GET['offset'] );
@@ -136,7 +136,7 @@ class JCK_WooSocial_LikeSystem {
 
             }
 
-            $response['likes_html'] = ob_get_clean();
+            $response['likes_likes_html'] = ob_get_clean();
 
         }
 
@@ -431,15 +431,15 @@ class JCK_WooSocial_LikeSystem {
 
         if( ( is_category() || is_shop() ) && !is_search() ) {
 
-            $class .= $GLOBALS['jck_woosocial']->settings['likes_category_align'];
+            $class .= $GLOBALS['jck_woosocial']->settings['likes_likes_category_align'];
 
         } elseif( is_search() ) {
 
-            $class .= $GLOBALS['jck_woosocial']->settings['likes_search_align'];
+            $class .= $GLOBALS['jck_woosocial']->settings['likes_likes_search_align'];
 
         } else {
 
-            $class .= $GLOBALS['jck_woosocial']->settings['likes_product_align'];
+            $class .= $GLOBALS['jck_woosocial']->settings['likes_likes_product_align'];
 
         }
 

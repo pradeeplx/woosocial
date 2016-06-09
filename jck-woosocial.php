@@ -1,39 +1,46 @@
 <?php
 /*
 Plugin Name: WooSocial
-Plugin URI: http://www.jckemp.com
+Plugin URI: https://iconicwp.com
 Description: Profiles, likes, and followers - WooSocial
 Version: 1.0.1
-Author: James Kemp
-Author URI: http://www.jckemp.com
+Author: Iconic
+Author URI: https://iconicwp.com
 Text Domain: jck-woosocial
 */
-
-defined('JCK_WOOSOCIAL_PLUGIN_PATH') or define('JCK_WOOSOCIAL_PLUGIN_PATH', plugin_dir_path( __FILE__ ));
-defined('JCK_WOOSOCIAL_PLUGIN_URL') or define('JCK_WOOSOCIAL_PLUGIN_URL', plugin_dir_url( __FILE__ ));
 
 class JCK_WooSocial {
 
     public $name = 'WooSocial';
     public $shortname = 'WooSocial';
     public $slug = 'jck-woosocial';
-    public $alt_slug;
+    public $slug_alt;
     public $version = "1.0.1";
-    public $plugin_path = JCK_WOOSOCIAL_PLUGIN_PATH;
-    public $plugin_url = JCK_WOOSOCIAL_PLUGIN_URL;
+    public $plugin_path;
+    public $plugin_url;
     public $options;
+
+    /**
+     * Templates
+     *
+     * Used to allow users to override templates in their theme
+     *
+     * @since 1.0.0
+     * @access public
+     * @var Iconic_CFFV_TemplateLoader $templates
+     */
     public $templates;
+
     private $hooks;
     public $profile_system;
     public $like_system;
     public $follow_system;
     public $activity_log;
     private $wpsf;
-    private $wpsf_2;
     public $settings_name;
     public $settings;
 
-/**	=============================
+/**    =============================
     *
     * Construct the plugin
     *
@@ -54,7 +61,7 @@ class JCK_WooSocial {
 
     }
 
-/**	=============================
+/**    =============================
     *
     * Setup Constants for this class
     *
@@ -62,12 +69,14 @@ class JCK_WooSocial {
 
     public function set_constants() {
 
-        $this->alt_slug      = str_replace('-', '_', $this->slug);
-        $this->settings_name = $this->alt_slug;
+        $this->plugin_path = plugin_dir_path( __FILE__ );
+        $this->plugin_url = plugin_dir_url( __FILE__ );
+        $this->slug_alt = str_replace('-', '_', $this->slug);
+        $this->settings_name = $this->slug_alt;
 
     }
 
-/**	=============================
+/**    =============================
     *
     * Install Plugin on Activation
     *
@@ -80,7 +89,7 @@ class JCK_WooSocial {
 
     }
 
-/**	=============================
+/**    =============================
     *
     * Load Classes
     *
@@ -96,35 +105,35 @@ class JCK_WooSocial {
         require_once( $this->plugin_path.'/inc/class-follow-system.php' );
         require_once( $this->plugin_path.'/inc/class-activity-log-system.php' );
 
-        $this->wpsf           = new WordPressSettingsFramework( $this->plugin_path.'/inc/settings-main.php', $this->settings_name );
-        $this->hooks          = new JCK_WooSocial_Hooks();
-        $this->templates      = new JCK_WooSocial_TemplateLoader();
+        $this->wpsf = new WordPressSettingsFramework( $this->plugin_path.'/inc/settings-main.php', $this->settings_name );
+        $this->hooks = new JCK_WooSocial_Hooks();
+        $this->templates = new Iconic_Template_Loader( $this->slug_alt, 'jck-woosocial', $this->plugin_path );
         $this->profile_system = new JCK_WooSocial_ProfileSystem();
-        $this->like_system    = new JCK_WooSocial_LikeSystem();
-        $this->follow_system  = new JCK_WooSocial_FollowSystem();
-        $this->activity_log   = new JCK_WooSocial_ActivityLogSystem();
+        $this->like_system = new JCK_WooSocial_LikeSystem();
+        $this->follow_system = new JCK_WooSocial_FollowSystem();
+        $this->activity_log = new JCK_WooSocial_ActivityLogSystem();
 
     }
 
-/**	=============================
+/**    =============================
     *
     * Run quite near the start (http://codex.wordpress.org/Plugin_API/Action_Reference)
     *
     ============================= */
 
-	public function plugins_loaded_hook() {
+    public function plugins_loaded_hook() {
 
-    	load_plugin_textdomain( "jck-woosocial", false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+        load_plugin_textdomain( "jck-woosocial", false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
-	}
+    }
 
-/**	=============================
+/**    =============================
     *
     * Run after the current user is set (http://codex.wordpress.org/Plugin_API/Action_Reference)
     *
     ============================= */
 
-	public function initiate_hook() {
+    public function initiate_hook() {
 
         if(is_admin()) {
 
@@ -142,7 +151,7 @@ class JCK_WooSocial {
 
         }
 
-	}
+    }
 
 /** =============================
     *
@@ -162,60 +171,60 @@ class JCK_WooSocial {
 
     }
 
-/**	=============================
+/**    =============================
     *
     * Add Custom Nav Meta Box
     *
     ============================= */
 
-	public function nav_menu_add_meta_boxes() {
-		add_meta_box( 'jck_woosocial_nav_link', __( 'WooSocial', 'jck-woosocial' ), array( $this, 'nav_menu_links' ), 'nav-menus', 'side', 'low' );
-	}
+    public function nav_menu_add_meta_boxes() {
+        add_meta_box( 'jck_woosocial_nav_link', __( 'WooSocial', 'jck-woosocial' ), array( $this, 'nav_menu_links' ), 'nav-menus', 'side', 'low' );
+    }
 
-	public function nav_menu_links() {
+    public function nav_menu_links() {
 
-    	$links = array(
-        	__('Activity Feed', 'jck-woosocial') => '/jck-woosocial/activity/',
-        	__('Your Profile', 'jck-woosocial')  => '/jck-woosocial/profile/%nicename%/'
-    	);
+        $links = array(
+            __('Activity Feed', 'jck-woosocial') => '/jck-woosocial/activity/',
+            __('Your Profile', 'jck-woosocial')  => '/jck-woosocial/profile/%nicename%/'
+        );
 
-		?>
-		<div id="posttype-woocommerce-social" class="posttypediv">
-			<div id="tabs-panel-woocommerce-social" class="tabs-panel tabs-panel-active">
-				<ul id="woocommerce-social-checklist" class="categorychecklist form-no-clear">
-					<?php
-					$i = -1;
-					foreach ($links as $title => $url ) {
-						?>
-						<li>
-							<label class="menu-item-title">
-								<input type="checkbox" class="menu-item-checkbox" name="menu-item[<?php echo esc_attr( $i ); ?>][menu-item-object-id]" value="<?php echo esc_attr( $i ); ?>" /> <?php echo esc_html( $title ); ?>
-							</label>
-							<input type="hidden" class="menu-item-type" name="menu-item[<?php echo esc_attr( $i ); ?>][menu-item-type]" value="custom" />
-							<input type="hidden" class="menu-item-title" name="menu-item[<?php echo esc_attr( $i ); ?>][menu-item-title]" value="<?php echo esc_html( $title ); ?>" />
-							<input type="hidden" class="menu-item-url" name="menu-item[<?php echo esc_attr( $i ); ?>][menu-item-url]" value="<?php echo esc_url( $url ); ?>" />
-							<input type="hidden" class="menu-item-classes" name="menu-item[<?php echo esc_attr( $i ); ?>][menu-item-classes]" />
-						</li>
-						<?php
-						$i --;
-					}
-					?>
-				</ul>
-			</div>
-			<p class="button-controls">
-				<span class="list-controls">
-					<a href="<?php echo admin_url( 'nav-menus.php?page-tab=all&selectall=1#posttype-woocommerce-social' ); ?>" class="select-all"><?php _e( 'Select All', 'woocommerce' ); ?></a>
-				</span>
-				<span class="add-to-menu">
-					<input type="submit" class="button-secondary submit-add-to-menu right" value="<?php _e( 'Add to Menu', 'woocommerce' ); ?>" name="add-post-type-menu-item" id="submit-posttype-woocommerce-social">
-					<span class="spinner"></span>
-				</span>
-			</p>
-		</div>
-		<?php
-	}
+        ?>
+        <div id="posttype-woocommerce-social" class="posttypediv">
+            <div id="tabs-panel-woocommerce-social" class="tabs-panel tabs-panel-active">
+                <ul id="woocommerce-social-checklist" class="categorychecklist form-no-clear">
+                    <?php
+                    $i = -1;
+                    foreach ($links as $title => $url ) {
+                        ?>
+                        <li>
+                            <label class="menu-item-title">
+                                <input type="checkbox" class="menu-item-checkbox" name="menu-item[<?php echo esc_attr( $i ); ?>][menu-item-object-id]" value="<?php echo esc_attr( $i ); ?>" /> <?php echo esc_html( $title ); ?>
+                            </label>
+                            <input type="hidden" class="menu-item-type" name="menu-item[<?php echo esc_attr( $i ); ?>][menu-item-type]" value="custom" />
+                            <input type="hidden" class="menu-item-title" name="menu-item[<?php echo esc_attr( $i ); ?>][menu-item-title]" value="<?php echo esc_html( $title ); ?>" />
+                            <input type="hidden" class="menu-item-url" name="menu-item[<?php echo esc_attr( $i ); ?>][menu-item-url]" value="<?php echo esc_url( $url ); ?>" />
+                            <input type="hidden" class="menu-item-classes" name="menu-item[<?php echo esc_attr( $i ); ?>][menu-item-classes]" />
+                        </li>
+                        <?php
+                        $i --;
+                    }
+                    ?>
+                </ul>
+            </div>
+            <p class="button-controls">
+                <span class="list-controls">
+                    <a href="<?php echo admin_url( 'nav-menus.php?page-tab=all&selectall=1#posttype-woocommerce-social' ); ?>" class="select-all"><?php _e( 'Select All', 'woocommerce' ); ?></a>
+                </span>
+                <span class="add-to-menu">
+                    <input type="submit" class="button-secondary submit-add-to-menu right" value="<?php _e( 'Add to Menu', 'woocommerce' ); ?>" name="add-post-type-menu-item" id="submit-posttype-woocommerce-social">
+                    <span class="spinner"></span>
+                </span>
+            </p>
+        </div>
+        <?php
+    }
 
-/**	=============================
+/**    =============================
     *
     * Replace Profile and Activity Feed Links in menu Item
     *
@@ -282,7 +291,7 @@ class JCK_WooSocial {
 
     }
 
-/**	=============================
+/**    =============================
     *
     * Frontend Styles
     *
@@ -451,7 +460,7 @@ class JCK_WooSocial {
         return str_replace('; ',';',str_replace(' }','}',str_replace('{ ','{',str_replace(array("\r\n","\r","\n","\t",'  ','    ','    '),"",preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!','',$css)))));
     }
 
-/**	=============================
+/**    =============================
     *
     * Frontend Scripts
     *
@@ -466,20 +475,20 @@ class JCK_WooSocial {
             wp_register_script( $this->slug.'_scripts', $this->plugin_url . 'assets/frontend/js/main.min.js', array( 'jquery' ), $this->version, true);
 
             $vars = array(
-    			'ajax_url' => admin_url( 'admin-ajax.php' ),
-    			'nonce'    => wp_create_nonce( $this->slug ),
-    			'user_id'  => is_user_logged_in() ? get_current_user_id() : 0,
-    			'strings'  => array(
-        			"no_more" => __( "No more to load", "jck-woosocial" )
-    			)
-    		);
+                'ajax_url' => admin_url( 'admin-ajax.php' ),
+                'nonce'    => wp_create_nonce( $this->slug ),
+                'user_id'  => is_user_logged_in() ? get_current_user_id() : 0,
+                'strings'  => array(
+                    "no_more" => __( "No more to load", "jck-woosocial" )
+                )
+            );
 
-    		wp_localize_script( $this->slug.'_scripts', $this->alt_slug.'_vars', $vars );
+            wp_localize_script( $this->slug.'_scripts', $this->slug_alt.'_vars', $vars );
 
-    		wp_enqueue_script( 'hoverIntent' );
-    		wp_enqueue_script( $this->slug.'_scripts' );
+            wp_enqueue_script( 'hoverIntent' );
+            wp_enqueue_script( $this->slug.'_scripts' );
 
-		}
+        }
 
     }
 
@@ -508,7 +517,7 @@ class JCK_WooSocial {
 
     }
 
-/**	=============================
+/**    =============================
     *
     * Admin Styles
     *
@@ -521,7 +530,7 @@ class JCK_WooSocial {
         global $post, $pagenow;
 
         // maybe limit this to particular pages, you can use:
-		// if( $post && (get_post_type( $post->ID ) == "product" && ($pagenow == "post.php" || $pagenow == "post-new.php")) ){
+        // if( $post && (get_post_type( $post->ID ) == "product" && ($pagenow == "post.php" || $pagenow == "post-new.php")) ){
 
         wp_register_style( $this->slug.'_admin_styles', $this->plugin_url . 'assets/admin/css/main.min.css', array( 'jquery', 'eq', 'hoverIntent' ), $this->version );
 
@@ -529,7 +538,7 @@ class JCK_WooSocial {
 
     }
 
-/**	=============================
+/**    =============================
     *
     * Admin Scripts
     *
@@ -542,9 +551,9 @@ class JCK_WooSocial {
         global $post, $pagenow;
 
         // maybe limit this to particular pages, you can use:
-		// if( $post && (get_post_type( $post->ID ) == "product" && ($pagenow == "post.php" || $pagenow == "post-new.php")) ){
+        // if( $post && (get_post_type( $post->ID ) == "product" && ($pagenow == "post.php" || $pagenow == "post-new.php")) ){
 
-		wp_register_script( $this->slug.'_admin_scripts', $this->plugin_url . 'assets/admin/js/main.min.js', array( 'jquery' ), $this->version, true);
+        wp_register_script( $this->slug.'_admin_scripts', $this->plugin_url . 'assets/admin/js/main.min.js', array( 'jquery' ), $this->version, true);
 
         wp_enqueue_script( $this->slug.'_admin_scripts' );
 
@@ -555,14 +564,14 @@ class JCK_WooSocial {
     * Allow to remove method for a hook when it's a class method used
     * and the class doesn't have a variable assigned, but the class name is known
     *
-    * @hook_name: 	  Name of the wordpress hook
-    * @class_name: 	  Name of the class where the add_action resides
-    * @method_name:	  Name of the method to unhook
-    * @priority:	  The priority of which the above method has in the add_action
+    * @hook_name:       Name of the wordpress hook
+    * @class_name:       Name of the class where the add_action resides
+    * @method_name:      Name of the method to unhook
+    * @priority:      The priority of which the above method has in the add_action
     *
     ============================= */
 
-	private function remove_filters_for_anonymous_class( $hook_name = '', $class_name ='', $method_name = '', $priority = 0 ) {
+    private function remove_filters_for_anonymous_class( $hook_name = '', $class_name ='', $method_name = '', $priority = 0 ) {
 
         global $wp_filter;
 
@@ -584,9 +593,9 @@ class JCK_WooSocial {
 
         return false;
 
-	}
+    }
 
-/**	=============================
+/**    =============================
     *
     * Get Woo Version Number
     *
@@ -618,7 +627,7 @@ class JCK_WooSocial {
 
     }
 
-/**	=============================
+/**    =============================
     *
     * Shorten large numbers into abbreviations (i.e. 1,500 = 1.5k)
     *
@@ -644,8 +653,8 @@ class JCK_WooSocial {
 
             if( $number >= pow(10, $exponent) ) {
 
-            	$display_num = $number / pow(10, $exponent);
-            	$decimals    = ($exponent >= 3 && round($display_num) < 100) ? 1 : 0;
+                $display_num = $number / pow(10, $exponent);
+                $decimals    = ($exponent >= 3 && round($display_num) < 100) ? 1 : 0;
 
                 return number_format($display_num,$decimals) . $abbrev;
 
@@ -654,7 +663,7 @@ class JCK_WooSocial {
         }
     }
 
-/**	=============================
+/**    =============================
     *
     * Get "Load More" Ajax Button
     *
@@ -702,7 +711,7 @@ class JCK_WooSocial {
 
     }
 
-/**	=============================
+/**    =============================
     *
     * Message Wrapper
     *

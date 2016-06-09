@@ -1,0 +1,32 @@
+{
+    "name": "jamesckemp/{{text-domain}}",
+    "authors": [
+        {
+            "name": "James Kemp",
+            "email": "me@jckemp.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/jamesckemp/WordPress-Settings-Framework.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/iconicwp/template-loader.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/iconicwp/post-types.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/GaryJones/Gamajo-Template-Loader.git"
+        }
+    ],
+    "require": {
+        "jamesckemp/WordPress-Settings-Framework": "dev-master",
+        "iconicwp/template-loader": "dev-master",
+        "gamajo/template-loader": "dev-master"
+    }
+}

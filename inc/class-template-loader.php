@@ -1,18 +1,18 @@
 <?php
- 
+
 if( ! class_exists( 'Gamajo_Template_Loader' ) ) {
 	require plugin_dir_path( __FILE__ ) . 'vendor/class-gamajo-template-loader.php';
 }
 
+if( class_exists( 'Iconic_Template_Loader' ) )
+    return;
+
 /**
- * Template loader for Meal Planner.
+ * Template loader for Iconic plugins
  *
  * Only need to specify class properties here.
- *
- * @package Meal_Planner
- * @author  Gary Jones
  */
-class JCK_WooSocial_TemplateLoader extends Gamajo_Template_Loader {
+class Iconic_Template_Loader extends Gamajo_Template_Loader {
 
 	/**
 	 * Prefix for filter names.
@@ -20,7 +20,7 @@ class JCK_WooSocial_TemplateLoader extends Gamajo_Template_Loader {
 	 * @since 1.0.0
 	 * @type string
 	 */
-	protected $filter_prefix = 'jck_woosocial';
+	protected $filter_prefix;
 
 	/**
 	 * Directory name where custom templates for this plugin should be found in the theme.
@@ -28,22 +28,29 @@ class JCK_WooSocial_TemplateLoader extends Gamajo_Template_Loader {
 	 * @since 1.0.0
 	 * @type string
 	 */
-	protected $theme_template_directory = 'jck-woosocial';
+	protected $theme_template_directory;
 
 	/**
 	 * Reference to the root directory path of this plugin.
 	 *
-	 * Can either be a defined constant, or a relative reference from where the subclass lives.
-	 *
-	 * In this case, `MEAL_PLANNER_PLUGIN_DIR` would be defined in the root plugin file as:
-	 *
-	 * ~~~
-	 * define( 'MEAL_PLANNER_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-	 * ~~~
-	 *
 	 * @since 1.0.0
 	 * @type string
 	 */
-	protected $plugin_directory = JCK_WOOSOCIAL_PLUGIN_PATH;
+	protected $plugin_directory;
+
+	/**
+     * Construct
+     *
+     * @param str $filter_prefix
+     * @param str $theme_template_directory
+     * @param str $plugin_directory
+     */
+    public function __construct( $filter_prefix, $theme_template_directory, $plugin_directory ) {
+
+        $this->filter_prefix = $filter_prefix;
+        $this->theme_template_directory = $theme_template_directory;
+        $this->plugin_directory = $plugin_directory;
+
+    }
 
 }

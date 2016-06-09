@@ -1,6 +1,9 @@
 # Mac Specific #
 .DS_Store
 
+# Files #
+composer.lock
+
 # Packages #
 *.7z
 *.dmg
@@ -19,6 +22,5 @@
 # Folders #
 node_modules/
 .sass-cache
-
-# Uncomment for Production #
+vendor/
 codecanyon

@@ -11,14 +11,70 @@ Text Domain: jck-woosocial
 
 class JCK_WooSocial {
 
+    /**
+     * Name
+     *
+     * @since 1.0.0
+     * @access public
+     * @var str
+     */
     public $name = 'WooSocial';
+
+    /**
+     * Short Name
+     *
+     * @since 1.0.0
+     * @access public
+     * @var str
+     */
     public $shortname = 'WooSocial';
+
+    /**
+     * Slug
+     *
+     * @since 1.0.0
+     * @access public
+     * @var str
+     */
     public $slug = 'jck-woosocial';
+
+    /**
+     * Slug Alt
+     *
+     * Main slug, but with underscores
+     *
+     * @since 1.0.0
+     * @access public
+     * @var str
+     */
     public $slug_alt;
+
+    /**
+     * version
+     *
+     * @since 1.0.0
+     * @access public
+     * @var str
+     */
     public $version = "1.0.1";
+
+    /**
+     * Plugin path
+     *
+     * @since 1.0.0
+     * @access public
+     * @var str
+     */
     public $plugin_path;
+
+    /**
+     * Plugin URL
+     *
+     * @since 1.0.0
+     * @access public
+     * @var str
+     */
     public $plugin_url;
-    public $options;
 
     /**
      * Templates
@@ -31,21 +87,81 @@ class JCK_WooSocial {
      */
     public $templates;
 
+    /**
+     * Hooks class
+     *
+     * @since 1.0.0
+     * @access public
+     * @var JCK_WooSocial_Hooks
+     */
     private $hooks;
+
+    /**
+     * Profile class
+     *
+     * @since 1.0.0
+     * @access public
+     * @var JCK_WooSocial_ProfileSystem
+     */
     public $profile_system;
+
+    /**
+     * Like class
+     *
+     * @since 1.0.0
+     * @access public
+     * @var JCK_WooSocial_LikeSystem
+     */
     public $like_system;
+
+    /**
+     * Follow class
+     *
+     * @since 1.0.0
+     * @access public
+     * @var JCK_WooSocial_FollowSystem
+     */
     public $follow_system;
+
+    /**
+     * Activity Log class
+     *
+     * @since 1.0.0
+     * @access public
+     * @var JCK_WooSocial_ActivityLogSystem
+     */
     public $activity_log;
+
+    /**
+     * WP Settings Framework
+     *
+     * @since 1.0.0
+     * @access private
+     * @var WordPressSettingsFramework
+     */
     private $wpsf;
+
+    /**
+     * Settings name
+     *
+     * @since 1.0.0
+     * @access public
+     * @var str
+     */
     public $settings_name;
+
+    /**
+     * Settings
+     *
+     * @since 1.0.0
+     * @access public
+     * @var arr
+     */
     public $settings;
 
-/**    =============================
-    *
-    * Construct the plugin
-    *
-    ============================= */
-
+    /**
+     * Construct the plugin
+     */
     public function __construct() {
 
         $this->set_constants();
@@ -61,12 +177,9 @@ class JCK_WooSocial {
 
     }
 
-/**    =============================
-    *
-    * Setup Constants for this class
-    *
-    ============================= */
-
+    /**
+     * Setup Constants for this class
+     */
     public function set_constants() {
 
         $this->plugin_path = plugin_dir_path( __FILE__ );
@@ -76,12 +189,9 @@ class JCK_WooSocial {
 
     }
 
-/**    =============================
-    *
-    * Install Plugin on Activation
-    *
-    ============================= */
-
+    /**
+     * Install Plugin on Activation
+     */
     public function install() {
 
         $this->activity_log->setup_activity_log();
@@ -89,12 +199,9 @@ class JCK_WooSocial {
 
     }
 
-/**    =============================
-    *
-    * Load Classes
-    *
-    ============================= */
-
+    /**
+     * Load Classes
+     */
     private function load_classes() {
 
         require_once( $this->plugin_path.'/inc/vendor/class-wordpress-settings-framework.php' );
@@ -115,24 +222,18 @@ class JCK_WooSocial {
 
     }
 
-/**    =============================
-    *
-    * Run quite near the start (http://codex.wordpress.org/Plugin_API/Action_Reference)
-    *
-    ============================= */
-
+    /**
+     * Run quite near the start (http://codex.wordpress.org/Plugin_API/Action_Reference)
+     */
     public function plugins_loaded_hook() {
 
         load_plugin_textdomain( "jck-woosocial", false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
     }
 
-/**    =============================
-    *
-    * Run after the current user is set (http://codex.wordpress.org/Plugin_API/Action_Reference)
-    *
-    ============================= */
-
+    /**
+     * Run after the current user is set (http://codex.wordpress.org/Plugin_API/Action_Reference)
+     */
     public function initiate_hook() {
 
         if(is_admin()) {
@@ -153,12 +254,9 @@ class JCK_WooSocial {
 
     }
 
-/** =============================
-    *
-    * Initiate Settings
-    *
-    ============================= */
-
+    /**
+     * Initiate Settings
+     */
     public function init_settings() {
 
         $this->wpsf->add_settings_page( array(
@@ -171,12 +269,9 @@ class JCK_WooSocial {
 
     }
 
-/**    =============================
-    *
-    * Add Custom Nav Meta Box
-    *
-    ============================= */
-
+    /**
+     * Add Custom Nav Meta Box
+     */
     public function nav_menu_add_meta_boxes() {
         add_meta_box( 'jck_woosocial_nav_link', __( 'WooSocial', 'jck-woosocial' ), array( $this, 'nav_menu_links' ), 'nav-menus', 'side', 'low' );
     }
@@ -224,12 +319,9 @@ class JCK_WooSocial {
         <?php
     }
 
-/**    =============================
-    *
-    * Replace Profile and Activity Feed Links in menu Item
-    *
-    ============================= */
-
+    /**
+     * Replace Profile and Activity Feed Links in menu Item
+     */
     public function nav_menu_profile_link( $atts, $item, $args ) {
 
         if( is_user_logged_in() ) {
@@ -242,15 +334,12 @@ class JCK_WooSocial {
 
     }
 
-/** =============================
-    *
-    * Helper: Replace menu URLs with proper links
-    *
-    * @param  [str] [$url]
-    * @return [str]
-    *
-    ============================= */
-
+    /**
+     * Helper: Replace menu URLs with proper links
+     *
+     * @param  [str] [$url]
+     * @return [str]
+     */
     public function replace_url( $url ) {
 
         $current_user = wp_get_current_user();
@@ -262,18 +351,15 @@ class JCK_WooSocial {
 
     }
 
-/** =============================
-    *
-    * Frontend: Replace URLs for themes with this custom walker (like Atelier)
-    *
-    * @param  [str] [$item_output]
-    * @param  [obj] [$item]
-    * @param  [int] [$depth]
-    * @param  [arr] [$args]
-    * @return [str]
-    *
-    ============================= */
-
+    /**
+     * Frontend: Replace URLs for themes with this custom walker (like Atelier)
+     *
+     * @param  [str] [$item_output]
+     * @param  [obj] [$item]
+     * @param  [int] [$depth]
+     * @param  [arr] [$args]
+     * @return [str]
+     */
     public function nav_menu_profile_link_walker( $item_output, $item, $depth, $args ) {
 
         if( is_user_logged_in() ) {
@@ -291,14 +377,11 @@ class JCK_WooSocial {
 
     }
 
-/**    =============================
-    *
-    * Frontend Styles
-    *
-    * @access public
-    *
-    ============================= */
-
+    /**
+     * Frontend Styles
+     *
+     * @access public
+     */
     public function frontend_styles() {
 
         if( $this->can_load_assets() ) {
@@ -447,27 +530,21 @@ class JCK_WooSocial {
 
     }
 
-/** =============================
-    *
-    * Minify CSS
-    *
-    * @param  [str] [$css]
-    * @return [str] [$css]
-    *
-    ============================= */
-
+    /**
+     * Minify CSS
+     *
+     * @param  [str] [$css]
+     * @return [str] [$css]
+     */
     public function minify_css( $css ) {
         return str_replace('; ',';',str_replace(' }','}',str_replace('{ ','{',str_replace(array("\r\n","\r","\n","\t",'  ','    ','    '),"",preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!','',$css)))));
     }
 
-/**    =============================
-    *
-    * Frontend Scripts
-    *
-    * @access public
-    *
-    ============================= */
-
+    /**
+     * Frontend Scripts
+     *
+     * @access public
+     */
     public function frontend_scripts() {
 
         if( $this->can_load_assets() ) {
@@ -492,14 +569,11 @@ class JCK_WooSocial {
 
     }
 
-/** =============================
-    *
-    * Can Load Assets?
-    *
-    * @return [bool]
-    *
-    ============================= */
-
+    /**
+     * Can Load Assets?
+     *
+     * @return [bool]
+     */
     public function can_load_assets() {
 
         if(
@@ -517,14 +591,11 @@ class JCK_WooSocial {
 
     }
 
-/**    =============================
-    *
-    * Admin Styles
-    *
-    * @access public
-    *
-    ============================= */
-
+    /**
+     * Admin Styles
+     *
+     * @access public
+     */
     public function admin_styles() {
 
         global $post, $pagenow;
@@ -538,14 +609,11 @@ class JCK_WooSocial {
 
     }
 
-/**    =============================
-    *
-    * Admin Scripts
-    *
-    * @access public
-    *
-    ============================= */
-
+    /**
+     * Admin Scripts
+     *
+     * @access public
+     */
     public function admin_scripts() {
 
         global $post, $pagenow;
@@ -559,18 +627,15 @@ class JCK_WooSocial {
 
     }
 
-/** =============================
-    *
-    * Allow to remove method for a hook when it's a class method used
-    * and the class doesn't have a variable assigned, but the class name is known
-    *
-    * @hook_name:       Name of the wordpress hook
-    * @class_name:       Name of the class where the add_action resides
-    * @method_name:      Name of the method to unhook
-    * @priority:      The priority of which the above method has in the add_action
-    *
-    ============================= */
-
+    /**
+     * Allow to remove method for a hook when it's a class method used
+     * and the class doesn't have a variable assigned, but the class name is known
+     *
+     * @hook_name:       Name of the wordpress hook
+     * @class_name:       Name of the class where the add_action resides
+     * @method_name:      Name of the method to unhook
+     * @priority:      The priority of which the above method has in the add_action
+     */
     private function remove_filters_for_anonymous_class( $hook_name = '', $class_name ='', $method_name = '', $priority = 0 ) {
 
         global $wp_filter;
@@ -595,14 +660,11 @@ class JCK_WooSocial {
 
     }
 
-/**    =============================
-    *
-    * Get Woo Version Number
-    *
-    * @return mixed bool/str NULL or Woo version number
-    *
-    ============================= */
-
+    /**
+     * Get Woo Version Number
+     *
+     * @return mixed bool/str NULL or Woo version number
+     */
     private function get_woo_version_number() {
 
         // If get_plugins() isn't available, require it
@@ -627,16 +689,13 @@ class JCK_WooSocial {
 
     }
 
-/**    =============================
-    *
-    * Shorten large numbers into abbreviations (i.e. 1,500 = 1.5k)
-    *
-    * @param int $number Number to shorten
-    * @return string A number with a symbol
-    *
-    ============================= */
-
-    function shorten_number($number) {
+    /**
+     * Shorten large numbers into abbreviations (i.e. 1,500 = 1.5k)
+     *
+     * @param int $number Number to shorten
+     * @return string A number with a symbol
+     */
+    public function shorten_number($number) {
 
         if( $number == 0 )
             return $number;
@@ -663,15 +722,12 @@ class JCK_WooSocial {
         }
     }
 
-/**    =============================
-    *
-    * Get "Load More" Ajax Button
-    *
-    * @param mixed $type
-    * @return str
-    *
-    ============================= */
-
+    /**
+     * Get "Load More" Ajax Button
+     *
+     * @param mixed $type
+     * @return str
+     */
     public function get_load_more_button( $type = false ) {
 
         if( !$type )
@@ -711,18 +767,15 @@ class JCK_WooSocial {
 
     }
 
-/**    =============================
-    *
-    * Message Wrapper
-    *
-    * Wrap Text in a nice wrapper for displaying messages
-    *
-    * @param str $message
-    * @param str $type
-    * @return str
-    *
-    ============================= */
-
+    /**
+     * Message Wrapper
+     *
+     * Wrap Text in a nice wrapper for displaying messages
+     *
+     * @param str $message
+     * @param str $type
+     * @return str
+     */
     public function wrap_message( $message, $type = "notice" ) {
 
         echo sprintf(
@@ -736,15 +789,12 @@ class JCK_WooSocial {
     }
 
 
-/** =============================
-    *
-    * Is Json?
-    *
-    * @param  [str] [$string]
-    * @return [bool]
-    *
-    ============================= */
-
+    /**
+     * Is Json?
+     *
+     * @param  [str] [$string]
+     * @return [bool]
+     */
     public function is_json( $string ) {
 
         json_decode( $string );

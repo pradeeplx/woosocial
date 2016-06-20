@@ -27,18 +27,19 @@
 <ul class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-links">
 
     <?php $i = 0; foreach( $links as $link ) { ?>
-    
+
         <?php $active_class = $i === 0 ? sprintf( '%s-profile-link--active', $GLOBALS['jck_woosocial']->slug ) : ""; ?>
-    
+
         <li class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-links__item">
             <a href="#<?php echo $GLOBALS['jck_woosocial']->slug; ?>-<?php echo $link['href']; ?>" class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-link <?php echo $active_class; ?>">
-                <i class="jck-woosocial-ic-<?php echo $link['icon']; ?>"></i> <?php echo $link['text']; ?>
                 <?php if( isset( $link['count'] ) ) { ?><span class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-profile-link__count"><?php echo $link['count']; ?></span><?php } ?>
+                <i class="jck-woosocial-ic-<?php echo $link['icon']; ?>"></i>
+                <?php echo $link['text']; ?>
             </a>
         </li>
-    
+
     <?php $i++; } ?>
-    
+
 </ul>
 
 <?php unset($i, $links); ?>

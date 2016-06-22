@@ -2,12 +2,18 @@
 
 class JCK_WooSocial_LikeSystem {
 
-/**	=============================
-    *
-    * Construct the class
-    *
-    ============================= */
+    /**
+     * Product likes meta key
+     *
+     * @since 1.0.1
+     * @access public
+     * @var str
+     */
+    public $product_likes_meta_key = "_jck_woosocial_likes";
 
+    /**
+     * Construct the class
+     */
     public function __construct() {
 
         add_action( 'init', array( $this, 'initiate_hook' ) );
@@ -15,45 +21,43 @@ class JCK_WooSocial_LikeSystem {
 
     }
 
-/**	=============================
-    *
-    * Run after the current user is set (http://codex.wordpress.org/Plugin_API/Action_Reference)
-    *
-    ============================= */
+    /**
+     * Run after the current user is set (http://codex.wordpress.org/Plugin_API/Action_Reference)
+     */
+    public function initiate_hook() {
 
-	public function initiate_hook() {
+    	add_action( 'wp_ajax_jck_woosocial_product_like_action',  array( $this, 'like_action' ) );
 
-    	add_action( 'wp_ajax_jck_woosocial_product_like_action',         array( $this, 'like_action' ) );
+        add_action( 'wp_ajax_jck_woosocial_load_more_likes', array( $this, 'load_more' ) );
+        add_action( 'wp_ajax_nopriv_jck_woosocial_load_more_likes', array( $this, 'load_more' ) );
 
-        add_action( 'wp_ajax_jck_woosocial_load_more_likes',             array( $this, 'load_more' ) );
-        add_action( 'wp_ajax_nopriv_jck_woosocial_load_more_likes',      array( $this, 'load_more' ) );
+        //add_filter( 'woocommerce_get_catalog_ordering_args', array( $this, 'add_catalog_ordering_args' ), 10, 1 );
+        //add_filter( 'woocommerce_default_catalog_orderby_options', array( $this, 'catalog_orderby' ), 10, 1 );
+        //add_filter( 'woocommerce_catalog_orderby', array( $this, 'catalog_orderby' ), 10, 1 );
 
 	}
 
-/**	=============================
-    *
-    * Run after wp is fully set up and $post is accessible (http://codex.wordpress.org/Plugin_API/Action_Reference)
-    *
-    ============================= */
-
-	public function wp_hook() {
+    /**
+     * Run after wp is fully set up and $post is accessible (http://codex.wordpress.org/Plugin_API/Action_Reference)
+     */
+    public function wp_hook() {
 
     	if(!is_admin()) {
 
         	$settings = $GLOBALS['jck_woosocial']->settings;
 
             if( $settings['likes_likes_category_display'] !== "none" && ( is_product_category() || is_shop() ) && !is_search() )
-                add_action( $settings['likes_likes_category_display'],         array( $this, 'show_likes_loop' ) );
+                add_action( $settings['likes_likes_category_display'], array( $this, 'show_likes_loop' ) );
 
             if( $settings['likes_likes_search_display'] !== "none" && is_search() )
-                add_action( $settings['likes_likes_search_display'],           array( $this, 'show_likes_loop' ) );
+                add_action( $settings['likes_likes_search_display'], array( $this, 'show_likes_loop' ) );
 
             if( $settings['likes_likes_product_display'] !== "none" && is_product() ) {
 
                 $position = explode('/', $settings['likes_likes_product_display']);
                 $priority = isset( $position[1] ) ? (int)$position[1] : 10;
 
-                add_action( $position[0],                                array( $this, 'show_likes_loop' ), $priority );
+                add_action( $position[0], array( $this, 'show_likes_loop' ), $priority );
 
             }
 
@@ -61,12 +65,9 @@ class JCK_WooSocial_LikeSystem {
 
 	}
 
-/**	=============================
-    *
-    * Ajax: Follow Action
-    *
-    ============================= */
-
+    /**
+     * Ajax: Follow Action
+     */
     function like_action() {
 
     	if ( ! wp_verify_nonce( $_GET['nonce'], $GLOBALS['jck_woosocial']->slug ) )
@@ -109,12 +110,9 @@ class JCK_WooSocial_LikeSystem {
     	wp_die();
     }
 
-/**	=============================
-    *
-    * Ajax: Load More Action
-    *
-    ============================= */
-
+    /**
+     * Ajax: Load More Action
+     */
     function load_more() {
 
         $response = array(
@@ -155,16 +153,13 @@ class JCK_WooSocial_LikeSystem {
 
     }
 
-/**	=============================
-    *
-    * Has Liked
-    *
-    * @param int $user_id
-    * @param int $follow_user_id
-    * @return bool
-    *
-    ============================= */
-
+    /**
+     * Has Liked
+     *
+     * @param int $user_id
+     * @param int $follow_user_id
+     * @return bool
+     */
     public function has_liked( $user_id, $product_id ) {
 
         global $wpdb;
@@ -182,15 +177,12 @@ class JCK_WooSocial_LikeSystem {
         return ( $liked ) ? $liked : false;
     }
 
-/**	=============================
-    *
-    * Get Like List item
-    *
-    * @param int $user_id
-    * @return str
-    *
-    ============================= */
-
+    /**
+     * Get Like List item
+     *
+     * @param int $user_id
+     * @return str
+     */
     public function get_like_list_item( $user_id ) {
 
         $user = $GLOBALS['jck_woosocial']->profile_system->get_user_info( $user_id );
@@ -203,14 +195,11 @@ class JCK_WooSocial_LikeSystem {
 
     }
 
-/**	=============================
-    *
-    * Show Likes in the Loop
-    *
-    * @param int $product_id
-    *
-    ============================= */
-
+    /**
+     * Show Likes in the Loop
+     *
+     * @param int $product_id
+     */
     public function show_likes_loop( $product_id = false ) {
 
         global $post;
@@ -222,15 +211,12 @@ class JCK_WooSocial_LikeSystem {
 
     }
 
-/**	=============================
-    *
-    * Get like button
-    *
-    * @param array $args
-    * @return str
-    *
-    ============================= */
-
+    /**
+     * Get like button
+     *
+     * @param array $args
+     * @return str
+     */
     public function get_like_button( $args ) {
 
         $defaults = array(
@@ -266,17 +252,14 @@ class JCK_WooSocial_LikeSystem {
 
     }
 
-/**	=============================
-    *
-    * Get Likes
-    *
-    * @param int $user_id
-    * @param int $limit
-    * @param int $offset
-    * @return obj
-    *
-    ============================= */
-
+    /**
+     * Get Likes
+     *
+     * @param int $user_id
+     * @param int $limit
+     * @param int $offset
+     * @return obj
+     */
     public function get_likes( $user_id, $limit = null, $offset = null ) {
 
         if( $limit === null ) $limit = $GLOBALS['jck_woosocial']->activity_log->default_limit;
@@ -302,15 +285,12 @@ class JCK_WooSocial_LikeSystem {
 
     }
 
-/**	=============================
-    *
-    * Get Likes count by user ID
-    *
-    * @param int $user_id
-    * @return int
-    *
-    ============================= */
-
+    /**
+     * Get Likes count by user ID
+     *
+     * @param int $user_id
+     * @return int
+     */
     public function get_likes_count( $user_id ) {
 
         if( $user_id == "" )
@@ -334,19 +314,16 @@ class JCK_WooSocial_LikeSystem {
 
     }
 
-/**	=============================
-    *
-    * Get Product Likes
-    *
-    * Get Likes for a single Product
-    *
-    * @param int $user_id
-    * @param int $limit
-    * @param int $offset
-    * @return obj
-    *
-    ============================= */
-
+    /**
+     * Get Product Likes
+     *
+     * Get Likes for a single Product
+     *
+     * @param int $user_id
+     * @param int $limit
+     * @param int $offset
+     * @return obj
+     */
     public function get_product_likes( $product_id, $limit = 5 ) {
 
         global $wpdb;
@@ -366,15 +343,12 @@ class JCK_WooSocial_LikeSystem {
 
     }
 
-/**	=============================
-    *
-    * Get Likes count by product ID
-    *
-    * @param int $product_id
-    * @return int
-    *
-    ============================= */
-
+    /**
+     * Get Likes count by product ID
+     *
+     * @param int $product_id
+     * @return int
+     */
     public function get_product_likes_count( $product_id ) {
 
         if( $product_id == "" )
@@ -388,16 +362,15 @@ class JCK_WooSocial_LikeSystem {
 
     }
 
-/**	=============================
-    *
-    * Get Product Info
-    *
-    * @param int $product_id
-    * @return obj
-    *
-    ============================= */
-
+    /**
+     * Get Product Info
+     *
+     * @param int $product_id
+     * @return obj
+     */
     public function get_product_info( $product_id ) {
+
+        $product_id = absint( $product_id );
 
         $product = wc_get_product( $product_id );
 
@@ -407,7 +380,7 @@ class JCK_WooSocial_LikeSystem {
         $product->sku = $product->get_sku();
         $product->price_html = $product->get_price_html();
 
-        $product->image_link = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr( $product->url ), esc_attr( $product->title ), get_the_post_thumbnail( $product_id, 'shop_catalog' ) );
+        $product->image_link = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr( $product->url ), esc_attr( $product->title ), $product->get_image( 'shop_catalog' ) );
 
         $product->add_to_cart_button = do_shortcode( sprintf( '[add_to_cart id="%d" sku="%s" style="" show_price="false" class="%s-add-to-cart-wrapper"]', $product_id, $product->sku, $GLOBALS['jck_woosocial']->slug ) );
 
@@ -417,14 +390,11 @@ class JCK_WooSocial_LikeSystem {
 
     }
 
-/** =============================
-    *
-    * Get "Likes" Alignment Class
-    *
-    * @return [str]
-    *
-    ============================= */
-
+    /*
+     * Get "Likes" Alignment Class
+     *
+     * @return str
+     */
     public function get_likes_alignment_class() {
 
         $class = sprintf("%s-product-likes-wrapper--", $GLOBALS['jck_woosocial']->slug);
@@ -444,6 +414,93 @@ class JCK_WooSocial_LikeSystem {
         }
 
         return $class;
+
+    }
+
+    /**
+     * Add option to order by likes
+     */
+    public function add_catalog_ordering_args( $sort_args ) {
+
+        $orderby_value = isset( $_GET['orderby'] ) ? woocommerce_clean( $_GET['orderby'] ) : apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby' ) );
+
+        if ( 'likes' == $orderby_value ) {
+            $sort_args['orderby'] ='meta_value_num title';
+            $sort_args['order'] = 'desc';
+            $sort_args['meta_key'] = $this->product_likes_meta_key;
+        }
+
+        return $sort_args;
+
+    }
+
+    /**
+     * Add order_by option to dropdown
+     *
+     * @param array $orderby
+     * @return array
+     */
+    public function catalog_orderby( $orderby ) {
+
+        $orderby['likes'] = __('Sort by likes', 'jck-woosocial');
+
+        return $orderby;
+
+    }
+
+    /**
+     * Update product likes count
+     *
+     * @param $product_id
+     * @param str $type add/remove
+     */
+    public function update_products_like_count( $product_id, $type = "add" ) {
+
+        $product_likes = get_post_meta($product_id, $this->product_likes_meta_key, true);
+
+        if( !$product_likes ) { $product_likes = 0; }
+
+        if( $type == "add" ) {
+
+            $product_likes = (int)$product_likes + 1;
+
+        } else {
+
+            $product_likes = $product_likes > 0 ? (int)$product_likes - 1 : 0;
+
+        }
+
+        update_post_meta($product_id, $this->product_likes_meta_key, $product_likes);
+
+    }
+
+    /**
+     * Recalculate likes for all products
+     */
+    public function recalculate_likes() {
+
+        $args = array(
+            'post_type' => array('product','product_variation'),
+            'posts_per_page' => -1,
+            'post_status' => 'any'
+        );
+
+        $products = new WP_Query( $args );
+
+        if ( !$products->have_posts() )
+            return;
+
+        foreach( $products->posts as $product ) {
+
+            $product_likes = $this->get_product_likes_count( $product->ID );
+
+            error_log( print_r( $product_likes, true ) );
+
+            //update_post_meta($product->ID, $this->product_likes_meta_key, $product_likes);
+
+        }
+
+        wp_reset_postdata();
 
     }
 

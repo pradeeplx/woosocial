@@ -2,42 +2,42 @@
     margin: 0 -0.98%;
     width: 101.96%;
     @include clearfix;
-    
+
     .jck-woosocial-card {
         float: left;
         width: 23.04%;
         margin: 0 0.98% 1.96%;
         box-sizing: border-box;
-        
+
         &--hover {
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
     }
-    
+
     &--medium {
-        
+
         .jck-woosocial-card {
             width: 31.37%;
         }
-        
+
     }
-    
+
     &--small {
-        
+
         .jck-woosocial-card {
             width: 48.04%;
         }
-        
+
     }
-    
+
     &--xsmall {
-        
+
         .jck-woosocial-card {
             width: 98.04%;
         }
-        
+
     }
-    
+
 }
 
 .jck-woosocial-card {
@@ -45,24 +45,25 @@
     background: #fff;
     padding: 15px;
     overflow: hidden;
-    
+
     &__image {
         margin: 0 auto 20px;
         position: relative;
         overflow: hidden;
-        
+
         img {
             width: 100%;
             height: auto;
             display: block;
-            
+
             &.avatar {
                 border-radius: 100%;
+                width: 100%;
             }
         }
-        
+
     }
-    
+
     .entry-content &__title,
     &__title {
         font-size: 18px;
@@ -74,18 +75,18 @@
         margin: 0;
         line-height: 1.4;
         height: 22px;
-        
+
         a {
             text-decoration: none;
             color: $c-text-primary;
         }
     }
-    
+
     &__user-stats {
         margin: 10px 0 0;
         padding: 0;
         text-align: center;
-        
+
         .jck-woosocial-card__user-stat {
             list-style: none none outside;
             margin: 0;
@@ -95,50 +96,50 @@
             display: inline;
         }
     }
-    
+
     &--product {
-        
+
         &__price {
             margin: 0 0 15px;
             display: block;
             line-height: 1.4;
             height: 22px;
             color: $c-text-primary;
-            
+
             ins {
                 text-decoration: none;
             }
-            
+
             del {
                 color: $c-text-secondary;
             }
         }
-        
+
         .jck-woosocial-add-to-cart-wrapper {
             margin: 0 0 15px -3px;
         }
-        
+
     }
-    
+
     &--user {
-        
+
         .jck-woosocial-card__image {
             max-width: 280px;
             margin-top: 10px;
         }
-        
+
         .jck-woosocial-card__title {
             text-align: center;
         }
-        
+
     }
-    
+
     &--self {
-        
+
         .jck-woosocial-card__title {
             margin-bottom: 50px;
         }
-        
+
     }
-    
+
 }

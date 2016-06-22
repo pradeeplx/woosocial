@@ -493,21 +493,18 @@ SELECT log.id, log.user_id, log.type, log.rel_id, log.time
 
     }
 
-/**	=============================
-    *
-    * Add like
-    *
-    * @param int $user_id
-    * @param int $product_id
-    * @return bool
-    *
-    ============================= */
-
+    /**
+     * Add like
+     *
+     * @param int $user_id
+     * @param int $product_id
+     * @return bool
+     */
     public function add_like( $user_id, $product_id ) {
 
         global $wpdb;
 
-        $wpdb->insert(
+        $insert = $wpdb->insert(
             $this->table_name,
             array(
                 'user_id' => $user_id,
@@ -523,29 +520,37 @@ SELECT log.id, log.user_id, log.type, log.rel_id, log.time
             )
         );
 
+        if( !$insert )
+            return false;
+
+        $GLOBALS['jck_woosocial']->like_system->update_products_like_count( $product_id );
+
+        return $insert;
+
     }
 
-/**	=============================
-    *
-    * Remove like
-    *
-    * @param int $user_id
-    * @param int $product_id
-    * @return obj Item that was deleted
-    *
-    ============================= */
-
+    /**
+     * Remove like
+     *
+     * @param int $user_id
+     * @param int $product_id
+     * @return obj Item that was deleted
+     */
     public function remove_like( $user_id, $product_id ) {
 
         global $wpdb;
 
         $liked = $GLOBALS['jck_woosocial']->like_system->has_liked( $user_id, $product_id );
 
-        if( $liked ) {
+        if( !$liked )
+            return false;
 
-            $result = $wpdb->delete( $this->table_name, array( 'user_id' => $user_id, 'rel_id' => $product_id, 'type' => 'like' ) );
+        $result = $wpdb->delete( $this->table_name, array( 'user_id' => $user_id, 'rel_id' => $product_id, 'type' => 'like' ) );
 
-        }
+        if( !$result )
+            return false;
+
+        $GLOBALS['jck_woosocial']->like_system->update_products_like_count( $product_id, 'remove' );
 
         return $result;
 

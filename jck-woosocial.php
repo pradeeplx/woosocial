@@ -227,10 +227,11 @@ class JCK_WooSocial {
 
         $this->hooks = new JCK_WooSocial_Hooks();
         $this->templates = new Iconic_Template_Loader( $this->slug_alt, 'jck-woosocial', $this->plugin_path );
-        $this->profile_system = new JCK_WooSocial_ProfileSystem();
-        $this->like_system = new JCK_WooSocial_LikeSystem();
-        $this->follow_system = new JCK_WooSocial_FollowSystem();
         $this->activity_log = new JCK_WooSocial_ActivityLogSystem();
+
+        $this->profile_system = new JCK_WooSocial_ProfileSystem();
+        $this->follow_system = new JCK_WooSocial_FollowSystem();
+        $this->like_system = new JCK_WooSocial_LikeSystem( $this->activity_log );
 
     }
 

@@ -6,10 +6,10 @@
     ============================= */
 
 	do_action( 'jck_woosocial_before_product_card', $product );
-?> 
+?>
 
     <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card <?php echo $GLOBALS['jck_woosocial']->slug; ?>-card--product">
-        
+
         <?php
         /**	=============================
             *
@@ -18,12 +18,12 @@
             * @hooked product_image - 10
             *
             ============================= */
-        
+
         	do_action( 'jck_woosocial_product_card_before_content', $product );
         ?>
-        
+
         <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-card__content">
-            
+
             <?php
             /**	=============================
                 *
@@ -35,22 +35,22 @@
                 * @hooked product_likes - 40
                 *
                 ============================= */
-            
+
             	do_action( 'jck_woosocial_product_card_content', $product );
             ?>
-        
+
         </div>
-        
+
         <?php
         /**	=============================
             *
             * jck_woosocial_product_card_after_content hook
             *
             ============================= */
-        
+
         	do_action( 'jck_woosocial_product_card_after_content', $product );
         ?>
-        
+
     </div>
 
 <?php
@@ -61,4 +61,4 @@
     ============================= */
 
 	do_action( 'jck_woosocial_after_product_card', $product );
-?> 
+?>

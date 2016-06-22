@@ -144,6 +144,7 @@
 
 .jck-woosocial-card__image img.avatar {
   border-radius: 100%;
+  width: 100%;
 }
 
 .entry-content .jck-woosocial-card__title, .jck-woosocial-card__title {

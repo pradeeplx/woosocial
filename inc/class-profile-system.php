@@ -275,7 +275,7 @@ class JCK_WooSocial_ProfileSystem {
 
         }
 
-        if( $user ) {
+        if( $user->user_nicename ) {
 
             $user->likes_count = $GLOBALS['jck_woosocial']->like_system->get_likes_count( $user->ID );
             $user->followers_count = $GLOBALS['jck_woosocial']->activity_log->get_followers_count( $user->ID );

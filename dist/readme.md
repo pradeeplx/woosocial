@@ -196,6 +196,9 @@ Overriding a template is simple. Templates that can be overridden are in the "te
 
 ## Changelog
 
+**v1.0.2** (27/02/2016)
+[fix] Undefined user properties appearing occasionally
+
 **v1.0.1** (23/02/2016)
 [update] Settings framework
 [fix] is_profile check

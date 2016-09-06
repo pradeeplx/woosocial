@@ -1,6 +1,6 @@
 ## WooSocial
 
-This is the git repo for the WooCommerce plugin, WooSocial.
+This is the git repo for the WooCommerce plugin, [WooSocial](https://iconicwp.com/products/woosocial/).
 
 ## Download
 
@@ -25,3 +25,7 @@ Assets can be modified from within the `source` folder. just make sure to run `$
 ## Documentation
 
 You can view the docs [here](https://github.com/iconicwp/woosocial/blob/master/dist/readme.md).
+
+## About Iconic
+
+We develop free and premium [WooCommerce plugins](https://iconicwp.com/products/). Get in touch if you have any questions!

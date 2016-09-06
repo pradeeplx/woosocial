@@ -23,5 +23,7 @@ composer.lock
 node_modules/
 .sass-cache
 vendor/
-codecanyon
+codecanyon/
 tmp/
+
+!dist/iconic-woosocial.zip

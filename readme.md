@@ -20,7 +20,7 @@ If you're planning on contributing, once you've cloned the repo, you will need t
 3. `$ composer install`
 4. `$ gulp deps`
 
-Assets can be modified from within the `source` folder. just make sure to run `$ gulp` to watch for changes. The plugin uses sass.
+Assets can be modified from within the `source` folder. Just make sure to run `$ gulp` to watch for changes. The plugin uses sass.
 
 ## Documentation
 

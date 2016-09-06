@@ -45,6 +45,8 @@ Once installed you can find the options panel under WooCommerce > WooSocial.
 
 v1.1.0 (06/09/2016)
 [update] Re-released as free plugin on WordPress.org
+[fix] Fix profile issue for WooCommerce customers
+[fix] Fix DB table naming issues when using on multisite
 
 v1.0.2 (27/02/2016)
 [fix] Undefined user properties appearing occasionally

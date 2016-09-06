@@ -36,15 +36,17 @@ class Iconic_WooSocial_ProfileSystem {
 
         } else {
 
-            add_filter( 'author_rewrite_rules',                         array( $this, 'author_rewrite_rules' ) );
-            add_filter( 'template_include',                             array( $this, 'profile_template' ), 99 );
-            add_filter( 'woocommerce_login_redirect',                   array( $this, 'login_redirect' ), 10, 2 );
-            add_filter( 'wp_get_nav_menu_items',                        array( $this, 'nav_menu_items' ), 10, 3 );
+            add_filter( 'author_rewrite_rules', array( $this, 'author_rewrite_rules' ) );
+            add_filter( 'template_include', array( $this, 'profile_template' ), 99 );
+            add_filter( 'woocommerce_login_redirect', array( $this, 'login_redirect' ), 10, 2 );
+            add_filter( 'wp_get_nav_menu_items', array( $this, 'nav_menu_items' ), 10, 3 );
 
-            add_action( 'iconic_woosocial_before_profile',                 array( $this, 'before_profile' ), 5 );
-            add_action( 'iconic_woosocial_after_profile',                  array( $this, 'after_profile' ), 50 );
+            add_action( 'iconic_woosocial_before_profile', array( $this, 'before_profile' ), 5 );
+            add_action( 'iconic_woosocial_after_profile', array( $this, 'after_profile' ), 50 );
 
-            add_filter( 'body_class',                                   array( $this, 'body_class' ), 10, 1 );
+            add_filter( 'body_class', array( $this, 'body_class' ), 10, 1 );
+
+            remove_action( 'template_redirect', 'wc_disable_author_archives_for_customers' );
 
         }
 

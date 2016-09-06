@@ -196,7 +196,7 @@ class Iconic_WooSocial_FollowSystem {
         	SELECT *
         	FROM {$GLOBALS['iconic_woosocial']->activity_log->table_name} AS log
 
-        	LEFT JOIN `{$wpdb->prefix}users` AS users
+        	LEFT JOIN `{$wpdb->users}` AS users
             ON users.ID = log.rel_id
 
         	WHERE log.rel_id = $user_id
@@ -236,7 +236,7 @@ class Iconic_WooSocial_FollowSystem {
         	SELECT $select
         	FROM {$GLOBALS['iconic_woosocial']->activity_log->table_name} AS log
 
-        	LEFT JOIN `{$wpdb->prefix}users` AS users
+        	LEFT JOIN `{$wpdb->users}` AS users
             ON users.ID = log.rel_id
 
         	WHERE user_id = $user_id

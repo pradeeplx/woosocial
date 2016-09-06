@@ -224,7 +224,7 @@ class Iconic_WooSocial_ActivityLogSystem {
             SELECT COUNT(*)
             FROM $this->table_name AS log
 
-            LEFT JOIN `{$wpdb->prefix}users` AS users
+            LEFT JOIN `{$wpdb->users}` AS users
             ON users.ID = log.rel_id
 
             WHERE log.user_id = $user_id
@@ -305,10 +305,10 @@ SELECT log.id, log.user_id, log.type, log.rel_id, log.time
             SELECT log.id, log.user_id, log.type, log.rel_id, log.time
                 FROM `$this->table_name` AS log
 
-                    LEFT JOIN `{$wpdb->prefix}posts` AS posts
+                    LEFT JOIN `{$wpdb-> posts}` AS posts
                     ON posts.ID = log.rel_id
 
-                    LEFT JOIN `{$wpdb->prefix}users` AS users
+                    LEFT JOIN `{$wpdb->users}` AS users
                     ON users.ID = log.rel_id
 
             	WHERE log.user_id IN ($user_id)

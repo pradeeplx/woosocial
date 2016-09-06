@@ -270,7 +270,7 @@ class Iconic_WooSocial_LikeSystem {
         $likes = $wpdb->get_results(
         	"
         	SELECT * FROM `{$GLOBALS['iconic_woosocial']->activity_log->table_name}` AS log
-            INNER JOIN `{$wpdb->prefix}posts` AS posts
+            INNER JOIN `{$wpdb-> posts}` AS posts
             ON posts.ID = log.rel_id
             AND log.user_id = $user_id
             AND log.type = 'like'
@@ -302,7 +302,7 @@ class Iconic_WooSocial_LikeSystem {
             "
             SELECT COUNT(*)
             FROM `{$GLOBALS['iconic_woosocial']->activity_log->table_name}` AS log
-            INNER JOIN `{$wpdb->prefix}posts` AS posts
+            INNER JOIN `{$wpdb-> posts}` AS posts
             ON posts.ID = log.rel_id
             AND posts.post_status = 'publish'
             AND log.user_id = $user_id

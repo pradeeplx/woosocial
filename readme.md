@@ -2,6 +2,10 @@
 
 This is the git repo for the WooCommerce plugin, [WooSocial](https://iconicwp.com/products/woosocial/). Enable user profiles, follow functionality, and product likes on your WooCommerce store.
 
+## Live Demo
+
+View the [WooSocial demo](http://demos.iconicwp.com/woosocial/).
+
 ## Download
 
 You can download the installable plugin files [here](https://github.com/iconicwp/woosocial/raw/master/dist/iconic-woosocial.zip).

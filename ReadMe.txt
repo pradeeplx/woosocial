@@ -10,6 +10,8 @@ Enable user profiles, follow functionality, and product likes on your WooCommerc
 
 == Description ==
 
+View the [WooSocial demo](http://demos.iconicwp.com/woosocial/).
+
 Make your online shop a thriving social community and increase exposure of your products with this powerful new add-on for the ever-popular WordPress plugin, WooCommerce.
 
 WooSocial has been created to encourage your customers to like products and connect with friends to view their activity; all within your online store. Your customers will be given user profiles in order to keep track of the products they love and check out the things their friends are loving, too.

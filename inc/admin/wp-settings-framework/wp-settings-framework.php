@@ -431,6 +431,21 @@ if( !class_exists('WordPressSettingsFramework') ){
         }
 
         /**
+         * Generate: Number field
+         *
+         * @param arr $args
+         */
+        public function generate_number_field( $args ) {
+
+            $args['value'] = esc_attr( stripslashes( $args['value'] ) );
+
+            echo '<input type="number" name="'. $args['name'] .'" id="'. $args['id'] .'" value="'. $args['value'] .'" placeholder="'. $args['placeholder'] .'" class="regular-text '. $args['class'] .'" />';
+
+            $this->generate_description( $args['desc'] );
+
+        }
+
+        /**
          * Generate: Time field
          *
          * @param arr $args
@@ -841,12 +856,12 @@ if( !class_exists('WordPressSettingsFramework') ){
          */
         public function get_settings() {
 
-        	$options = get_option($this->option_group.'_settings');
+        	$settings = get_option($this->option_group.'_settings');
 
-        	if($options)
-        	    return $options;
+        	if($settings)
+        	    return $settings;
 
-        	$options = array();
+        	$settings = array();
 
         	foreach($this->settings as $section){
         		foreach($section['fields'] as $field){
@@ -855,11 +870,13 @@ if( !class_exists('WordPressSettingsFramework') ){
             		    $field['default'] = array_values( $field['default'] );
             		}
 
-        			$options[ sprintf('%s_%s', $section['section_id'], $field['id']) ] = (isset($field['default'])) ? $field['default'] : false;
+            		$setting_key = $this->has_tabs() ? sprintf('%s_%s_%s', $section['tab_id'], $section['section_id'], $field['id']) : sprintf('%s_%s', $section['section_id'], $field['id']);
+
+        			$settings[ $setting_key ] = (isset($field['default'])) ? $field['default'] : false;
         		}
         	}
 
-        	return $options;
+        	return $settings;
 
         }
 
@@ -934,20 +951,6 @@ if( !class_exists('WordPressSettingsFramework') ){
         }
 
     }
-}
-
-if( !function_exists('wpsf_get_settings') ){
-
-    /**
-     * Get the settings from a settings file/option group
-     *
-     * @param string option group id
-     * @return array settings
-     */
-    function wpsf_get_settings( $option_group ){
-        return get_option( $option_group .'_settings' );
-    }
-
 }
 
 if( !function_exists('wpsf_get_setting') ){

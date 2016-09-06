@@ -1,46 +1,46 @@
 (function($, document) {
 
-    var jck_woosocial = {
+    var iconic_woosocial = {
 
         cache: function() {
-            jck_woosocial.els = {};
-            jck_woosocial.vars = {};
+            iconic_woosocial.els = {};
+            iconic_woosocial.vars = {};
 
-            jck_woosocial.vars.is_hidden_class = "jck-woosocial--is-hidden";
-            jck_woosocial.vars.animate_spin_class = "jck-woosocial-spin";
-            jck_woosocial.vars.add_to_cart_buttons_class = '.jck-woosocial-add-to-cart-wrapper .add_to_cart_button';
-            jck_woosocial.vars.card_grid_cards_class = '.jck-woosocial-card-grid .jck-woosocial-card';
-            jck_woosocial.vars.card_hover_class = 'jck-woosocial-card--hover';
+            iconic_woosocial.vars.is_hidden_class = "iconic-woosocial--is-hidden";
+            iconic_woosocial.vars.animate_spin_class = "iconic-woosocial-spin";
+            iconic_woosocial.vars.add_to_cart_buttons_class = '.iconic-woosocial-add-to-cart-wrapper .add_to_cart_button';
+            iconic_woosocial.vars.card_grid_cards_class = '.iconic-woosocial-card-grid .iconic-woosocial-card';
+            iconic_woosocial.vars.card_hover_class = 'iconic-woosocial-card--hover';
 
-            jck_woosocial.els.document_body = $(document.body);
-            jck_woosocial.els.actions_list = $('.jck-woosocial-actions');
-            jck_woosocial.els.tab_links = $('.jck-woosocial-profile-link');
-            jck_woosocial.els.tab_content = $('.jck-woosocial-tab-content');
-            jck_woosocial.els.load_more_button = $('.jck-woosocial-load-more');
-            jck_woosocial.els.action_blocks = $('.jck-woosocial-action');
-            jck_woosocial.els.likes_container = $('.jck-woosocial-user-likes');
-            jck_woosocial.els.following_container = $('.jck-woosocial-following');
-            jck_woosocial.els.followers_container = $('.jck-woosocial-followers');
-            jck_woosocial.els.add_to_cart_buttons = $('.jck-woosocial-add-to-cart-wrapper .add_to_cart_button');
-            jck_woosocial.els.tick_icon = $('<i class="jck-woosocial-ic-tick"></i>');
-            jck_woosocial.els.loading_icon = $('<i class="jck-woosocial-ic-loading jck-woosocial-spin"></i>');
-            jck_woosocial.els.card_grids = $('.jck-woosocial-card-grid');
-            jck_woosocial.els.breakpoint_elements = $('[data-breakpoints]');
-            jck_woosocial.els.breakpoints = [];
+            iconic_woosocial.els.document_body = $(document.body);
+            iconic_woosocial.els.actions_list = $('.iconic-woosocial-actions');
+            iconic_woosocial.els.tab_links = $('.iconic-woosocial-profile-link');
+            iconic_woosocial.els.tab_content = $('.iconic-woosocial-tab-content');
+            iconic_woosocial.els.load_more_button = $('.iconic-woosocial-load-more');
+            iconic_woosocial.els.action_blocks = $('.iconic-woosocial-action');
+            iconic_woosocial.els.likes_container = $('.iconic-woosocial-user-likes');
+            iconic_woosocial.els.following_container = $('.iconic-woosocial-following');
+            iconic_woosocial.els.followers_container = $('.iconic-woosocial-followers');
+            iconic_woosocial.els.add_to_cart_buttons = $('.iconic-woosocial-add-to-cart-wrapper .add_to_cart_button');
+            iconic_woosocial.els.tick_icon = $('<i class="iconic-woosocial-ic-tick"></i>');
+            iconic_woosocial.els.loading_icon = $('<i class="iconic-woosocial-ic-loading iconic-woosocial-spin"></i>');
+            iconic_woosocial.els.card_grids = $('.iconic-woosocial-card-grid');
+            iconic_woosocial.els.breakpoint_elements = $('[data-breakpoints]');
+            iconic_woosocial.els.breakpoints = [];
 
         },
 
         on_ready: function() {
 
-            jck_woosocial.cache();
-            jck_woosocial.setup_follow_actions();
-            jck_woosocial.setup_product_like_action();
-            jck_woosocial.setup_tabs();
-            jck_woosocial.setup_load_more();
-            jck_woosocial.add_to_cart();
-            jck_woosocial.setup_breakpoints();
-            jck_woosocial.check_breakpoints();
-            jck_woosocial.setup_cards();
+            iconic_woosocial.cache();
+            iconic_woosocial.setup_follow_actions();
+            iconic_woosocial.setup_product_like_action();
+            iconic_woosocial.setup_tabs();
+            iconic_woosocial.setup_load_more();
+            iconic_woosocial.add_to_cart();
+            iconic_woosocial.setup_breakpoints();
+            iconic_woosocial.check_breakpoints();
+            iconic_woosocial.setup_cards();
 
         },
 
@@ -50,18 +50,18 @@
 
         on_resize: function() {
 
-            jck_woosocial.check_breakpoints();
+            iconic_woosocial.check_breakpoints();
 
         },
 
         setup_follow_actions: function() {
 
-            $('.jck-woosocial-follow-action').on('click', function(){
+            $('.iconic-woosocial-follow-action').on('click', function(){
 
                 var $button = $(this),
                     user_id = $button.attr('data-user-id'),
                     type = $button.attr('data-type'),
-                    loading_class = 'jck-woosocial-follow-action--loading';
+                    loading_class = 'iconic-woosocial-follow-action--loading';
 
                 if( type !== "login" ) {
 
@@ -71,13 +71,13 @@
 
                         $.ajax({
             				type:        "GET",
-            				url:         jck_woosocial_vars.ajax_url,
+            				url:         iconic_woosocial_vars.ajax_url,
             				cache:       false,
             				dataType:    "jsonp",
             				crossDomain: true,
             				data: {
-            					action:  'jck_woosocial_follow_action',
-            					nonce:   jck_woosocial_vars.nonce,
+            					action:  'iconic_woosocial_follow_action',
+            					nonce:   iconic_woosocial_vars.nonce,
             					user_id: user_id,
             					type:    type
             				},
@@ -88,11 +88,11 @@
             					$button.attr('data-type',data.button.type);
 
             					$button.removeClass(loading_class);
-            					$button.removeClass('jck-woosocial-follow-action--'+type);
-            					$button.addClass('jck-woosocial-follow-action--'+data.button.type);
+            					$button.removeClass('iconic-woosocial-follow-action--'+type);
+            					$button.addClass('iconic-woosocial-follow-action--'+data.button.type);
 
             					if(data.add_follow_html) {
-                					jck_woosocial.els.actions_list.prepend(data.add_follow_html);
+                					iconic_woosocial.els.actions_list.prepend(data.add_follow_html);
             					}
             				},
 
@@ -111,16 +111,16 @@
 
         setup_product_like_action: function() {
 
-            $(document).on('click', '.jck-woosocial-product-like-action', function(){
+            $(document).on('click', '.iconic-woosocial-product-like-action', function(){
 
                 var $button = $(this),
-                    $current_likes_list = $button.closest('.jck-woosocial-product-likes'),
+                    $current_likes_list = $button.closest('.iconic-woosocial-product-likes'),
                     product_id = $button.attr('data-product-id'),
                     type = $button.attr('data-type'),
-                    $count = $button.find('.jck-woosocial-product-like-button__count'),
-                    loading_class = 'jck-woosocial-product-like-action--loading',
+                    $count = $button.find('.iconic-woosocial-product-like-button__count'),
+                    loading_class = 'iconic-woosocial-product-like-action--loading',
                     $icon = $button.find('i'),
-                    $action = $button.closest('.jck-woosocial-action');
+                    $action = $button.closest('.iconic-woosocial-action');
 
                 if( type !== "login" ) {
 
@@ -130,13 +130,13 @@
 
                         $.ajax({
             				type: "GET",
-            				url: jck_woosocial_vars.ajax_url,
+            				url: iconic_woosocial_vars.ajax_url,
             				cache: false,
             				dataType: "jsonp",
             				crossDomain: true,
             				data: {
-            					action: 'jck_woosocial_product_like_action',
-            					nonce: jck_woosocial_vars.nonce,
+            					action: 'iconic_woosocial_product_like_action',
+            					nonce: iconic_woosocial_vars.nonce,
             					product_id: product_id,
             					type: type
             				},
@@ -153,17 +153,17 @@
 
                 					$button.removeClass(loading_class);
 
-                					$button.removeClass('jck-woosocial-product-like-action--'+type);
-                					$button.addClass('jck-woosocial-product-like-action--'+data.button.type);
+                					$button.removeClass('iconic-woosocial-product-like-action--'+type);
+                					$button.addClass('iconic-woosocial-product-like-action--'+data.button.type);
 
                 					if( data.button.type === "unlike" ) {
-                    					$icon.attr('class','jck-woosocial-ic-heart-full');
+                    					$icon.attr('class','iconic-woosocial-ic-heart-full');
                 					} else {
-                    					$icon.attr('class','jck-woosocial-ic-heart');
+                    					$icon.attr('class','iconic-woosocial-ic-heart');
                 					}
 
                 					if(data.add_like_html) {
-                    					$current_likes_list.find('.jck-woosocial-product-likes__item--like-button').after(data.add_like_html);
+                    					$current_likes_list.find('.iconic-woosocial-product-likes__item--like-button').after(data.add_like_html);
                 					}
 
                 					if(data.remove_like_class) {
@@ -190,17 +190,17 @@
 
         setup_tabs: function() {
 
-            jck_woosocial.els.tab_links.on('click', function(){
+            iconic_woosocial.els.tab_links.on('click', function(){
 
                 var target = $(this).attr('href'),
-                    active_class = 'jck-woosocial-profile-link--active';
+                    active_class = 'iconic-woosocial-profile-link--active';
 
-                jck_woosocial.els.tab_links.removeClass(active_class);
+                iconic_woosocial.els.tab_links.removeClass(active_class);
                 $(this).addClass(active_class);
-                jck_woosocial.els.tab_content.hide();
+                iconic_woosocial.els.tab_content.hide();
                 $(target).show();
 
-                jck_woosocial.check_breakpoints();
+                iconic_woosocial.check_breakpoints();
 
                 return false;
 
@@ -210,73 +210,73 @@
 
         spin_icon_start: function( $icon ){
 
-            $icon.addClass( jck_woosocial.vars.animate_spin_class );
+            $icon.addClass( iconic_woosocial.vars.animate_spin_class );
 
         },
 
         spin_icon_stop: function( $icon ){
 
-            $icon.removeClass( jck_woosocial.vars.animate_spin_class );
+            $icon.removeClass( iconic_woosocial.vars.animate_spin_class );
 
         },
 
         disable_load_more_button: function( $button ){
 
             $button
-            .html( jck_woosocial_vars.strings.no_more )
+            .html( iconic_woosocial_vars.strings.no_more )
             .removeAttr('href')
-            .addClass("jck-woosocial-load-more--disabled");
+            .addClass("iconic-woosocial-load-more--disabled");
 
         },
 
         setup_load_more: function() {
 
-            jck_woosocial.els.load_more_button.on('click', function(){
+            iconic_woosocial.els.load_more_button.on('click', function(){
 
                 var $load_more_button = $(this),
                     $load_more_icon = $load_more_button.find('i');
 
-                if( $load_more_button.hasClass("jck-woosocial-load-more--disabled") ) {
+                if( $load_more_button.hasClass("iconic-woosocial-load-more--disabled") ) {
                     return false;
                 }
 
-                jck_woosocial.spin_icon_start( $load_more_icon );
+                iconic_woosocial.spin_icon_start( $load_more_icon );
 
-                if( $(this).hasClass('jck-woosocial-load-more--activity') ) {
+                if( $(this).hasClass('iconic-woosocial-load-more--activity') ) {
 
-                    jck_woosocial.load_more_activity( $(this), function(){
+                    iconic_woosocial.load_more_activity( $(this), function(){
 
-                        jck_woosocial.spin_icon_stop( $load_more_icon );
-
-                    } );
-
-                }
-
-                if( $(this).hasClass('jck-woosocial-load-more--likes') ) {
-
-                    jck_woosocial.load_more_likes( $(this), function(){
-
-                        jck_woosocial.spin_icon_stop( $load_more_icon );
+                        iconic_woosocial.spin_icon_stop( $load_more_icon );
 
                     } );
 
                 }
 
-                if( $(this).hasClass('jck-woosocial-load-more--followers') ) {
+                if( $(this).hasClass('iconic-woosocial-load-more--likes') ) {
 
-                    jck_woosocial.load_more_followers( $(this), function(){
+                    iconic_woosocial.load_more_likes( $(this), function(){
 
-                        jck_woosocial.spin_icon_stop( $load_more_icon );
+                        iconic_woosocial.spin_icon_stop( $load_more_icon );
 
                     } );
 
                 }
 
-                if( $(this).hasClass('jck-woosocial-load-more--following') ) {
+                if( $(this).hasClass('iconic-woosocial-load-more--followers') ) {
 
-                    jck_woosocial.load_more_following( $(this), function(){
+                    iconic_woosocial.load_more_followers( $(this), function(){
 
-                        jck_woosocial.spin_icon_stop( $load_more_icon );
+                        iconic_woosocial.spin_icon_stop( $load_more_icon );
+
+                    } );
+
+                }
+
+                if( $(this).hasClass('iconic-woosocial-load-more--following') ) {
+
+                    iconic_woosocial.load_more_following( $(this), function(){
+
+                        iconic_woosocial.spin_icon_stop( $load_more_icon );
 
                     } );
 
@@ -297,13 +297,13 @@
 
             $.ajax({
 				type:        "GET",
-				url:         jck_woosocial_vars.ajax_url,
+				url:         iconic_woosocial_vars.ajax_url,
 				cache:       false,
 				dataType:    "jsonp",
 				crossDomain: true,
 				data: {
-					action:          'jck_woosocial_load_more_activity',
-					nonce:           jck_woosocial_vars.nonce,
+					action:          'iconic_woosocial_load_more_activity',
+					nonce:           iconic_woosocial_vars.nonce,
 					limit:           limit,
 					offset:          offset,
 					user_id:         user_id,
@@ -319,7 +319,7 @@
 
 					} else {
 
-    					jck_woosocial.disable_load_more_button( $load_more_button );
+    					iconic_woosocial.disable_load_more_button( $load_more_button );
 
 					}
 
@@ -345,13 +345,13 @@
 
             $.ajax({
 				type:        "GET",
-				url:         jck_woosocial_vars.ajax_url,
+				url:         iconic_woosocial_vars.ajax_url,
 				cache:       false,
 				dataType:    "jsonp",
 				crossDomain: true,
 				data: {
-					action:  'jck_woosocial_load_more_likes',
-					nonce:   jck_woosocial_vars.nonce,
+					action:  'iconic_woosocial_load_more_likes',
+					nonce:   iconic_woosocial_vars.nonce,
 					limit:   limit,
 					offset:  offset,
 					user_id: user_id
@@ -361,12 +361,12 @@
 
 					if( data.likes_html ) {
 
-    					jck_woosocial.els.likes_container.append( data.likes_html );
+    					iconic_woosocial.els.likes_container.append( data.likes_html );
     					$load_more_button.attr('data-offset', next_offset) ;
 
 					} else {
 
-    					jck_woosocial.disable_load_more_button( $load_more_button );
+    					iconic_woosocial.disable_load_more_button( $load_more_button );
 
 					}
 
@@ -393,13 +393,13 @@
 
             $.ajax({
 				type:        "GET",
-				url:         jck_woosocial_vars.ajax_url,
+				url:         iconic_woosocial_vars.ajax_url,
 				cache:       false,
 				dataType:    "jsonp",
 				crossDomain: true,
 				data: {
-					action:  'jck_woosocial_load_more_followers',
-					nonce:   jck_woosocial_vars.nonce,
+					action:  'iconic_woosocial_load_more_followers',
+					nonce:   iconic_woosocial_vars.nonce,
 					limit:   limit,
 					offset:  offset,
 					user_id: user_id
@@ -411,12 +411,12 @@
 
 					if( data.followers_html ) {
 
-    					jck_woosocial.els.followers_container.append( data.followers_html );
+    					iconic_woosocial.els.followers_container.append( data.followers_html );
     					$load_more_button.attr('data-offset', next_offset) ;
 
 					} else {
 
-    					jck_woosocial.disable_load_more_button( $load_more_button );
+    					iconic_woosocial.disable_load_more_button( $load_more_button );
 
 					}
 
@@ -442,13 +442,13 @@
 
             $.ajax({
 				type:        "GET",
-				url:         jck_woosocial_vars.ajax_url,
+				url:         iconic_woosocial_vars.ajax_url,
 				cache:       false,
 				dataType:    "jsonp",
 				crossDomain: true,
 				data: {
-					action:  'jck_woosocial_load_more_following',
-					nonce:   jck_woosocial_vars.nonce,
+					action:  'iconic_woosocial_load_more_following',
+					nonce:   iconic_woosocial_vars.nonce,
 					limit:   limit,
 					offset:  offset,
 					user_id: user_id
@@ -460,12 +460,12 @@
 
 					if( data.following_html ) {
 
-    					jck_woosocial.els.following_container.append( data.following_html );
+    					iconic_woosocial.els.following_container.append( data.following_html );
     					$load_more_button.attr('data-offset', next_offset) ;
 
 					} else {
 
-    					jck_woosocial.disable_load_more_button( $load_more_button );
+    					iconic_woosocial.disable_load_more_button( $load_more_button );
 
 					}
 
@@ -484,29 +484,29 @@
 
     	add_to_cart: function() {
 
-        	jck_woosocial.els.document_body.on('click', jck_woosocial.vars.add_to_cart_buttons_class, function(){
+        	iconic_woosocial.els.document_body.on('click', iconic_woosocial.vars.add_to_cart_buttons_class, function(){
 
             	var $button = $(this),
             	    button_text = $button.text();
 
                 $button
                 .attr('data-button-text',button_text)
-                .append( jck_woosocial.els.loading_icon );
+                .append( iconic_woosocial.els.loading_icon );
 
         	});
 
-        	jck_woosocial.els.document_body.on( 'added_to_cart', function( e, fragments, cart_hash, $button ) {
+        	iconic_woosocial.els.document_body.on( 'added_to_cart', function( e, fragments, cart_hash, $button ) {
 
             	if( typeof $button === "undefined" ) { return; }
 
-                var $woosocial_button_wrapper = $button.closest('.jck-woosocial-add-to-cart-wrapper'),
+                var $woosocial_button_wrapper = $button.closest('.iconic-woosocial-add-to-cart-wrapper'),
                     button_text = $button.attr('data-button-text');
 
                 if( $woosocial_button_wrapper.length > 0 ) {
 
                     $button
                     .html( button_text )
-                    .append( jck_woosocial.els.tick_icon );
+                    .append( iconic_woosocial.els.tick_icon );
 
                     setTimeout(function(){
 
@@ -522,11 +522,11 @@
 
         setup_breakpoints: function() {
 
-            if( jck_woosocial.els.breakpoint_elements.length > 0 ) {
+            if( iconic_woosocial.els.breakpoint_elements.length > 0 ) {
 
                 // store breakpoint data in cache for future reference
 
-                jck_woosocial.els.breakpoint_elements.each(function( index, element ){
+                iconic_woosocial.els.breakpoint_elements.each(function( index, element ){
 
                     var $element = $(element),
                 	    breakpoints = $element.attr('data-breakpoints'),
@@ -537,7 +537,7 @@
                             width: 0
                         };
 
-                    jck_woosocial.els.breakpoints.push( breakpoint_object );
+                    iconic_woosocial.els.breakpoints.push( breakpoint_object );
 
                 });
 
@@ -545,9 +545,9 @@
 
             // when an element width has changed, trigger breakpoint update
 
-            jck_woosocial.els.document_body.on('element_width_change', function( event, breakpoint_object ){
+            iconic_woosocial.els.document_body.on('element_width_change', function( event, breakpoint_object ){
 
-                jck_woosocial.update_breakpoints( breakpoint_object );
+                iconic_woosocial.update_breakpoints( breakpoint_object );
 
             });
 
@@ -555,9 +555,9 @@
 
         check_breakpoints: function() {
 
-            if( jck_woosocial.els.breakpoints.length > 0 ) {
+            if( iconic_woosocial.els.breakpoints.length > 0 ) {
 
-            	$.each(jck_woosocial.els.breakpoints, function(index, breakpoint_object){
+            	$.each(iconic_woosocial.els.breakpoints, function(index, breakpoint_object){
 
                     var previous_width = breakpoint_object.width,
                         current_width = breakpoint_object.element.width();
@@ -566,7 +566,7 @@
 
                         breakpoint_object.width = current_width;
 
-                        jck_woosocial.els.document_body.trigger('element_width_change', [breakpoint_object]);
+                        iconic_woosocial.els.document_body.trigger('element_width_change', [breakpoint_object]);
 
                     }
 
@@ -620,13 +620,13 @@
 
     	setup_cards: function() {
 
-        	jck_woosocial.els.document_body.hoverIntent(
+        	iconic_woosocial.els.document_body.hoverIntent(
 
         	    function(){
 
             	    var $card = $(this);
 
-            	    $card.addClass( jck_woosocial.vars.card_hover_class );
+            	    $card.addClass( iconic_woosocial.vars.card_hover_class );
 
         	    },
 
@@ -634,19 +634,19 @@
 
             	    var $card = $(this);
 
-            	    $card.removeClass( jck_woosocial.vars.card_hover_class );
+            	    $card.removeClass( iconic_woosocial.vars.card_hover_class );
 
         	    },
 
-        	    jck_woosocial.vars.card_grid_cards_class
+        	    iconic_woosocial.vars.card_grid_cards_class
             );
 
     	}
 
     };
 
-	$(document).ready( jck_woosocial.on_ready() );
-	$(window).on('scroll', function() { jck_woosocial.on_scroll(); } );
-	$(window).on('resize', function() { jck_woosocial.on_resize(); } );
+	$(document).ready( iconic_woosocial.on_ready() );
+	$(window).on('scroll', function() { iconic_woosocial.on_scroll(); } );
+	$(window).on('resize', function() { iconic_woosocial.on_resize(); } );
 
 }(jQuery, document));

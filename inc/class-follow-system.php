@@ -1,6 +1,6 @@
 <?php
 
-class JCK_WooSocial_FollowSystem {
+class Iconic_WooSocial_FollowSystem {
 
 /**	=============================
     *
@@ -22,14 +22,14 @@ class JCK_WooSocial_FollowSystem {
 
 	public function initiate_hook() {
 
-        add_action( 'wp_ajax_jck_woosocial_follow_action',                array( $this, 'jck_woosocial_follow_action' ) );
-        add_action( 'wp_ajax_nopriv_jck_woosocial_follow_action',         array( $this, 'jck_woosocial_follow_action' ) );
+        add_action( 'wp_ajax_iconic_woosocial_follow_action',                array( $this, 'iconic_woosocial_follow_action' ) );
+        add_action( 'wp_ajax_nopriv_iconic_woosocial_follow_action',         array( $this, 'iconic_woosocial_follow_action' ) );
 
-        add_action( 'wp_ajax_jck_woosocial_load_more_following',             array( $this, 'load_more_following' ) );
-        add_action( 'wp_ajax_nopriv_jck_woosocial_load_more_following',      array( $this, 'load_more_following' ) );
+        add_action( 'wp_ajax_iconic_woosocial_load_more_following',             array( $this, 'load_more_following' ) );
+        add_action( 'wp_ajax_nopriv_iconic_woosocial_load_more_following',      array( $this, 'load_more_following' ) );
 
-        add_action( 'wp_ajax_jck_woosocial_load_more_followers',             array( $this, 'load_more_followers' ) );
-        add_action( 'wp_ajax_nopriv_jck_woosocial_load_more_followers',      array( $this, 'load_more_followers' ) );
+        add_action( 'wp_ajax_iconic_woosocial_load_more_followers',             array( $this, 'load_more_followers' ) );
+        add_action( 'wp_ajax_nopriv_iconic_woosocial_load_more_followers',      array( $this, 'load_more_followers' ) );
 
 	}
 
@@ -39,11 +39,11 @@ class JCK_WooSocial_FollowSystem {
     *
     ============================= */
 
-    function jck_woosocial_follow_action() {
+    function iconic_woosocial_follow_action() {
 
 
 
-    	if ( ! wp_verify_nonce( $_GET['nonce'], $GLOBALS['jck_woosocial']->slug ) )
+    	if ( ! wp_verify_nonce( $_GET['nonce'], $GLOBALS['iconic_woosocial']->slug ) )
     		die ( 'Busted!' );
 
         $current_user_id = get_current_user_id();
@@ -54,19 +54,19 @@ class JCK_WooSocial_FollowSystem {
 
         if( $_GET['type'] == "follow" ) {
 
-            $action = $GLOBALS['jck_woosocial']->activity_log->add_follow( $current_user_id, $_GET['user_id'] );
+            $action = $GLOBALS['iconic_woosocial']->activity_log->add_follow( $current_user_id, $_GET['user_id'] );
 
-            $response['button']['text'] = __('Unfollow', 'jck-woosocial');
+            $response['button']['text'] = __('Unfollow', 'iconic-woosocial');
             $response['button']['type'] = 'unfollow';
 
         } else {
 
-            $removed = $GLOBALS['jck_woosocial']->activity_log->remove_follow( $current_user_id, $_GET['user_id'] );
+            $removed = $GLOBALS['iconic_woosocial']->activity_log->remove_follow( $current_user_id, $_GET['user_id'] );
 
-            $response['button']['text'] = __('Follow', 'jck-woosocial');
+            $response['button']['text'] = __('Follow', 'iconic-woosocial');
             $response['button']['type'] = 'follow';
 
-            $response['remove_follow_class'] = '.'.$GLOBALS['jck_woosocial']->slug.'-action--'.$removed->id;
+            $response['remove_follow_class'] = '.'.$GLOBALS['iconic_woosocial']->slug.'-action--'.$removed->id;
 
         }
 
@@ -96,7 +96,7 @@ class JCK_WooSocial_FollowSystem {
             'following_html' => false
         );
 
-        $following = $GLOBALS['jck_woosocial']->follow_system->get_following( $_GET['user_id'], $_GET['limit'], $_GET['offset'] );
+        $following = $GLOBALS['iconic_woosocial']->follow_system->get_following( $_GET['user_id'], $_GET['limit'], $_GET['offset'] );
 
         $response['following'] = $following;
 
@@ -106,8 +106,8 @@ class JCK_WooSocial_FollowSystem {
 
             foreach( $following as $user ) {
 
-                $user = $GLOBALS['jck_woosocial']->profile_system->get_user_info( $user->rel_id );
-                include( $GLOBALS['jck_woosocial']->templates->locate_template( 'cards/user.php' ) );
+                $user = $GLOBALS['iconic_woosocial']->profile_system->get_user_info( $user->rel_id );
+                include( $GLOBALS['iconic_woosocial']->templates->locate_template( 'cards/user.php' ) );
 
             }
 
@@ -142,7 +142,7 @@ class JCK_WooSocial_FollowSystem {
             'following_html' => false
         );
 
-        $followers = $GLOBALS['jck_woosocial']->follow_system->get_followers( $_GET['user_id'], $_GET['limit'], $_GET['offset'] );
+        $followers = $GLOBALS['iconic_woosocial']->follow_system->get_followers( $_GET['user_id'], $_GET['limit'], $_GET['offset'] );
 
         $response['followers'] = $followers;
 
@@ -152,8 +152,8 @@ class JCK_WooSocial_FollowSystem {
 
             foreach( $followers as $user ) {
 
-                $user = $GLOBALS['jck_woosocial']->profile_system->get_user_info( $user->user_id );
-                include( $GLOBALS['jck_woosocial']->templates->locate_template( 'cards/user.php' ) );
+                $user = $GLOBALS['iconic_woosocial']->profile_system->get_user_info( $user->user_id );
+                include( $GLOBALS['iconic_woosocial']->templates->locate_template( 'cards/user.php' ) );
 
             }
 
@@ -194,7 +194,7 @@ class JCK_WooSocial_FollowSystem {
         $followers = $wpdb->get_results(
         	"
         	SELECT *
-        	FROM {$GLOBALS['jck_woosocial']->activity_log->table_name} AS log
+        	FROM {$GLOBALS['iconic_woosocial']->activity_log->table_name} AS log
 
         	LEFT JOIN `{$wpdb->prefix}users` AS users
             ON users.ID = log.rel_id
@@ -234,7 +234,7 @@ class JCK_WooSocial_FollowSystem {
         $followers = $wpdb->get_results(
         	"
         	SELECT $select
-        	FROM {$GLOBALS['jck_woosocial']->activity_log->table_name} AS log
+        	FROM {$GLOBALS['iconic_woosocial']->activity_log->table_name} AS log
 
         	LEFT JOIN `{$wpdb->prefix}users` AS users
             ON users.ID = log.rel_id
@@ -278,7 +278,7 @@ class JCK_WooSocial_FollowSystem {
         $following = $wpdb->get_row(
         	"
         	SELECT *
-        	FROM {$GLOBALS['jck_woosocial']->activity_log->table_name}
+        	FROM {$GLOBALS['iconic_woosocial']->activity_log->table_name}
         	WHERE user_id = $user_id
         	AND rel_id = $follow_user_id
         	AND type = 'follow'
@@ -307,18 +307,18 @@ class JCK_WooSocial_FollowSystem {
             $myaccount_page_id = get_option( 'woocommerce_myaccount_page_id' );
             $myaccount_page_url = ( $myaccount_page_id ) ? get_permalink( $myaccount_page_id ).'?profile='.$user_info->display_name : "javascript: void(0);";
 
-            $is_following = $GLOBALS['jck_woosocial']->follow_system->is_following( $current_user_id, $user_info->ID );
-            $button_text = ( $is_following ) ? __("Unfollow", 'jck-woosocial') : __("Follow", 'jck-woosocial');
+            $is_following = $GLOBALS['iconic_woosocial']->follow_system->is_following( $current_user_id, $user_info->ID );
+            $button_text = ( $is_following ) ? __("Unfollow", 'iconic-woosocial') : __("Follow", 'iconic-woosocial');
             $button_type = ( $is_user_logged_in ) ? ( $is_following ? "unfollow" : "follow" ) : "login";
             $button_classes = implode(' ', array(
-                sprintf( '%s-btn', $GLOBALS['jck_woosocial']->slug ),
-                sprintf( '%s-btn--follow', $GLOBALS['jck_woosocial']->slug ),
-                sprintf( '%s-follow-action', $GLOBALS['jck_woosocial']->slug ),
-                sprintf( '%s-follow-action--%s', $GLOBALS['jck_woosocial']->slug, $button_type )
+                sprintf( '%s-btn', $GLOBALS['iconic_woosocial']->slug ),
+                sprintf( '%s-btn--follow', $GLOBALS['iconic_woosocial']->slug ),
+                sprintf( '%s-follow-action', $GLOBALS['iconic_woosocial']->slug ),
+                sprintf( '%s-follow-action--%s', $GLOBALS['iconic_woosocial']->slug, $button_type )
             ));
             $href = ( $is_user_logged_in ) ? "javascript: void(0);" : $myaccount_page_url;
 
-            return sprintf('<div class="%s-btn--follow-wrapper"><a href="%s" class="%s" data-user-id="%d" data-type="%s">%s</a></div>', $GLOBALS['jck_woosocial']->slug, $href, $button_classes, $user_info->ID, $button_type, $button_text);
+            return sprintf('<div class="%s-btn--follow-wrapper"><a href="%s" class="%s" data-user-id="%d" data-type="%s">%s</a></div>', $GLOBALS['iconic_woosocial']->slug, $href, $button_classes, $user_info->ID, $button_type, $button_text);
 
         }
 

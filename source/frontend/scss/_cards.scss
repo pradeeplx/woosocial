@@ -1,9 +1,9 @@
-.jck-woosocial-card-grid {
+.iconic-woosocial-card-grid {
     margin: 0 -0.98%;
     width: 101.96%;
     @include clearfix;
 
-    .jck-woosocial-card {
+    .iconic-woosocial-card {
         float: left;
         width: 23.04%;
         margin: 0 0.98% 1.96%;
@@ -16,7 +16,7 @@
 
     &--medium {
 
-        .jck-woosocial-card {
+        .iconic-woosocial-card {
             width: 31.37%;
         }
 
@@ -24,7 +24,7 @@
 
     &--small {
 
-        .jck-woosocial-card {
+        .iconic-woosocial-card {
             width: 48.04%;
         }
 
@@ -32,7 +32,7 @@
 
     &--xsmall {
 
-        .jck-woosocial-card {
+        .iconic-woosocial-card {
             width: 98.04%;
         }
 
@@ -40,7 +40,7 @@
 
 }
 
-.jck-woosocial-card {
+.iconic-woosocial-card {
     border: 1px solid $c-border;
     background: #fff;
     padding: 15px;
@@ -87,7 +87,7 @@
         padding: 0;
         text-align: center;
 
-        .jck-woosocial-card__user-stat {
+        .iconic-woosocial-card__user-stat {
             list-style: none none outside;
             margin: 0;
             padding: 0 8px;
@@ -115,7 +115,7 @@
             }
         }
 
-        .jck-woosocial-add-to-cart-wrapper {
+        .iconic-woosocial-add-to-cart-wrapper {
             margin: 0 0 15px -3px;
         }
 
@@ -123,12 +123,12 @@
 
     &--user {
 
-        .jck-woosocial-card__image {
+        .iconic-woosocial-card__image {
             max-width: 280px;
             margin-top: 10px;
         }
 
-        .jck-woosocial-card__title {
+        .iconic-woosocial-card__title {
             text-align: center;
         }
 
@@ -136,7 +136,7 @@
 
     &--self {
 
-        .jck-woosocial-card__title {
+        .iconic-woosocial-card__title {
             margin-bottom: 50px;
         }
 

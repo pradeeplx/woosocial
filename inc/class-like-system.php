@@ -1,6 +1,6 @@
 <?php
 
-class JCK_WooSocial_LikeSystem {
+class Iconic_WooSocial_LikeSystem {
 
     /**
      * Product likes meta key
@@ -9,7 +9,7 @@ class JCK_WooSocial_LikeSystem {
      * @access public
      * @var str
      */
-    public $product_likes_meta_key = "_jck_woosocial_likes";
+    public $product_likes_meta_key = "_iconic_woosocial_likes";
 
     /**
      * Construct the class
@@ -26,10 +26,10 @@ class JCK_WooSocial_LikeSystem {
      */
     public function initiate_hook() {
 
-    	add_action( 'wp_ajax_jck_woosocial_product_like_action',  array( $this, 'like_action' ) );
+    	add_action( 'wp_ajax_iconic_woosocial_product_like_action',  array( $this, 'like_action' ) );
 
-        add_action( 'wp_ajax_jck_woosocial_load_more_likes', array( $this, 'load_more' ) );
-        add_action( 'wp_ajax_nopriv_jck_woosocial_load_more_likes', array( $this, 'load_more' ) );
+        add_action( 'wp_ajax_iconic_woosocial_load_more_likes', array( $this, 'load_more' ) );
+        add_action( 'wp_ajax_nopriv_iconic_woosocial_load_more_likes', array( $this, 'load_more' ) );
 
         //add_filter( 'woocommerce_get_catalog_ordering_args', array( $this, 'add_catalog_ordering_args' ), 10, 1 );
         //add_filter( 'woocommerce_default_catalog_orderby_options', array( $this, 'catalog_orderby' ), 10, 1 );
@@ -44,7 +44,7 @@ class JCK_WooSocial_LikeSystem {
 
     	if(!is_admin()) {
 
-        	$settings = $GLOBALS['jck_woosocial']->settings;
+        	$settings = $GLOBALS['iconic_woosocial']->settings;
 
             if( $settings['likes_likes_category_display'] !== "none" && ( is_product_category() || is_shop() ) && !is_search() )
                 add_action( $settings['likes_likes_category_display'], array( $this, 'show_likes_loop' ) );
@@ -70,7 +70,7 @@ class JCK_WooSocial_LikeSystem {
      */
     function like_action() {
 
-    	if ( ! wp_verify_nonce( $_GET['nonce'], $GLOBALS['jck_woosocial']->slug ) )
+    	if ( ! wp_verify_nonce( $_GET['nonce'], $GLOBALS['iconic_woosocial']->slug ) )
     		die ( 'Busted!' );
 
         $current_user_id = get_current_user_id();
@@ -82,17 +82,17 @@ class JCK_WooSocial_LikeSystem {
 
         if( $_GET['type'] == "like" ) {
 
-            $action = $GLOBALS['jck_woosocial']->activity_log->add_like( $current_user_id, $_GET['product_id'] );
+            $action = $GLOBALS['iconic_woosocial']->activity_log->add_like( $current_user_id, $_GET['product_id'] );
 
             $response['button']['type'] = 'unlike';
             $response['add_like_html'] = $this->get_like_list_item( $current_user_id );
 
         } else {
 
-            $action = $GLOBALS['jck_woosocial']->activity_log->remove_like( $current_user_id, $_GET['product_id'] );
+            $action = $GLOBALS['iconic_woosocial']->activity_log->remove_like( $current_user_id, $_GET['product_id'] );
 
             $response['button']['type'] = 'like';
-            $response['remove_like_class'] = sprintf( '.%s-product-likes__item--%s', $GLOBALS['jck_woosocial']->slug, $current_user_id );
+            $response['remove_like_class'] = sprintf( '.%s-product-likes__item--%s', $GLOBALS['iconic_woosocial']->slug, $current_user_id );
 
         }
 
@@ -119,7 +119,7 @@ class JCK_WooSocial_LikeSystem {
             'likes_likes_html' => false
         );
 
-        $likes = $GLOBALS['jck_woosocial']->like_system->get_likes( $_GET['user_id'], $_GET['limit'], $_GET['offset'] );
+        $likes = $GLOBALS['iconic_woosocial']->like_system->get_likes( $_GET['user_id'], $_GET['limit'], $_GET['offset'] );
 
         $response['likes'] = $likes;
 
@@ -129,8 +129,8 @@ class JCK_WooSocial_LikeSystem {
 
             foreach( $likes as $like ) {
 
-                $product = $GLOBALS['jck_woosocial']->like_system->get_product_info( $like->rel_id );
-                include($GLOBALS['jck_woosocial']->templates->locate_template( 'cards/product.php' ));
+                $product = $GLOBALS['iconic_woosocial']->like_system->get_product_info( $like->rel_id );
+                include($GLOBALS['iconic_woosocial']->templates->locate_template( 'cards/product.php' ));
 
             }
 
@@ -167,7 +167,7 @@ class JCK_WooSocial_LikeSystem {
         $liked = $wpdb->get_row(
         	"
         	SELECT *
-        	FROM {$GLOBALS['jck_woosocial']->activity_log->table_name}
+        	FROM {$GLOBALS['iconic_woosocial']->activity_log->table_name}
         	WHERE user_id = $user_id
         	AND rel_id = $product_id
         	AND type = 'like'
@@ -185,10 +185,10 @@ class JCK_WooSocial_LikeSystem {
      */
     public function get_like_list_item( $user_id ) {
 
-        $user = $GLOBALS['jck_woosocial']->profile_system->get_user_info( $user_id );
+        $user = $GLOBALS['iconic_woosocial']->profile_system->get_user_info( $user_id );
 
         ob_start();
-        include($GLOBALS['jck_woosocial']->templates->locate_template( 'product/part-like-item.php' ));
+        include($GLOBALS['iconic_woosocial']->templates->locate_template( 'product/part-like-item.php' ));
         $like_list_item = ob_get_clean();
 
         return $like_list_item;
@@ -207,7 +207,7 @@ class JCK_WooSocial_LikeSystem {
         $product_id = ( $product_id ) ? $product_id : $post->ID;
         $product_likes = $this->get_product_likes( $product_id );
 
-        include($GLOBALS['jck_woosocial']->templates->locate_template( 'product/loop-likes.php' ));
+        include($GLOBALS['iconic_woosocial']->templates->locate_template( 'product/loop-likes.php' ));
 
     }
 
@@ -236,16 +236,16 @@ class JCK_WooSocial_LikeSystem {
         $myaccount_page_id = get_option( 'woocommerce_myaccount_page_id' );
         $myaccount_page_url = ( $myaccount_page_id ) ? sprintf( '%s?like-product=%d', get_permalink( $myaccount_page_id ), $args['product_id'] ) : "javascript: void(0);";
 
-        $button_classes = implode(' ', apply_filters( 'jck_woosocial_like_button_classes', array(
-            sprintf( '%s-btn', $GLOBALS['jck_woosocial']->slug ),
-            sprintf( '%s-btn--like', $GLOBALS['jck_woosocial']->slug ),
-            sprintf( '%s-product-like-action', $GLOBALS['jck_woosocial']->slug ),
-            sprintf( '%s-product-like-action--%s', $GLOBALS['jck_woosocial']->slug, $type )
+        $button_classes = implode(' ', apply_filters( 'iconic_woosocial_like_button_classes', array(
+            sprintf( '%s-btn', $GLOBALS['iconic_woosocial']->slug ),
+            sprintf( '%s-btn--like', $GLOBALS['iconic_woosocial']->slug ),
+            sprintf( '%s-product-like-action', $GLOBALS['iconic_woosocial']->slug ),
+            sprintf( '%s-product-like-action--%s', $GLOBALS['iconic_woosocial']->slug, $type )
         ), $product_id, $type, $product_likes_count ));
         $href = ( is_user_logged_in() ) ? "javascript: void(0);" : $myaccount_page_url;
 
         ob_start();
-        include($GLOBALS['jck_woosocial']->templates->locate_template( 'product/part-like-button.php' ));
+        include($GLOBALS['iconic_woosocial']->templates->locate_template( 'product/part-like-button.php' ));
         $like_button = ob_get_clean();
 
         return $like_button;
@@ -262,14 +262,14 @@ class JCK_WooSocial_LikeSystem {
      */
     public function get_likes( $user_id, $limit = null, $offset = null ) {
 
-        if( $limit === null ) $limit = $GLOBALS['jck_woosocial']->activity_log->default_limit;
-        if( $offset === null ) $offset = $GLOBALS['jck_woosocial']->activity_log->default_offset;
+        if( $limit === null ) $limit = $GLOBALS['iconic_woosocial']->activity_log->default_limit;
+        if( $offset === null ) $offset = $GLOBALS['iconic_woosocial']->activity_log->default_offset;
 
         global $wpdb;
 
         $likes = $wpdb->get_results(
         	"
-        	SELECT * FROM `{$GLOBALS['jck_woosocial']->activity_log->table_name}` AS log
+        	SELECT * FROM `{$GLOBALS['iconic_woosocial']->activity_log->table_name}` AS log
             INNER JOIN `{$wpdb->prefix}posts` AS posts
             ON posts.ID = log.rel_id
             AND log.user_id = $user_id
@@ -301,7 +301,7 @@ class JCK_WooSocial_LikeSystem {
         $likes_count = $wpdb->get_var(
             "
             SELECT COUNT(*)
-            FROM `{$GLOBALS['jck_woosocial']->activity_log->table_name}` AS log
+            FROM `{$GLOBALS['iconic_woosocial']->activity_log->table_name}` AS log
             INNER JOIN `{$wpdb->prefix}posts` AS posts
             ON posts.ID = log.rel_id
             AND posts.post_status = 'publish'
@@ -310,7 +310,7 @@ class JCK_WooSocial_LikeSystem {
             "
         );
 
-        return $GLOBALS['jck_woosocial']->shorten_number( $likes_count );
+        return $GLOBALS['iconic_woosocial']->shorten_number( $likes_count );
 
     }
 
@@ -331,7 +331,7 @@ class JCK_WooSocial_LikeSystem {
         $likes = $wpdb->get_results(
         	"
         	SELECT *
-        	FROM {$GLOBALS['jck_woosocial']->activity_log->table_name}
+        	FROM {$GLOBALS['iconic_woosocial']->activity_log->table_name}
         	WHERE rel_id = $product_id
         	AND type = 'like'
         	ORDER BY time DESC
@@ -356,9 +356,9 @@ class JCK_WooSocial_LikeSystem {
 
         global $wpdb;
 
-        $likes_count = $wpdb->get_var( "SELECT COUNT(*) FROM {$GLOBALS['jck_woosocial']->activity_log->table_name} WHERE rel_id = $product_id AND type = 'like'" );
+        $likes_count = $wpdb->get_var( "SELECT COUNT(*) FROM {$GLOBALS['iconic_woosocial']->activity_log->table_name} WHERE rel_id = $product_id AND type = 'like'" );
 
-        return $GLOBALS['jck_woosocial']->shorten_number( $likes_count );
+        return $GLOBALS['iconic_woosocial']->shorten_number( $likes_count );
 
     }
 
@@ -382,7 +382,7 @@ class JCK_WooSocial_LikeSystem {
 
         $product->image_link = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr( $product->url ), esc_attr( $product->title ), $product->get_image( 'shop_catalog' ) );
 
-        $product->add_to_cart_button = do_shortcode( sprintf( '[add_to_cart id="%d" sku="%s" style="" show_price="false" class="%s-add-to-cart-wrapper"]', $product_id, $product->sku, $GLOBALS['jck_woosocial']->slug ) );
+        $product->add_to_cart_button = do_shortcode( sprintf( '[add_to_cart id="%d" sku="%s" style="" show_price="false" class="%s-add-to-cart-wrapper"]', $product_id, $product->sku, $GLOBALS['iconic_woosocial']->slug ) );
 
         $product->likes_count = $this->get_product_likes_count( $product_id );
 
@@ -397,19 +397,19 @@ class JCK_WooSocial_LikeSystem {
      */
     public function get_likes_alignment_class() {
 
-        $class = sprintf("%s-product-likes-wrapper--", $GLOBALS['jck_woosocial']->slug);
+        $class = sprintf("%s-product-likes-wrapper--", $GLOBALS['iconic_woosocial']->slug);
 
         if( ( is_category() || is_shop() ) && !is_search() ) {
 
-            $class .= $GLOBALS['jck_woosocial']->settings['likes_likes_category_align'];
+            $class .= $GLOBALS['iconic_woosocial']->settings['likes_likes_category_align'];
 
         } elseif( is_search() ) {
 
-            $class .= $GLOBALS['jck_woosocial']->settings['likes_likes_search_align'];
+            $class .= $GLOBALS['iconic_woosocial']->settings['likes_likes_search_align'];
 
         } else {
 
-            $class .= $GLOBALS['jck_woosocial']->settings['likes_likes_product_align'];
+            $class .= $GLOBALS['iconic_woosocial']->settings['likes_likes_product_align'];
 
         }
 
@@ -442,7 +442,7 @@ class JCK_WooSocial_LikeSystem {
      */
     public function catalog_orderby( $orderby ) {
 
-        $orderby['likes'] = __('Sort by likes', 'jck-woosocial');
+        $orderby['likes'] = __('Sort by likes', 'iconic-woosocial');
 
         return $orderby;
 

@@ -22,7 +22,7 @@
 
 // Styles
 
-.jck-woosocial-actions {
+.iconic-woosocial-actions {
     position: relative;
     padding: 0;
     margin: 0;
@@ -46,18 +46,18 @@
         height: 30px;
         overflow: hidden;
         
-        .jck-woosocial-load-more {
+        .iconic-woosocial-load-more {
             margin: 0;
         }
         
-        .jck-woosocial-actions--small & {
+        .iconic-woosocial-actions--small & {
             overflow: visible;
             
-            .jck-woosocial-load-more-wrapper {
+            .iconic-woosocial-load-more-wrapper {
                 margin-left: -48px;
                 text-align: left;
                 
-                .jck-woosocial-btn {
+                .iconic-woosocial-btn {
                     padding: 0 15px;
                 }
             }
@@ -73,7 +73,7 @@
     }
 }
 
-    .jck-woosocial-action {
+    .iconic-woosocial-action {
         position: relative;
         margin: 4em 0;
         padding: 0;
@@ -136,7 +136,7 @@
                 }
             }
             
-            .jck-woosocial-actions--small & {
+            .iconic-woosocial-actions--small & {
                 left: -43px;
                 width: 38px;
                 height: 38px;
@@ -187,7 +187,7 @@
                 border-left-color: $c-border;
             }
             
-            .jck-woosocial-actions--small & {
+            .iconic-woosocial-actions--small & {
                 @extend %small-wrapper;
                 
                 &:before {
@@ -213,17 +213,17 @@
                 border-right-color: $c-border;
             }
             
-            .jck-woosocial-action__date {
+            .iconic-woosocial-action__date {
                 left: auto;
                 right: 133%;
                 text-align: right;
                 
-                .jck-woosocial-actions--small & {
+                .iconic-woosocial-actions--small & {
                     @extend %small-date;
                 }
             }
             
-            .jck-woosocial-actions--small & {
+            .iconic-woosocial-actions--small & {
                 @extend %small-wrapper;
                 
                 &:before {
@@ -259,7 +259,7 @@
                 border: none;
             }
             
-            .jck-woosocial-actions--small & {
+            .iconic-woosocial-actions--small & {
                 height: 40px;
                 line-height: 40px;
                 
@@ -285,7 +285,7 @@
             overflow: hidden;
             color: #888;
             
-            .jck-woosocial-actions--small & {
+            .iconic-woosocial-actions--small & {
                 @extend %small-date;
             }
         }

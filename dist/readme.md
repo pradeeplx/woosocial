@@ -3,11 +3,13 @@
 To install the plugin:
 
 1. Open wp-admin and navigate to Plugins > Add New > Upload.
-2. Click Choose File, and choose the file jck-woosocial.zip from your CodeCanyon download zip.
+2. Click Choose File, and choose the file iconic-woosocial.zip.
 3. Once uploaded, click activate plugin.
 4. The plugin is now installed and activated.
 
-Once installed you can find the options panel under WooCommerce > WooSocial
+Alternatively, search for "WooSocial" by opening wp-admin and navigating to Plugins > Add New.
+
+Once installed you can find the options panel under WooCommerce > WooSocial.
 
 ## Configuration
 
@@ -193,22 +195,3 @@ There are 2 types of activity feeds. The first is the activity feed on a user's 
 ## Modifying a Template
 
 Overriding a template is simple. Templates that can be overridden are in the "templates" folder within the plugin. Simply copy them over to a folder named "jck-woosocial" within your theme folder.
-
-## Changelog
-
-**v1.0.2** (27/02/2016)
-[fix] Undefined user properties appearing occasionally
-
-**v1.0.1** (23/02/2016)
-[update] Settings framework
-[fix] is_profile check
-[fix] Fix URLs for certain themes, like Atelier
-[fix] Delete "like" when a product is completely removed
-[fix] Don't show users/products if they've been deleted
-[fix] Set author base to root, to remove with-front issues
-[fix] Profile counts in FF
-[update] Compatibility with WooCommerce Show Single Variations by Iconic
-[fix] Avatar size
-
-**v1.0.0** (06/10/2015)
-Initial Release

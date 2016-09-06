@@ -1,4 +1,4 @@
-.jck-woosocial-container {
+.iconic-woosocial-container {
     width: 100%;
     max-width: 1024px;
     padding: 0;
@@ -6,7 +6,7 @@
     box-sizing: border-box;
 }
 
-.jck-woosocial-btn {
+.iconic-woosocial-btn {
     height: 30px;
     padding: 0 20px;
     line-height: 30px;
@@ -37,7 +37,7 @@
 
 // Messages
 
-.jck-woosocial-message-wrapper {
+.iconic-woosocial-message-wrapper {
     background-color: #fff;
     text-align: center;
     padding: 15px;
@@ -46,12 +46,12 @@
 
 // Helpers
 
-.jck-woosocial-vertical-align {
+.iconic-woosocial-vertical-align {
     display: inline-block;
     vertical-align: middle;
 }
 
-.jck-woosocial-clear {
+.iconic-woosocial-clear {
     &:after {
         content: "";
         display: table;

@@ -1,10 +1,10 @@
 // Buttons
 
-.jck-woosocial-product-like-action {    
+.iconic-woosocial-product-like-action {    
     cursor: pointer;
 }
 
-.jck-woosocial-btn--like {
+.iconic-woosocial-btn--like {
     background: $c-like;
     height: 25px;
     line-height: 25px;
@@ -27,7 +27,7 @@
     }
 }
 
-.jck-woosocial-add-to-cart-wrapper {
+.iconic-woosocial-add-to-cart-wrapper {
     margin: 0;
     padding: 0;
     display: block;
@@ -36,7 +36,7 @@
     height: 30px;
     
     a.button {
-        @extend .jck-woosocial-btn;
+        @extend .iconic-woosocial-btn;
         
         &.loading {
             opacity: 1 !important;
@@ -63,7 +63,7 @@
         line-height: 1;
     }
     
-    .jck-woosocial-ic-loading {
+    .iconic-woosocial-ic-loading {
         transform-origin: 50% 44%;
         transform: translate3d(0,0,0);
         -webkit-backface-visibility: hidden;
@@ -80,7 +80,7 @@
 
 // Product Likes
 
-.jck-woosocial-product-likes-wrapper {
+.iconic-woosocial-product-likes-wrapper {
     
     &--centre {
         text-align: center;
@@ -96,7 +96,7 @@
     
 }
 
-.jck-woosocial-product-likes {
+.iconic-woosocial-product-likes {
     width: auto;
     max-width: 100%;
     margin: 10px auto;
@@ -108,7 +108,7 @@
     display: inline-block;
 }
     
-    .jck-woosocial-product-likes__item {
+    .iconic-woosocial-product-likes__item {
         width: 34px;
         height: 34px;
         line-height: 34px;

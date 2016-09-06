@@ -2,14 +2,14 @@
 /*
 Plugin Name: WooSocial
 Plugin URI: https://iconicwp.com
-Description: Profiles, likes, and followers - WooSocial
-Version: 1.0.1
+Description: Enable user profiles, follow functionality, and product likes on your WooCommerce store
+Version: 1.1.0
 Author: Iconic
 Author URI: https://iconicwp.com
-Text Domain: jck-woosocial
+Text Domain: iconic-woosocial
 */
 
-class JCK_WooSocial {
+class Iconic_WooSocial {
 
     /**
      * Name
@@ -36,7 +36,7 @@ class JCK_WooSocial {
      * @access public
      * @var str
      */
-    public $slug = 'jck-woosocial';
+    public $slug = 'iconic-woosocial';
 
     /**
      * Slug Alt
@@ -56,7 +56,7 @@ class JCK_WooSocial {
      * @access public
      * @var str
      */
-    public $version = "1.0.1";
+    public $version = "1.1.0";
 
     /**
      * Plugin path
@@ -92,7 +92,7 @@ class JCK_WooSocial {
      *
      * @since 1.0.0
      * @access public
-     * @var JCK_WooSocial_Hooks
+     * @var Iconic_WooSocial_Hooks
      */
     private $hooks;
 
@@ -101,7 +101,7 @@ class JCK_WooSocial {
      *
      * @since 1.0.0
      * @access public
-     * @var JCK_WooSocial_ProfileSystem
+     * @var Iconic_WooSocial_ProfileSystem
      */
     public $profile_system;
 
@@ -110,7 +110,7 @@ class JCK_WooSocial {
      *
      * @since 1.0.0
      * @access public
-     * @var JCK_WooSocial_LikeSystem
+     * @var Iconic_WooSocial_LikeSystem
      */
     public $like_system;
 
@@ -119,7 +119,7 @@ class JCK_WooSocial {
      *
      * @since 1.0.0
      * @access public
-     * @var JCK_WooSocial_FollowSystem
+     * @var Iconic_WooSocial_FollowSystem
      */
     public $follow_system;
 
@@ -128,7 +128,7 @@ class JCK_WooSocial {
      *
      * @since 1.0.0
      * @access public
-     * @var JCK_WooSocial_ActivityLogSystem
+     * @var Iconic_WooSocial_ActivityLogSystem
      */
     public $activity_log;
 
@@ -187,7 +187,7 @@ class JCK_WooSocial {
 
         $this->wpsf = new WordPressSettingsFramework( $this->plugin_path .'inc/admin/settings.php', $this->option_group );
 
-        $this->settings = wpsf_get_settings( $this->option_group );
+        $this->settings = $this->wpsf->get_settings();
 
     }
 
@@ -225,13 +225,13 @@ class JCK_WooSocial {
         require_once( $this->plugin_path.'/inc/class-follow-system.php' );
         require_once( $this->plugin_path.'/inc/class-activity-log-system.php' );
 
-        $this->hooks = new JCK_WooSocial_Hooks();
-        $this->templates = new Iconic_Template_Loader( $this->slug_alt, 'jck-woosocial', $this->plugin_path );
-        $this->activity_log = new JCK_WooSocial_ActivityLogSystem();
+        $this->hooks = new Iconic_WooSocial_Hooks();
+        $this->templates = new Iconic_Template_Loader( $this->slug_alt, 'iconic-woosocial', $this->plugin_path );
+        $this->activity_log = new Iconic_WooSocial_ActivityLogSystem();
 
-        $this->profile_system = new JCK_WooSocial_ProfileSystem();
-        $this->follow_system = new JCK_WooSocial_FollowSystem();
-        $this->like_system = new JCK_WooSocial_LikeSystem( $this->activity_log );
+        $this->profile_system = new Iconic_WooSocial_ProfileSystem();
+        $this->follow_system = new Iconic_WooSocial_FollowSystem();
+        $this->like_system = new Iconic_WooSocial_LikeSystem( $this->activity_log );
 
     }
 
@@ -240,7 +240,7 @@ class JCK_WooSocial {
      */
     public function plugins_loaded_hook() {
 
-        load_plugin_textdomain( "jck-woosocial", false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+        load_plugin_textdomain( "iconic-woosocial", false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
     }
 
@@ -275,8 +275,8 @@ class JCK_WooSocial {
         $this->wpsf->add_settings_page( array(
             'page_slug'   => 'settings',
             'parent_slug' => 'woocommerce',
-            'page_title'  => __( 'WooSocial Settings', 'jck-woosocial' ),
-            'menu_title'  => __( 'WooSocial', 'jck-woosocial' ),
+            'page_title'  => __( 'WooSocial Settings', 'iconic-woosocial' ),
+            'menu_title'  => __( 'WooSocial', 'iconic-woosocial' ),
             'capability'  => 'manage_options'
         ) );
 
@@ -286,14 +286,14 @@ class JCK_WooSocial {
      * Add Custom Nav Meta Box
      */
     public function nav_menu_add_meta_boxes() {
-        add_meta_box( 'jck_woosocial_nav_link', __( 'WooSocial', 'jck-woosocial' ), array( $this, 'nav_menu_links' ), 'nav-menus', 'side', 'low' );
+        add_meta_box( 'iconic_woosocial_nav_link', __( 'WooSocial', 'iconic-woosocial' ), array( $this, 'nav_menu_links' ), 'nav-menus', 'side', 'low' );
     }
 
     public function nav_menu_links() {
 
         $links = array(
-            __('Activity Feed', 'jck-woosocial') => '/jck-woosocial/activity/',
-            __('Your Profile', 'jck-woosocial')  => '/jck-woosocial/profile/%nicename%/'
+            __('Activity Feed', 'iconic-woosocial') => '/iconic-woosocial/activity/',
+            __('Your Profile', 'iconic-woosocial')  => '/iconic-woosocial/profile/%nicename%/'
         );
 
         ?>
@@ -357,7 +357,7 @@ class JCK_WooSocial {
 
         $current_user = wp_get_current_user();
 
-        $url = str_replace('/jck-woosocial', get_bloginfo('url'), $url);
+        $url = str_replace('/iconic-woosocial', get_bloginfo('url'), $url);
         $url = str_replace('%nicename%', $current_user->user_nicename, $url);
 
         return $url;
@@ -406,101 +406,101 @@ class JCK_WooSocial {
             // custom colours
 
             $custom_css = sprintf("
-                .jck-woosocial-add-to-cart-wrapper a.button, .jck-woosocial-btn {
+                .iconic-woosocial-add-to-cart-wrapper a.button, .iconic-woosocial-btn {
                     background: %s;
                     color: %s;
                 }
 
-                .jck-woosocial-add-to-cart-wrapper a.button:hover, .jck-woosocial-btn:hover,
-                .jck-woosocial-add-to-cart-wrapper a.button:focus, .jck-woosocial-btn:focus {
+                .iconic-woosocial-add-to-cart-wrapper a.button:hover, .iconic-woosocial-btn:hover,
+                .iconic-woosocial-add-to-cart-wrapper a.button:focus, .iconic-woosocial-btn:focus {
                     background: %s;
                     color: %s;
                 }
 
-                .jck-woosocial-action__icon--like {
+                .iconic-woosocial-action__icon--like {
                     border-color: %s;
                 }
 
-                .jck-woosocial-action__icon--like,
-                .jck-woosocial-btn--like {
+                .iconic-woosocial-action__icon--like,
+                .iconic-woosocial-btn--like {
                     background: %s;
                     color: %s;
                 }
 
-                .jck-woosocial-btn--like:hover,
-                .jck-woosocial-btn--like:focus {
+                .iconic-woosocial-btn--like:hover,
+                .iconic-woosocial-btn--like:focus {
                     background: %s;
                     color: %s;
                 }
 
-                .jck-woosocial-action__icon--follow {
+                .iconic-woosocial-action__icon--follow {
                     border-color: %s;
                 }
 
-                .jck-woosocial-action__icon--follow,
-                .jck-woosocial-btn--follow {
+                .iconic-woosocial-action__icon--follow,
+                .iconic-woosocial-btn--follow {
                     background: %s;
                     color: %s;
                 }
 
-                .jck-woosocial-btn--follow:hover,
-                .jck-woosocial-btn--follow:focus {
+                .iconic-woosocial-btn--follow:hover,
+                .iconic-woosocial-btn--follow:focus {
                     background: %s;
                     color: %s;
                 }
 
-                .jck-woosocial-action__description,
-                .jck-woosocial-actions:before {
+                .iconic-woosocial-action__description,
+                .iconic-woosocial-actions:before {
                     background: %s;
                 }
 
-                .jck-woosocial-card {
+                .iconic-woosocial-card {
                     border-color: %s;
                     background: %s;
                 }
 
-                .jck-woosocial-action__wrapper:before {
+                .iconic-woosocial-action__wrapper:before {
                     border-left-color: %s;
                 }
 
-                .jck-woosocial-action:nth-child(even) .jck-woosocial-action__wrapper:before {
+                .iconic-woosocial-action:nth-child(even) .iconic-woosocial-action__wrapper:before {
                     border-right-color: %s;
                 }
 
-                .jck-woosocial-profile-info,
-                .jck-woosocial-profile-links__item {
+                .iconic-woosocial-profile-info,
+                .iconic-woosocial-profile-links__item {
                     border-color: %s;
                 }
 
-                .jck-woosocial-profile-info,
-                .jck-woosocial-profile-link {
+                .iconic-woosocial-profile-info,
+                .iconic-woosocial-profile-link {
                     background: %s;
                 }
 
-                .jck-woosocial-profile-link {
+                .iconic-woosocial-profile-link {
                     color: %s;
                 }
 
-                .jck-woosocial-profile-link:hover,
-                .jck-woosocial-profile-link:focus {
-                    background: %s;
-                    color: %s;
-                }
-
-                .jck-woosocial-profile-link__count {
+                .iconic-woosocial-profile-link:hover,
+                .iconic-woosocial-profile-link:focus {
                     background: %s;
                     color: %s;
                 }
 
-                .jck-woosocial-profile-link:hover .jck-woosocial-profile-link__count
-                .jck-woosocial-profile-link:focus .jck-woosocial-profile-link__count {
+                .iconic-woosocial-profile-link__count {
                     background: %s;
                     color: %s;
                 }
 
-                .jck-woosocial-profile-link--active,
-                .jck-woosocial-profile-link--active:hover,
-                .jck-woosocial-profile-link--active:focus {
+                .iconic-woosocial-profile-link:hover .iconic-woosocial-profile-link__count
+                .iconic-woosocial-profile-link:focus .iconic-woosocial-profile-link__count {
+                    background: %s;
+                    color: %s;
+                }
+
+                .iconic-woosocial-profile-link--active,
+                .iconic-woosocial-profile-link--active:hover,
+                .iconic-woosocial-profile-link--active:focus {
                     background: %s;
                     color: %s;
                 }
@@ -569,7 +569,7 @@ class JCK_WooSocial {
                 'nonce'    => wp_create_nonce( $this->slug ),
                 'user_id'  => is_user_logged_in() ? get_current_user_id() : 0,
                 'strings'  => array(
-                    "no_more" => __( "No more to load", "jck-woosocial" )
+                    "no_more" => __( "No more to load", "iconic-woosocial" )
                 )
             );
 
@@ -768,14 +768,14 @@ class JCK_WooSocial {
         }
 
         return sprintf(
-            '<div class="%s-load-more-wrapper"><a href="javascript: void(0);" class="%s" data-limit="%d" data-offset="%d" data-user-id="%s" %s><i class="jck-woosocial-ic-loading"></i> %s</a></div>',
+            '<div class="%s-load-more-wrapper"><a href="javascript: void(0);" class="%s" data-limit="%d" data-offset="%d" data-user-id="%s" %s><i class="iconic-woosocial-ic-loading"></i> %s</a></div>',
             $this->slug,
             implode(' ', $classes),
             $this->activity_log->default_limit,
             $this->activity_log->default_offset + $this->activity_log->default_limit,
             $user_id,
             implode(' ', $additional_attributes),
-            __('Load more', 'jck-woosocial')
+            __('Load more', 'iconic-woosocial')
         );
 
     }
@@ -817,4 +817,4 @@ class JCK_WooSocial {
 
 }
 
-$GLOBALS['jck_woosocial'] = new JCK_WooSocial();
+$GLOBALS['iconic_woosocial'] = new Iconic_WooSocial();

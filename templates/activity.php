@@ -2,7 +2,7 @@
 /**
  * The template for displaying a profile page
  *
- * @package jck-woosocial
+ * @package iconic-woosocial
  * @since WooSocial 1.0.0
  */
  
@@ -16,31 +16,31 @@ get_header(); ?>
 <?php
 /**	=============================
     *
-    * jck_woosocial_before_profile hook
+    * iconic_woosocial_before_profile hook
     *
     * @hooked woocommerce_breadcrumb - 20
     *
     ============================= */
 
-	do_action( 'jck_woosocial_before_activity_feed' );
+	do_action( 'iconic_woosocial_before_activity_feed' );
 ?>    
     
-    <div class="<?php echo $GLOBALS['jck_woosocial']->slug; ?>-container <?php echo $GLOBALS['jck_woosocial']->slug; ?>-activity-wrapper <?php echo $GLOBALS['jck_woosocial']->slug; ?>-clear">
+    <div class="<?php echo $GLOBALS['iconic_woosocial']->slug; ?>-container <?php echo $GLOBALS['iconic_woosocial']->slug; ?>-activity-wrapper <?php echo $GLOBALS['iconic_woosocial']->slug; ?>-clear">
     
-        <?php $GLOBALS['jck_woosocial']->templates->get_template_part( 'activity/feed', 'following' ); ?>    
+        <?php $GLOBALS['iconic_woosocial']->templates->get_template_part( 'activity/feed', 'following' ); ?>    
     
     </div>
 
 <?php
 /**	=============================
     *
-    * jck_woosocial_after_profile hook
+    * iconic_woosocial_after_profile hook
     *
     * @hooked woocommerce_breadcrumb - 20
     *
     ============================= */
 
-	do_action( 'jck_woosocial_after_activity_feed' );
+	do_action( 'iconic_woosocial_after_activity_feed' );
 ?>
 
 <?php get_footer(); ?>

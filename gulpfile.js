@@ -1,6 +1,6 @@
 // Project Specific
 
-var plugin_filename = 'jck-woosocial',
+var plugin_filename = 'iconic-woosocial',
     plugin_zip_name = plugin_filename+'.zip',
     plugin_main_file = plugin_filename+'.php';
 
@@ -169,27 +169,3 @@ var deps = {
 
 	// RUN THIS TO COMPILE FOR CC (gulp compile)
 	gulp.task('compile', ['deps', 'create_main_zip']);
-
-/**
- * Replace strings in plugin files to rename
- *
- * $ gulp install --plugin_name="Iconic Base Plugin" --plugin_shortname="Base Plugin" --class_name=Iconic_Base_Plugin --class_prefix=Iconic_BP_
- *
- * @param str class_name hyphenated string e.g. Iconic_Base_Plugin
- */
-
-gulp.task('install', ['deps'], function(){
-
-    var class_name_lower = argv.class_name.toLowerCase();
-
-    gulp.src(['baseplugin.php','package.json','composer.json'], {base: './'})
-        .pipe(replace('{{class-name}}', argv.class_name))
-        .pipe(replace('{{text-domain}}', class_name_lower.split('_').join('-')))
-        .pipe(replace('{{global-variable}}', class_name_lower))
-        .pipe(replace('{{class-prefix}}', argv.class_prefix))
-        .pipe(replace('{{plugin-name}}', argv.plugin_name))
-        .pipe(replace('{{plugin-shortname}}', argv.plugin_shortname))
-        .pipe(gulp.dest('./'))
-        .pipe(notify({ message: 'Plugin files updated to '+argv.plugin_name }));
-
-});

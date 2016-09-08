@@ -18,7 +18,20 @@ WooSocial has been created to encourage your customers to like products and conn
 
 WooSocial gives each user an admin customisable URL where their profile is displayed, and it also allows them to access the combined activity feeds of all users they follow, in order to keep track of the latest trends. Your customers will have the chance to see what their friends are liking and who they’re following, as well as gather gift ideas for friends and family based on what they’ve liked. It’s a fantastic way to expose your products to a wider audience, generate more views to your store and target social-savvy, highly engaged consumers.
 
-Check out some of our other premium [WooCommerce plugins](https://iconicwp.com/):
+### Key Features
+
+* **Product Likes**  
+  Allow your customs to "like" products. A product like count will be displayed on each product. Customers can also see which products their friends are liking.
+* **Follow**  
+  Customers can follow their friends. This gives them access to see their friends activity; what they like, who they're following, and who follows them.
+* **Profiles**  
+  Give your customers their own shareable profile on your store. The profile displays a feed of their latest activity.
+* **Activity Feed**  
+  Customers can view a combined activity feed of what their friends are up to on your store.
+
+### Other Iconic Plugins
+
+Check out some of our other premium [WooCommerce plugins](https://iconicwp.com/products/):
 
 * [WooThumbs - Awesome Product Imagery](https://codecanyon.net/item/woothumbs-awesome-product-imagery/2867927?ref=iconicwp)
 * [WooCommerce Show Single Variations](https://codecanyon.net/item/woocommerce-show-single-variations/13523915?ref=iconicwp)
